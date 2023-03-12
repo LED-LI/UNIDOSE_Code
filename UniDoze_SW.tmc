@@ -1713,7 +1713,7 @@ moreThanOneMl:
 
     GGP     GB_microLtoWithdraw, GPbank_2            // load the 1mL volume [uL] into A
     CALCAV  SUB, GB_minDrawPistonTemp_uL             // if 0, will keep the draw, if 1mL, will adjust to compensate the previous 1mL move for bubbles          
-    COMP    0                                        // check if more ore less than 1ml
+    COMP    0                                        // check if more or less than 1ml
     JC      LE, returnDrawVial                       // no need to wait when going upwards
 
 returnDrawVial:

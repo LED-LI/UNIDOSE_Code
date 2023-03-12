@@ -175,7 +175,7 @@
 
 #Include UniDoze_TMCLParam.tmc                         // TMCL Parameters
 #Include UniDoze_Setup.tmc                             // UniDoze Parameters & initialization
-// this file 2023-03-12-V40127-UniDoze-SW-adjustment to china.tmc
+// this file UniDoze_SW.tmc
 
 //*********************************
 //*********************************

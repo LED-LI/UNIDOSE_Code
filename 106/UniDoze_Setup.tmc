@@ -143,12 +143,25 @@
 //                       less currrent when moving into dose calibrator :150
 //                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
+//         125. V1040090 fast speed for withdraw (1800) and more delay after draw, draw to full syringe in full speed and return piston to requested volume
+//         126. V1040092 fast speed for withdraw (1800) and more delay after draw (removed the draw full syringe)
+//         127. V1040096 debubble #2 - added a second fast draw (appended to V1040092)
+//         128. V1040097 bypass the PullAir percentage and use 100% all the time 
+//         129. V1040098 Priming syringe - #1 fill and empty syringe once before final draw
+//         130. V1040099 Priming syringe - #2 fill and empty syringe (shake) 3 times and once more slow
+//         131. V1040100 Priming syringe - #3 shake and never close all the way
+//         132. V1040101 Priming syringe - #4 
+//         133. V1040102 Priming syringe - #5 with breating
+//         134. V1040103 Priming syringe - #6 Short priming with breating
+//         135. V1040104 Priming syringe - #7 Fast priming with breating
+//         136. V1040105 Priming syringe - #8 Devi priming
+//         137. V1040106 Priming syringe - #9 Devi priming - next level
 //
 //***********************************************************************************************************
 
-// this file 2022-11-24-V40089-UniDoze-Setup-extract from DC.tmc
+// this file 2023-01-01-V400106-UniDoze-Setup-debubble-Devi_Priming_next_level.tmc
 
-CURRENT_VERSION      =  1040089
+CURRENT_VERSION      =  1040106
 
 //*******************************
 //Definitions of motor numbers
@@ -217,7 +230,7 @@ LED_ON               =    1
 LED_OFF              =    0
 PIG_WAS_REPLACED     =    1
 PIG_NOT_REPLACED     =    0
-DEF_DRAW_WAIT_TIME   =  200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
+DEF_DRAW_WAIT_TIME   =  300 // 200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
 AT_HOME              =    1
 DEFAULT_NEEDLE_LENGTH =  25
 DEFAULT_DRAW_VOLUME  = 1000  // 1[ml]
@@ -483,6 +496,7 @@ GB_squeezeCapHeight           =  53
    DETECT_CAP_HIGHT_REL            = -verticalMicroStepsPerMM 
    ABOVE_SQUEEZE_CAP               = -6000
    MIN_DEPTH_FOR_EXTRACT           =  20000
+   HIGHT_TO_GET_SOME_AIR           =  13825
 
    MAX_CURRENT_VERT                =   200
    MAX_CURRENT_VERT_HIGH           =   255
@@ -578,7 +592,7 @@ GB_144                       = 144
    pistonMicroStepsPerMM         = 1000 * pistonMicroStepsPerRev / pistonFeedPerRevolution // = 1322
 // GB_microL_per_100mm_current    =  6522
    PISTON_POS_COORD              =     3
-GB_PistonHomePos       = 48         // for empty syringe ~1300
+   GB_PistonHomePos       = 48         // for empty syringe ~1300
 
 //   BUMP_DOWN_REL                 =   500 /// 1000 // 0.05 mL // 1600 // tampa  // 800 // 0.04 mL 
 //   PISTON_BACKLASH               =     0 // (done) will be added to the "70%" push back = 60[uL]
@@ -610,15 +624,16 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    ACC_PIST                      =   200
    STBY_CURRENT_PIST             =    25
    MAX_CURRENT_PIST              =   128
+   MAX_PIST_IN_USTEPS            =   29650 // mesured - with curent hardware 
 
    WAIT_TICKS_PUSH_AIR           =    50  //  [0.5s]
    WAIT_TICKS_BUBBLES            =   100 //   [1s]
    WAIT_TICKS_BUBBLES_BACK       =    20  //  [0.2s]
  
-GB_145                         = 145
+GB_tempPistonCalculation_uL       = 145
 GB_pistonMicroStepPer100microL = 146 // 10000 * pistonMicroStepsPerMM / GB_microL_per_100mm_current = 2190
 GB_minDrawPistonTemp_uL        = 147 //
-GB_148                         = 148
+GB_pisonLocation               = 148
 GB_149                         = 149
 
 

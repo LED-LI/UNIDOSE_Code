@@ -143,10 +143,13 @@
 //                       less currrent when moving into dose calibrator :150
 //                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
+//         125. V1040089-a returned Bump amount 60 -> 46 microL (BUMP_DOWN_REL_uL)
+//         126. V1040089-b made extract dipper work with UI
+//         127. V1040089-c created tapTap to flick the syringe with the vial shield cover 
 //
 //***********************************************************************************************************
 
-// this file 2022-11-24-V40089-UniDoze-Setup-extract from DC.tmc
+// this file 2023-06-06-V40089-c-UniDoze-Setup-tapTap.tmc
 
 CURRENT_VERSION      =  1040089
 
@@ -586,7 +589,7 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
 //   ADD_FOR_PREFILL               =   830 ///  1666 // (done) add 0.08 mL
 //   PUSH_PISTON_MORE              =   300 ///   600 // 0.03 mL // 15 uL = 0.015 mL
 
-   BUMP_DOWN_REL_uL              =    60  // 46 ///  
+   BUMP_DOWN_REL_uL              =    46  // 60  // 46 ///  corrected again on 2023-03-01 to 46
 //   PISTON_BACKLASH_uL            =     0 //  (done) will be added to the "70%" push back = 60[uL]
    PISTON_MORE_uL                =   368 /// to the draw and then pushed back    = 0.6 mL
    ADD_FOR_PREFILL_uL            =    76 ///  1666 // (done) add 0.08 mL
@@ -604,8 +607,8 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    MAX_POS_SPEED_PIST_BUBBLE_BACK =  800 /// 1200
    MAX_POS_SPEED_PIST_MORE       =   200 //// 1800 ///  100 /// 200 // 1500 //  200
    MAX_POS_SPEED_PIST_MORE_BACK  =   600 /// 1200
-   SEARCH_SPEED_PIST             =   400 /// 800
-   SWITCH_SPEED_PIST             =   100
+   SEARCH_SPEED_PIST             =   150 // 400 /// 800
+   SWITCH_SPEED_PIST             =    50 // 100
 
    ACC_PIST                      =   200
    STBY_CURRENT_PIST             =    25
@@ -871,7 +874,7 @@ func_148:  CSUB capVibrate
            JA   BACK_GROUND_PROCESS
 func_150:  CSUB ExtractFromDoseCalibrator
            JA   BACK_GROUND_PROCESS
-func_152:  CSUB dummy_sub
+func_152:  CSUB tapTap
            JA   BACK_GROUND_PROCESS
 
 

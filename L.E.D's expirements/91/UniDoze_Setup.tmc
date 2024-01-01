@@ -143,12 +143,14 @@
 //                       less currrent when moving into dose calibrator :150
 //                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
+//         125. V1040090 fast speed for withdraw (1800) and more delay after draw, draw to full syringe in full speed and return piston to requested volume
+//         126. V1040091 added "rinse" before withdraw 
 //
 //***********************************************************************************************************
 
-// this file 2022-11-24-V40089-UniDoze-Setup-extract from DC.tmc
+// this file 2022-12-12-V40091-UniDoze-Setup-added-rinse-added-get-air-abovebump-10.tmc
 
-CURRENT_VERSION      =  1040089
+CURRENT_VERSION      =  1040091
 
 //*******************************
 //Definitions of motor numbers
@@ -217,7 +219,7 @@ LED_ON               =    1
 LED_OFF              =    0
 PIG_WAS_REPLACED     =    1
 PIG_NOT_REPLACED     =    0
-DEF_DRAW_WAIT_TIME   =  200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
+DEF_DRAW_WAIT_TIME   =  400 // 200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
 AT_HOME              =    1
 DEFAULT_NEEDLE_LENGTH =  25
 DEFAULT_DRAW_VOLUME  = 1000  // 1[ml]
@@ -473,7 +475,7 @@ GB_squeezeCapHeight           =  53
    VERTICAL_FOR_ROTATION           = 14500  // ABS
    VERTICAL_FOR_RETRETE            = 24000  // go lower to exit syringe from sheet metal when rotating
    VERTICAL_FOR_NEEDLE_DELTA       =  2900  // from bump, parameter 9
-   ABOVE_BUMP                      =     8  // insert neddle to this hight [mm]
+   ABOVE_BUMP                      =    10  // insert neddle to this hight [mm]
    VERTICAL_IN_VIAL_DELTA          = -verticalMicroStepsPerMM * ABOVE_BUMP  // ~1000 usteps = 8.0 [mm] from bump hight into the vial, to get most of the fluid
    STOP_CHECK_DIPPER_VERTICAL      =  4000  // 3000  //  delta from deepest vertical in dose (GP 17)
    ABOVE_PIG                       = -9300  // ABS
@@ -483,6 +485,7 @@ GB_squeezeCapHeight           =  53
    DETECT_CAP_HIGHT_REL            = -verticalMicroStepsPerMM 
    ABOVE_SQUEEZE_CAP               = -6000
    MIN_DEPTH_FOR_EXTRACT           =  20000
+   HIGHT_TO_GET_SOME_AIR           =  13825
 
    MAX_CURRENT_VERT                =   200
    MAX_CURRENT_VERT_HIGH           =   255
@@ -615,10 +618,10 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    WAIT_TICKS_BUBBLES            =   100 //   [1s]
    WAIT_TICKS_BUBBLES_BACK       =    20  //  [0.2s]
  
-GB_145                         = 145
+GB_tempPistonCalculation_uL       = 145
 GB_pistonMicroStepPer100microL = 146 // 10000 * pistonMicroStepsPerMM / GB_microL_per_100mm_current = 2190
 GB_minDrawPistonTemp_uL        = 147 //
-GB_148                         = 148
+GB_pisonLocation               = 148
 GB_149                         = 149
 
 
@@ -661,6 +664,7 @@ GB_microMeterRandom     = 26    // +/- random insertion into vial in uM
    limitNeedleBentMicroS         =  rotateMicroStepsPerMM * LIMIT_UM_BENT_NEEDLE / 1000  // 3.0 [mm] // 2.0 [mm] = 88 us
    NUMBER_OF_KICKS               =      0
    ROTATE_BUBBLES_uM             =   1000  //  +/- 1 mm at the end of the needle
+   LEAVE_WATER_FOR_AIR           =   2000
 
 GB_lastTopRefPosition         = 150
 GB_rotateMicroStepsPerMM      = 151

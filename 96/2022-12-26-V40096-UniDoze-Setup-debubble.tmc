@@ -143,12 +143,13 @@
 //                       less currrent when moving into dose calibrator :150
 //                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
+//         125. V1040096 debubble
 //
 //***********************************************************************************************************
 
-// this file 2022-11-24-V40089-UniDoze-Setup-extract from DC.tmc
+// this file 2022-12-26-V40096-UniDoze-Setup-debubble.tmc
 
-CURRENT_VERSION      =  1040089
+CURRENT_VERSION      =  1040090
 
 //*******************************
 //Definitions of motor numbers

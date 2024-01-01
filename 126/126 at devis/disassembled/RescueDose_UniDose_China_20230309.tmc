@@ -1,0 +1,2312 @@
+          CSUB Lbl177
+          JA Lbl176
+          CSUB Lbl527
+          JA Lbl176
+          JA Lbl559
+          JA Lbl176
+          CSUB Lbl617
+          JA Lbl176
+          CSUB Lbl645
+          JA Lbl176
+          CSUB Lbl761
+          JA Lbl176
+          CSUB Lbl457
+          JA Lbl176
+          CSUB Lbl819
+          JA Lbl176
+          CSUB Lbl191
+          JA Lbl176
+          CSUB Lbl542
+          JA Lbl176
+          CSUB Lbl1883
+          JA Lbl176
+          CSUB Lbl215
+          JA Lbl176
+          CSUB Lbl209
+          JA Lbl176
+          CSUB Lbl206
+          JA Lbl176
+          CSUB Lbl212
+          JA Lbl176
+          CSUB Lbl872
+          JA Lbl176
+          CSUB Lbl882
+          JA Lbl176
+          CSUB Lbl892
+          JA Lbl176
+          CSUB Lbl911
+          JA Lbl176
+          CSUB Lbl927
+          JA Lbl176
+          CSUB Lbl967
+          JA Lbl176
+          CSUB Lbl983
+          JA Lbl176
+          CSUB Lbl991
+          JA Lbl176
+          CSUB Lbl999
+          JA Lbl176
+          CSUB Lbl1007
+          JA Lbl176
+          CSUB Lbl967
+          JA Lbl176
+          CSUB Lbl991
+          JA Lbl176
+          CSUB Lbl999
+          JA Lbl176
+          CSUB Lbl1007
+          JA Lbl176
+          CSUB Lbl931
+          JA Lbl176
+          CSUB Lbl1022
+          JA Lbl176
+          CSUB Lbl1015
+          JA Lbl176
+          CSUB Lbl1196
+          JA Lbl176
+          CSUB Lbl1033
+          JA Lbl176
+          CSUB Lbl1071
+          JA Lbl176
+          CSUB Lbl1334
+          JA Lbl176
+          CSUB Lbl1210
+          JA Lbl176
+          CSUB Lbl1200
+          JA Lbl176
+          CSUB Lbl1238
+          JA Lbl176
+          CSUB Lbl1308
+          JA Lbl176
+          CSUB Lbl1345
+          JA Lbl176
+          CSUB Lbl1367
+          JA Lbl176
+          CSUB Lbl592
+          JA Lbl176
+          CSUB Lbl1417
+          JA Lbl176
+          CSUB Lbl1411
+          JA Lbl176
+          CSUB Lbl1458
+          JA Lbl176
+          CSUB Lbl1550
+          JA Lbl176
+          CSUB Lbl1234
+          JA Lbl176
+          CSUB Lbl1236
+          JA Lbl176
+          CSUB Lbl1210
+          JA Lbl176
+          CSUB Lbl1398
+          JA Lbl176
+          CSUB Lbl876
+          JA Lbl176
+          CSUB Lbl917
+          JA Lbl176
+          CSUB Lbl1909
+          JA Lbl176
+          CSUB Lbl1522
+          JA Lbl176
+          CSUB Lbl1570
+          JA Lbl176
+          CSUB Lbl1687
+          JA Lbl176
+          CSUB Lbl864
+          JA Lbl176
+          CSUB Lbl1061
+          JA Lbl176
+          CSUB Lbl1319
+          JA Lbl176
+          CSUB Lbl887
+          JA Lbl176
+          CSUB Lbl900
+          JA Lbl176
+          CSUB Lbl920
+          JA Lbl176
+          CSUB Lbl1949
+          JA Lbl176
+          CSUB Lbl923
+          JA Lbl176
+          CSUB Lbl1482
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl1971
+          JA Lbl176
+          CSUB Lbl1692
+          JA Lbl176
+          CSUB Lbl1724
+          JA Lbl176
+          CSUB Lbl1750
+          JA Lbl176
+          CSUB Lbl1778
+          JA Lbl176
+          CSUB Lbl1831
+          JA Lbl176
+          CSUB Lbl1925
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl1560
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl2030
+          JA Lbl176
+          CSUB Lbl2031
+          JA Lbl176
+          CSUB Lbl2032
+          JA Lbl176
+          CSUB Lbl2034
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          CSUB Lbl175
+          JA Lbl176
+          STOP 
+
+Lbl175:   RSUB
+
+Lbl176:   JA Lbl176
+
+Lbl177:   SGP 20, 2, 0
+          CSUB Lbl477
+          GGP 50, 2
+          CALC MUL, 100
+          AGP 192, 2
+          CSUB Lbl185
+          CSUB Lbl559
+          RSUB 
+
+Lbl185:   SGP 0, 2, 1040126
+          STGP 0, 2
+          SGP 65, 0, 5
+          SGP 84, 0, 0
+          SGP 85, 0, 0
+          RSUB 
+
+Lbl191:   SGP 3, 2, 0
+          CSUB Lbl215
+          SIO 7, 2, 0
+          CSUB Lbl218
+          CSUB Lbl285
+          CSUB Lbl345
+          CSUB Lbl380
+          CSUB Lbl395
+          CSUB Lbl412
+          CSUB Lbl433
+          CSUB Lbl453
+          CSUB Lbl477
+          SGP 4, 2, 0
+          SGP 3, 2, 1
+          RSUB 
+
+Lbl206:   SIO 1, 2, 0
+          SIO 0, 2, 1
+          RSUB 
+
+Lbl209:   SIO 1, 2, 1
+          SIO 0, 2, 0
+          RSUB 
+
+Lbl212:   SIO 1, 2, 1
+          SIO 0, 2, 1
+          RSUB 
+
+Lbl215:   SIO 1, 2, 0
+          SIO 0, 2, 0
+          RSUB 
+
+Lbl218:   GGP 1, 2
+          COMP 1
+          JC NE, Lbl226
+          SGP 160, 2, 3000
+          SGP 161, 2, 5877
+          SGP 162, 2, 50680
+          SGP 163, 2, 2500
+          JA Lbl276
+
+Lbl226:   GGP 1, 2
+          COMP 2
+          JC NE, Lbl234
+          SGP 160, 2, 3000
+          SGP 161, 2, 6417
+          SGP 162, 2, 47000
+          SGP 163, 2, 2500
+          JA Lbl276
+
+Lbl234:   GGP 1, 2
+          COMP 3
+          JC NE, Lbl242
+          SGP 160, 2, 3000
+          SGP 161, 2, 5837
+          SGP 162, 2, 51600
+          SGP 163, 2, 2500
+          JA Lbl276
+
+Lbl242:   GGP 1, 2
+          COMP 4
+          JC NE, Lbl250
+          SGP 160, 2, 2500
+          SGP 161, 2, 6417
+          SGP 162, 2, 40000
+          SGP 163, 2, 2000
+          JA Lbl276
+
+Lbl250:   GGP 1, 2
+          COMP 5
+          JC NE, Lbl258
+          SGP 160, 2, 6000
+          SGP 161, 2, 13196
+          SGP 162, 2, 45000
+          SGP 163, 2, 4500
+          JA Lbl276
+
+Lbl258:   GGP 1, 2
+          COMP 6
+          JC NE, Lbl266
+          SGP 160, 2, 2000
+          SGP 161, 2, 6060
+          SGP 162, 2, 33000
+          SGP 163, 2, 1500
+          JA Lbl276
+
+Lbl266:   GGP 1, 2
+          COMP 7
+          JC NE, Lbl274
+          SGP 160, 2, 3000
+          SGP 161, 2, 6000
+          SGP 162, 2, 50000
+          SGP 163, 2, 2500
+          JA Lbl276
+
+Lbl274:   SGP 1, 2, 6
+          JA Lbl218
+
+Lbl276:   GGP 24, 2
+          COMP 1
+          JC EQ, Lbl284
+          GGP 13, 2
+          COMP 1
+          JC EQ, Lbl284
+          CALC LOAD, 368
+          CALCVA SUB, 160
+
+Lbl284:   RSUB
+
+Lbl285:   GGP 10, 2
+          COMP 0
+          JC GT, Lbl289
+          SGP 10, 2, 25
+
+Lbl289:   SGP 2, 2, 400
+          GGP 10, 2
+          CALCX LOAD
+          GGP 2, 2
+          CALCX MUL
+          CALC DIV, 25
+          AGP 2, 2
+          GGP 11, 2
+          COMP 22
+          JC EQ, Lbl330
+          GGP 11, 2
+          COMP 20
+          JC NE, Lbl307
+          GGP 2, 2
+          CALC MUL, 47
+          CALC DIV, 100
+          AGP 2, 2
+          JA Lbl330
+
+Lbl307:   GGP 11, 2
+          COMP 21
+          JC NE, Lbl315
+          GGP 2, 2
+          CALC MUL, 64
+          CALC DIV, 100
+          AGP 2, 2
+          JA Lbl330
+
+Lbl315:   GGP 11, 2
+          COMP 23
+          JC NE, Lbl323
+          GGP 2, 2
+          CALC MUL, 150
+          CALC DIV, 100
+          AGP 2, 2
+          JA Lbl330
+
+Lbl323:   GGP 11, 2
+          COMP 24
+          JC NE, Lbl330
+          GGP 2, 2
+          CALC MUL, 176
+          CALC DIV, 100
+          AGP 2, 2
+
+Lbl330:   GGP 27, 2
+          COMP 0
+          JC LE, Lbl344
+          GGP 2, 2
+          CALCX LOAD
+          GGP 27, 2
+          COMP 1000
+          JC LE, Lbl340
+          GGP 27, 2
+          JA Lbl341
+
+Lbl340:   CALC LOAD, 1000
+
+Lbl341:   CALCX MUL
+          CALC DIV, 1000
+          AGP 2, 2
+
+Lbl344:   RSUB
+
+Lbl345:   MST 0
+          SAP 194, 0, 400
+          SAP 195, 0, 400
+          SAP 4, 0, 1300
+          SAP 5, 0, 10
+          SAP 6, 0, 200
+          SAP 7, 0, 100
+          SAP 200, 0, 255
+          SAP 12, 0, 0
+          SAP 13, 0, 0
+          SAP 140, 0, 4
+          SAP 160, 0, 1
+          SAP 153, 0, 3
+          SAP 154, 0, 3
+          SAP 149, 0, 1
+          SIO 6, 2, 1
+          GGP 162, 2
+          CALC MUL, 125
+          CALC DIV, 1000
+          AGP 128, 2
+          CALC LOAD, 33000
+          CALC MUL, 125
+          CALC DIV, 1000
+          AGP 129, 2
+          GGP 10, 2
+          CALC MUL, 125
+          AGP 130, 2
+          CALC LOAD, 25
+          CALC MUL, 125
+          AGP 132, 2
+          CALC LOAD, 14500
+          ACO 7, 0
+          GGP 7, 2
+          ACO 8, 0
+          RSUB 
+
+Lbl380:   MST 1
+          SAP 194, 1, 350
+          SAP 195, 1, 20
+          SAP 4, 1, 500
+          SAP 5, 1, 10
+          SAP 6, 1, 128
+          SAP 7, 1, 25
+          SAP 200, 1, 255
+          SAP 12, 1, 1
+          SAP 13, 1, 0
+          SAP 140, 1, 4
+          SAP 160, 1, 1
+          SAP 153, 1, 3
+          SAP 154, 1, 3
+          RSUB 
+
+Lbl395:   SGP 140, 2, 40
+          SGP 141, 2, 122
+          MST 2
+          SAP 194, 2, 400
+          SAP 195, 2, 20
+          SAP 4, 2, 400
+          SAP 5, 2, 60
+          SAP 6, 2, 128
+          SAP 7, 2, 25
+          SAP 200, 2, 255
+          SAP 12, 2, 1
+          SAP 13, 2, 0
+          SAP 140, 2, 4
+          SAP 160, 2, 1
+          SAP 153, 2, 3
+          SAP 154, 2, 3
+          RSUB 
+
+Lbl412:   MST 3
+          SAP 194, 3, 400
+          SAP 195, 3, 100
+          SAP 4, 3, 600
+          SAP 5, 3, 200
+          SAP 6, 3, 128
+          SAP 7, 3, 25
+          SAP 200, 3, 255
+          SAP 12, 3, 0
+          SAP 13, 3, 0
+          SAP 140, 3, 4
+          SAP 160, 3, 1
+          SAP 153, 3, 3
+          SAP 154, 3, 3
+          GGP 161, 2
+          CALCX SWAP
+          CALC LOAD, 10000
+          CALC MUL, 656
+          CALCX DIV
+          AGP 146, 2
+          RSUB 
+
+Lbl433:   SGP 79, 0, 2
+          SGP 151, 2, 44
+          SGP 152, 2, 132
+          MST 4
+          SAP 194, 4, 100
+          SAP 195, 4, 50
+          SAP 4, 4, 1300
+          SAP 5, 4, 20
+          SAP 6, 4, 128
+          SAP 7, 4, 100
+          SAP 200, 4, 255
+          SAP 12, 4, 1
+          SAP 13, 4, 1
+          SAP 140, 4, 4
+          SAP 160, 4, 1
+          SAP 153, 4, 3
+          SAP 154, 4, 3
+          SCO 7, 4, 31920
+          SCO 8, 4, 1000
+          RSUB 
+
+Lbl453:   SGP 79, 0, 2
+          SAP 12, 4, 0
+          SAP 13, 4, 1
+          RSUB 
+
+Lbl457:   SGP 5, 2, 90
+          STGP 5, 2
+          GGP 28, 2
+          CALC OR, 32
+          AGP 28, 2
+          STGP 28, 2
+
+Lbl463:   SAP 5, 0, 40
+          MST 0
+          MST 1
+          MST 2
+          MST 3
+          MST 4
+          SGP 16, 2, 0
+          CSUB Lbl209
+          DI 37
+          DI 38
+          WAIT TICKS, 0, 100
+          SAP 7, 4, 10
+          SAP 5, 0, 10
+          RST Lbl176
+
+Lbl477:   VECT 46, Lbl488
+          SGP 46, 3, 3
+          EI 46
+          VECT 35, Lbl491
+          SGP 35, 3, 3
+          VECT 37, Lbl494
+          SGP 37, 3, 2
+          VECT 38, Lbl506
+          SGP 38, 3, 1
+          EI 255
+          RSUB 
+
+Lbl488:   SGP 190, 2, 1
+          CSUB Lbl523
+          RETI 
+
+Lbl491:   SGP 195, 2, 1
+          CSUB Lbl523
+          RETI 
+
+Lbl494:   CSUB Lbl523
+          GGP 191, 2
+          COMP 1
+          JC NE, Lbl504
+          MST 2
+          RFS STOP, 2
+          WAIT RFS, 2, 200
+          CSUB Lbl1043
+          CSUB Lbl900
+          JA Lbl505
+
+Lbl504:   CSUB Lbl1043
+
+Lbl505:   RETI
+
+Lbl506:   CSUB Lbl523
+          GGP 17, 2
+          CALC SUB, 4000
+          CALCX LOAD
+          GAP 1, 0
+          CALCX SUB
+          COMP 0
+          JC GT, Lbl522
+          GAP 1, 0
+          AGP 196, 2
+          GGP 28, 2
+          CALC OR, 128
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2018
+          CSUB Lbl457
+
+Lbl522:   RETI
+
+Lbl523:   GGP 255, 2
+          CALC ADD, 1
+          AGP 255, 2
+          RSUB 
+
+Lbl527:   SGP 4, 2, 0
+          CSUB Lbl1080
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl541
+          SAP 6, 4, 0
+          CSUB Lbl882
+          CSUB Lbl900
+          CSUB Lbl876
+          CSUB Lbl927
+          CSUB Lbl882
+          CSUB Lbl911
+          CSUB Lbl864
+          SGP 4, 2, 1
+
+Lbl541:   RSUB
+
+Lbl542:   SGP 180, 2, 0
+          CSUB Lbl1080
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl558
+          SAP 6, 4, 0
+          CSUB Lbl887
+          CSUB Lbl900
+          CSUB Lbl920
+          CSUB Lbl872
+          GGP 47, 2
+          ACO 2, 2
+          MVP COORD, 2, 2
+          CSUB Lbl927
+          CSUB Lbl923
+          SGP 180, 2, 1
+
+Lbl558:   RSUB
+
+Lbl559:   RST Lbl560
+
+Lbl560:   SGP 5, 2, 10
+          SGP 22, 2, 1
+          SGP 13, 2, 0
+          SGP 52, 2, 0
+          SGP 24, 2, 0
+          SGP 15, 2, 0
+          SGP 16, 2, 0
+          SGP 190, 2, 1
+          SGP 191, 2, 0
+          SGP 197, 2, 0
+          CSUB Lbl191
+          CSUB Lbl573
+          JA Lbl463
+
+Lbl573:   SGP 29, 2, 0
+          SGP 28, 2, 0
+          SGP 30, 2, 0
+          SGP 31, 2, 0
+          SGP 32, 2, 0
+          SGP 33, 2, 0
+          SGP 34, 2, 0
+          SGP 35, 2, 0
+          SGP 37, 2, 0
+          SGP 38, 2, 0
+          SGP 39, 2, 0
+          SGP 40, 2, 0
+          SGP 41, 2, 0
+          SGP 42, 2, 0
+          SGP 43, 2, 0
+          SGP 44, 2, 0
+          SGP 198, 2, 0
+          SGP 36, 2, 0
+          RSUB 
+
+Lbl592:   CSUB Lbl191
+          CSUB Lbl573
+          RSGP 29, 2
+          GGP 29, 2
+          COMP 1
+          JC NE, Lbl615
+          SGP 29, 2, 0
+          STGP 29, 2
+          STGP 28, 2
+          STGP 30, 2
+          STGP 31, 2
+          STGP 32, 2
+          STGP 33, 2
+          STGP 34, 2
+          STGP 35, 2
+          STGP 37, 2
+          STGP 38, 2
+          STGP 39, 2
+          STGP 40, 2
+          STGP 41, 2
+          STGP 42, 2
+          STGP 43, 2
+          STGP 44, 2
+
+Lbl615:   CSUB Lbl206
+          RSUB 
+
+Lbl617:   DI 35
+          EI 37
+          DI 38
+          CSUB Lbl592
+          CSUB Lbl1148
+          CSUB Lbl1095
+          CSUB Lbl1015
+          CSUB Lbl1022
+          GGP 29, 2
+          COMP 1
+          JC NE, Lbl630
+          SGP 5, 2, 10
+          JA Lbl641
+
+Lbl630:   CSUB Lbl542
+          GGP 8, 2
+          CSUB Lbl1706
+          GGP 24, 2
+          COMP 1
+          JC NE, Lbl637
+          CSUB Lbl1196
+
+Lbl637:   CSUB Lbl1768
+          SAP 7, 4, 200
+          SAP 7, 2, 200
+          SGP 5, 2, 30
+
+Lbl641:   DI 35
+          DI 37
+          DI 38
+          RSUB 
+
+Lbl645:   DI 35
+          EI 37
+          DI 38
+          SGP 187, 2, 0
+          SGP 132, 2, 0
+          CSUB Lbl592
+          SGP 197, 2, 0
+          CSUB Lbl1163
+          CSUB Lbl1095
+          CSUB Lbl1111
+          CSUB Lbl1175
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl694
+          CSUB Lbl819
+          GGP 29, 2
+          COMP 1
+          JC NE, Lbl666
+          SAP 7, 4, 200
+          SAP 7, 2, 200
+          JA Lbl694
+
+Lbl666:   CSUB Lbl206
+          CSUB Lbl1200
+          SAP 7, 2, 25
+          SAP 7, 4, 100
+          CSUB Lbl1210
+          CSUB Lbl1238
+          CSUB Lbl946
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl694
+          CSUB Lbl1308
+          CSUB Lbl1334
+          GGP 52, 2
+          COMP 1
+          JC NE, Lbl683
+          CSUB Lbl1358
+          JA Lbl684
+
+Lbl683:   CSUB Lbl1345
+
+Lbl684:   CSUB Lbl1367
+          CSUB Lbl1398
+          CSUB Lbl1417
+          CSUB Lbl1411
+          CSUB Lbl1420
+          CSUB Lbl1458
+          EI 38
+          CSUB Lbl1550
+          CSUB Lbl1687
+          SGP 5, 2, 50
+
+Lbl694:   DI 35
+          DI 37
+          DI 38
+          RSUB 
+
+Lbl698:   CALCV LOAD, 144, 500
+          GGP 18, 2
+          COMP 112
+          JC EQ, Lbl724
+          COMP 115
+          JC EQ, Lbl705
+          JA Lbl727
+
+Lbl705:   CALCV LOAD, 183, 2
+          SAP 4, 3, 150
+          CALCAV LOAD, 144
+          CSUB Lbl1800
+          CALCAV LOAD, 144
+          CALC DIV, 4
+          CSUB Lbl1800
+
+Lbl712:   SAP 4, 3, 1800
+          CALCAV LOAD, 144
+          CALC MUL, 2
+          CSUB Lbl1800
+          CALCAV LOAD, 144
+          CSUB Lbl1800
+          SAP 4, 3, 150
+          CALCAV LOAD, 144
+          CALC DIV, 3
+          CSUB Lbl1800
+          DJNZ 183, Lbl712
+          JA Lbl727
+
+Lbl724:   CSUB Lbl748
+          CSUB Lbl729
+          JA Lbl727
+
+Lbl727:   SAP 4, 3, 150
+          RSUB 
+
+Lbl729:   SAP 4, 3, 150
+          CALCAV LOAD, 160
+          CALC MUL, 40
+          CALC DIV, 100
+          CSUB Lbl1800
+          SAP 4, 3, 1800
+          GGP 160, 2
+          CSUB Lbl1800
+          CSUB Lbl1821
+          CALCAV LOAD, 160
+          CALC MUL, 60
+          CALC DIV, 100
+          CSUB Lbl1800
+          SAP 4, 3, 150
+          CALC LOAD, -100
+          CSUB Lbl1805
+          WAIT TICKS, 3, 300
+          SAP 4, 3, 150
+          RSUB 
+
+Lbl748:   CALCV LOAD, 183, 2
+
+Lbl749:   SAP 4, 3, 1800
+          GGP 160, 2
+          CALCAV DIV, 183
+          CSUB Lbl1800
+          WAIT TICKS, 3, 250
+          CALCV SUB, 183, 1
+          CALCAV LOAD, 183
+          COMP 1
+          JC GE, Lbl749
+          WAIT TICKS, 3, 150
+          SAP 4, 3, 150
+          RSUB 
+
+Lbl761:   DI 35
+          EI 37
+          DI 38
+          CSUB Lbl592
+          CSUB Lbl1184
+          CSUB Lbl1071
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl818
+          GGP 29, 2
+          COMP 1
+          JC NE, Lbl775
+          SGP 5, 2, 50
+          JA Lbl818
+
+Lbl775:   GGP 22, 2
+          COMP 1
+          JC NE, Lbl792
+          SGP 24, 2, 0
+          SGP 13, 2, 0
+          SGP 52, 2, 0
+          SGP 190, 2, 0
+          GGP 20, 2
+          COMP 1
+          JC NE, Lbl786
+          SGP 190, 2, 1
+
+Lbl786:   CSUB Lbl1570
+          DI 35
+          DI 38
+          SGP 5, 2, 10
+          CSUB Lbl617
+          JA Lbl818
+
+Lbl792:   GGP 13, 2
+          COMP 1
+          JC NE, Lbl799
+          GGP 52, 2
+          COMP 1
+          JC NE, Lbl812
+          JA Lbl803
+
+Lbl799:   GGP 52, 2
+          COMP 1
+          JC EQ, Lbl812
+          JA Lbl803
+
+Lbl803:   GGP 44, 2
+          CALC OR, 8
+          AGP 44, 2
+          STGP 44, 2
+          CSUB Lbl2014
+          GGP 8, 2
+          MVPA ABS, 0
+          CSUB Lbl1709
+          JA Lbl818
+
+Lbl812:   SGP 24, 2, 0
+          CSUB Lbl1660
+          SGP 190, 2, 1
+          SGP 5, 2, 30
+          CSUB Lbl1683
+          JA Lbl645
+
+Lbl818:   RSUB
+
+Lbl819:   SGP 14, 2, 0
+          CSUB Lbl832
+          CSUB Lbl839
+          CSUB Lbl848
+          CSUB Lbl855
+          GGP 29, 2
+          COMP 1
+          JC NE, Lbl830
+          CSUB Lbl2022
+          SGP 5, 2, 30
+          RSUB 
+
+Lbl830:   SGP 14, 2, 1
+          RSUB 
+
+Lbl832:   GAP 11, 5
+          COMP 1
+          JC EQ, Lbl838
+          SGP 37, 2, 1
+          STGP 37, 2
+          CSUB Lbl2014
+
+Lbl838:   RSUB
+
+Lbl839:   GIO 7, 0
+          COMP 1
+          JC NE, Lbl844
+          CSUB Lbl887
+          JA Lbl847
+
+Lbl844:   SGP 39, 2, 1
+          STGP 39, 2
+          CSUB Lbl2014
+
+Lbl847:   RSUB
+
+Lbl848:   GIO 0, 0
+          COMP 1
+          JC EQ, Lbl854
+          SGP 38, 2, 1
+          STGP 38, 2
+          CSUB Lbl2014
+
+Lbl854:   RSUB
+
+Lbl855:   GGP 190, 2
+          COMP 1
+          JC EQ, Lbl863
+          GGP 28, 2
+          CALC OR, 1
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2014
+
+Lbl863:   RSUB
+
+Lbl864:   SAP 193, 0, 65
+          RFS START, 0
+          CSUB Lbl1719
+          SAP 193, 0, 1
+          RFS START, 0
+          CSUB Lbl1719
+          CSUB Lbl872
+          RSUB 
+
+Lbl872:   CSUB Lbl876
+          GGP 7, 2
+          CSUB Lbl1706
+          RSUB 
+
+Lbl876:   SAP 5, 0, 40
+          SAP 193, 0, 5
+          RFS START, 0
+          CSUB Lbl1719
+          SAP 5, 0, 10
+          RSUB 
+
+Lbl882:   SAP 7, 1, 150
+          SAP 193, 1, 2
+          RFS START, 1
+          CSUB Lbl1745
+          RSUB 
+
+Lbl887:   SAP 7, 1, 150
+          SAP 193, 1, 1
+          RFS START, 1
+          CSUB Lbl1745
+          RSUB 
+
+Lbl892:   SAP 6, 4, 0
+          SAP 194, 2, 400
+          SAP 195, 2, 20
+          SAP 193, 2, 2
+          RFS START, 2
+          CSUB Lbl1773
+          SAP 6, 4, 128
+          RSUB 
+
+Lbl900:   GGP 5, 2
+          COMP 20
+          JC NE, Lbl904
+          SAP 6, 4, 0
+
+Lbl904:   SAP 194, 2, 400
+          SAP 195, 2, 20
+          SAP 193, 2, 1
+          RFS START, 2
+          CSUB Lbl1773
+          SAP 6, 4, 128
+          RSUB 
+
+Lbl911:   SAP 193, 3, 2
+          RFS START, 3
+          CSUB Lbl1826
+          GGP 48, 2
+          CSUB Lbl1792
+          RSUB 
+
+Lbl917:   CSUB Lbl920
+          CSUB Lbl1826
+          RSUB 
+
+Lbl920:   SAP 193, 3, 1
+          RFS START, 3
+          RSUB 
+
+Lbl923:   CSUB Lbl1826
+          GGP 48, 2
+          CSUB Lbl1792
+          RSUB 
+
+Lbl927:   CSUB Lbl931
+          GGP 49, 2
+          CSUB Lbl1847
+          RSUB 
+
+Lbl931:   CSUB Lbl940
+          CSUB Lbl934
+          RSUB 
+
+Lbl934:   SAP 194, 4, 20
+          SAP 195, 4, 10
+          SAP 193, 4, 1
+          RFS START, 4
+          CSUB Lbl1865
+          RSUB 
+
+Lbl940:   SAP 194, 4, 100
+          SAP 195, 4, 50
+          SAP 193, 4, 1
+          RFS START, 4
+          CSUB Lbl1860
+          RSUB 
+
+Lbl946:   GIO 5, 0
+          COMP 1
+          JC EQ, Lbl966
+          WAIT TICKS, 0, 100
+          GIO 5, 0
+          COMP 1
+          JC EQ, Lbl966
+          WAIT TICKS, 0, 100
+          GIO 5, 0
+          COMP 1
+          JC EQ, Lbl966
+          WAIT TICKS, 0, 100
+          GIO 5, 0
+          COMP 1
+          JC EQ, Lbl966
+          CSUB Lbl2010
+          SGP 42, 2, 1
+          STGP 42, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+
+Lbl966:   RSUB
+
+Lbl967:   CSUB Lbl2018
+          GGP 30, 2
+          CALC OR, 8
+          AGP 30, 2
+          STGP 30, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+          JA Lbl463
+
+Lbl975:   CSUB Lbl2018
+          GGP 30, 2
+          CALC OR, 64
+          AGP 30, 2
+          STGP 30, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+          JA Lbl463
+
+Lbl983:   CSUB Lbl2018
+          GGP 31, 2
+          CALC OR, 8
+          AGP 31, 2
+          STGP 31, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+          JA Lbl463
+
+Lbl991:   CSUB Lbl2018
+          GGP 32, 2
+          CALC OR, 8
+          AGP 32, 2
+          STGP 32, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+          JA Lbl463
+
+Lbl999:   CSUB Lbl2018
+          GGP 33, 2
+          CALC OR, 8
+          AGP 33, 2
+          STGP 33, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+          JA Lbl463
+
+Lbl1007:  CSUB Lbl2018
+          GGP 34, 2
+          CALC OR, 8
+          AGP 34, 2
+          STGP 34, 2
+          SGP 5, 2, 80
+          STGP 5, 2
+          JA Lbl463
+
+Lbl1015:  GAP 11, 5
+          COMP 1
+          JC NE, Lbl1021
+          SGP 35, 2, 1
+          STGP 35, 2
+          CSUB Lbl2014
+
+Lbl1021:  RSUB
+
+Lbl1022:  GIO 3, 0
+          COMP 0
+          JC NE, Lbl1032
+          SAP 6, 4, 0
+          SAP 7, 4, 10
+          GGP 28, 2
+          CALC OR, 1024
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2014
+
+Lbl1032:  RSUB
+
+Lbl1033:  GAP 11, 5
+          COMP 1
+          JC EQ, Lbl1042
+          GGP 28, 2
+          CALC OR, 2
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2014
+          JA Lbl457
+
+Lbl1042:  RSUB
+
+Lbl1043:  GAP 11, 5
+          COMP 1
+          JC EQ, Lbl1060
+          WAIT TICKS, 0, 20
+          GAP 11, 5
+          COMP 1
+          JC EQ, Lbl1060
+          WAIT TICKS, 0, 20
+          GAP 11, 5
+          COMP 1
+          JC EQ, Lbl1060
+          GGP 28, 2
+          CALC OR, 2
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2014
+          JA Lbl457
+
+Lbl1060:  RSUB
+
+Lbl1061:  GIO 0, 0
+          COMP 1
+          JC EQ, Lbl1070
+          GGP 28, 2
+          CALC OR, 4
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2014
+          JA Lbl457
+
+Lbl1070:  RSUB
+
+Lbl1071:  GIO 7, 0
+          COMP 1
+          JC EQ, Lbl1079
+          GGP 28, 2
+          CALC OR, 8
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2014
+
+Lbl1079:  RSUB
+
+Lbl1080:  GAP 11, 5
+          COMP 1
+          JC NE, Lbl1089
+          GGP 43, 2
+          CALC OR, 1
+          AGP 43, 2
+          STGP 43, 2
+          CSUB Lbl2014
+          JA Lbl1094
+
+Lbl1089:  GGP 43, 2
+          CALC OR, 1
+          CALC XOR, 1
+          AGP 43, 2
+          STGP 43, 2
+
+Lbl1094:  RSUB
+
+Lbl1095:  GGP 24, 2
+          COMP 1
+          JC NE, Lbl1110
+          GGP 23, 2
+          CALCX LOAD
+          GGP 163, 2
+          CALCX SUB
+          COMP 0
+          JC LT, Lbl1107
+          GGP 23, 2
+          COMP 0
+          JC GE, Lbl1110
+
+Lbl1107:  SGP 41, 2, 1
+          STGP 41, 2
+          CSUB Lbl2014
+
+Lbl1110:  RSUB
+
+Lbl1111:  GGP 13, 2
+          COMP 1
+          JC EQ, Lbl1115
+          SGP 15, 2, 0
+
+Lbl1115:  GGP 24, 2
+          COMP 1
+          JC NE, Lbl1120
+          GGP 23, 2
+          AGP 15, 2
+
+Lbl1120:  GGP 52, 2
+          COMP 1
+          JC NE, Lbl1124
+          SGP 15, 2, 0
+
+Lbl1124:  GGP 15, 2
+          CALCAV ADD, 27
+          AGP 15, 2
+          CALCAV SUB, 160
+          COMP 0
+          JC GT, Lbl1141
+          GGP 24, 2
+          COMP 1
+          JC NE, Lbl1138
+          GGP 15, 2
+          CALCX LOAD
+          COMP 100
+          JC GE, Lbl1147
+          JA Lbl1141
+
+Lbl1138:  GGP 15, 2
+          COMP 100
+          JC GE, Lbl1147
+
+Lbl1141:  SGP 40, 2, 1
+          STGP 40, 2
+          GGP 15, 2
+          CALCAV SUB, 27
+          AGP 15, 2
+          CSUB Lbl2014
+
+Lbl1147:  RSUB
+
+Lbl1148:  CSUB Lbl1681
+          GGP 5, 2
+          COMP 10
+          JC EQ, Lbl1161
+          GGP 5, 2
+          COMP 30
+          JC EQ, Lbl1161
+          GGP 44, 2
+          CALC OR, 1
+          AGP 44, 2
+          STGP 44, 2
+          CSUB Lbl2014
+          JA Lbl1162
+
+Lbl1161:  SGP 5, 2, 20
+
+Lbl1162:  RSUB
+
+Lbl1163:  CSUB Lbl1681
+          GGP 5, 2
+          COMP 30
+          JC EQ, Lbl1173
+          GGP 44, 2
+          CALC OR, 2
+          AGP 44, 2
+          STGP 44, 2
+          CSUB Lbl2014
+          JA Lbl1174
+
+Lbl1173:  SGP 5, 2, 40
+
+Lbl1174:  RSUB
+
+Lbl1175:  GAP 10, 5
+          COMP 1
+          JC NE, Lbl1173
+          GGP 28, 2
+          CALC OR, 256
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2010
+          RSUB 
+
+Lbl1184:  CSUB Lbl1681
+          GGP 5, 2
+          COMP 50
+          JC EQ, Lbl1194
+          GGP 44, 2
+          CALC OR, 4
+          AGP 44, 2
+          STGP 44, 2
+          CSUB Lbl2014
+          JA Lbl1195
+
+Lbl1194:  SGP 5, 2, 60
+
+Lbl1195:  RSUB
+
+Lbl1196:  GGP 23, 2
+          CALC ADD, 76
+          CSUB Lbl1805
+          RSUB 
+
+Lbl1200:  GGP 8, 2
+          CALC ADD, -5600
+          CALCAV ADD, 129
+          CALCAV SUB, 128
+          CALCAV ADD, 132
+          CALCAV SUB, 130
+          MVPA ABS, 0
+          CSUB Lbl1709
+          CSUB Lbl900
+          RSUB 
+
+Lbl1210:  GGP 24, 2
+          COMP 1
+          JC EQ, Lbl1233
+          GGP 13, 2
+          COMP 1
+          JC EQ, Lbl1233
+          GGP 52, 2
+          COMP 1
+          JC EQ, Lbl1233
+          GGP 146, 2
+          CALCX LOAD
+          GGP 27, 2
+          CALCX MUL
+          CALC DIV, 100
+          CALCX LOAD
+          GGP 21, 2
+          CALCX MUL
+          CALC DIV, 100
+          CALCX LOAD
+          GAP 1, 3
+          CALCX ADD
+          ACO 3, 3
+          MVP COORD, 3, 3
+
+Lbl1233:  RSUB
+
+Lbl1234:  SIO 7, 2, 1
+          RSUB 
+
+Lbl1236:  SIO 7, 2, 0
+          RSUB 
+
+Lbl1238:  MVP COORD, 81, 7
+          CSUB Lbl1855
+          CSUB Lbl1714
+          CSUB Lbl1061
+          CSUB Lbl1245
+          CSUB Lbl1288
+          RSUB 
+
+Lbl1245:  GGP 51, 2
+          COMP 10
+          JC LE, Lbl1250
+          SGP 51, 2, 0
+          JA Lbl1254
+
+Lbl1250:  GGP 51, 2
+          COMP -5
+          JC GT, Lbl1254
+          SGP 51, 2, 0
+
+Lbl1254:  GGP 51, 2
+          CALC MUL, 125
+          CALCAV ADD, 9
+          CALC ADD, 2900
+          CALCAV SUB, 129
+          CALCAV ADD, 128
+          CALCAV SUB, 132
+          CALCAV ADD, 130
+          MVPA ABS, 0
+          GGP 49, 2
+          CALC ADD, 31920
+          CSUB Lbl1847
+          CSUB Lbl1709
+          CSUB Lbl1234
+          SAP 194, 4, 20
+          SAP 195, 4, 10
+          SAP 193, 4, 8
+          RFS START, 4
+          WAIT RFS, 4, 90
+          JC ETO, Lbl1275
+          JA Lbl1281
+
+Lbl1275:  RFS STOP, 4
+          WAIT RFS, 4, 200
+          SAP 194, 4, 100
+          SAP 193, 4, 7
+          RFS START, 4
+          CSUB Lbl1870
+
+Lbl1281:  SAP 194, 4, 100
+          SAP 195, 4, 50
+          GAP 197, 4
+          AGP 150, 2
+          GAP 197, 4
+          AAP 1, 4
+          RSUB 
+
+Lbl1288:  GGP 150, 2
+          CALCX LOAD
+          GGP 50, 2
+          CALCX SUB
+          CALCX LOAD
+          AGP 153, 2
+          COMP 132
+          JC GE, Lbl1300
+          GGP 153, 2
+          COMP -132
+          JC LE, Lbl1300
+          JA Lbl1307
+
+Lbl1300:  CSUB Lbl1420
+          GGP 28, 2
+          CALC OR, 64
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2010
+          JA Lbl463
+
+Lbl1307:  RSUB
+
+Lbl1308:  CSUB Lbl1319
+          MVPA REL, 4
+          CSUB Lbl1850
+          SGP 36, 2, 1
+          SAP 4, 0, 200
+          GGP 9, 2
+          CALC ADD, -1259
+          MVPA ABS, 0
+          CSUB Lbl1709
+          CSUB Lbl1061
+          RSUB 
+
+Lbl1319:  GGP 26, 2
+          COMP 0
+          JC GE, Lbl1324
+          SGP 26, 2, 0
+          JA Lbl1328
+
+Lbl1324:  GGP 26, 2
+          COMP 700
+          JC LE, Lbl1328
+          SGP 26, 2, 300
+
+Lbl1328:  GGP 133, 0
+          CALC SUB, 1073741820
+          CALC DIV, 1000
+          CALCAV MUL, 26
+          CALC DIV, 24233010
+          RSUB 
+
+Lbl1334:  GGP 24, 2
+          COMP 1
+          JC EQ, Lbl1341
+          GGP 13, 2
+          COMP 1
+          JC EQ, Lbl1344
+          JA Lbl1344
+
+Lbl1341:  CALC LOAD, 76
+          CALC MUL, -1
+          CSUB Lbl1805
+
+Lbl1344:  RSUB
+
+Lbl1345:  GGP 24, 2
+          COMP 1
+          JC EQ, Lbl1355
+          GGP 13, 2
+          COMP 1
+          JC EQ, Lbl1355
+          GGP 27, 2
+          CALCAV MUL, 21
+          CALC DIV, -100
+          CSUB Lbl1805
+
+Lbl1355:  CSUB Lbl1363
+          WAIT TICKS, 0, 50
+          RSUB 
+
+Lbl1358:  SAP 4, 3, 600
+          GGP 48, 2
+          CSUB Lbl1792
+          CSUB Lbl1363
+          RSUB 
+
+Lbl1363:  CALC LOAD, 0
+          CSUB Lbl1805
+          RSUB 
+
+          RSUB 
+
+Lbl1367:  CALCV LOAD, 147, 0
+          GGP 24, 2
+          COMP 1
+          JC EQ, Lbl1384
+          GGP 13, 2
+          COMP 1
+          JC EQ, Lbl1384
+          CALCVA LOAD, 149
+          CSUB Lbl698
+          CALCV LOAD, 147, 1000
+          SAP 4, 3, 150
+          CALCAV LOAD, 149
+          CALC ADD, 368
+          CSUB Lbl1800
+          SAP 4, 3, 150
+          CALC LOAD, 1000
+          CSUB Lbl1805
+
+Lbl1384:  SAP 4, 3, 150
+          GGP 27, 2
+          CALCAV SUB, 147
+          COMP 0
+          JC GT, Lbl1389
+
+Lbl1389:  SAP 4, 3, 150
+          GGP 27, 2
+          CALCAV SUB, 147
+          CSUB Lbl1805
+          GGP 27, 2
+          CALCAV SUB, 147
+          COMP 0
+          JC LE, Lbl1397
+
+Lbl1397:  RSUB
+
+Lbl1398:  SAP 4, 3, 150
+          CALC LOAD, -60
+          CSUB Lbl1805
+          GGP 24, 2
+          COMP 1
+          JC NE, Lbl1405
+          JA Lbl1410
+
+Lbl1405:  GGP 13, 2
+          COMP 1
+          JC EQ, Lbl1410
+          CALC LOAD, -368
+          CSUB Lbl1805
+
+Lbl1410:  RSUB
+
+Lbl1411:  CALC LOAD, 60
+          CSUB Lbl1805
+          RSUB 
+
+          GGP 2, 2
+          WAIT TICKS, 0, -1
+          RSUB 
+
+Lbl1417:  GGP 9, 2
+          CSUB Lbl1706
+          RSUB 
+
+Lbl1420:  SAP 4, 0, 1300
+          MVP ABS, 0, 14500
+          CSUB Lbl1821
+          CSUB Lbl1709
+          SGP 36, 2, 0
+          CSUB Lbl1236
+          MVP COORD, 81, 8
+          CSUB Lbl1855
+          CSUB Lbl1714
+          CSUB Lbl927
+          CSUB Lbl1440
+          GGP 8, 2
+          CALC ADD, -5600
+          CALCAV ADD, 129
+          CALCAV SUB, 128
+          CALCAV ADD, 132
+          CALCAV SUB, 130
+          MVPA ABS, 0
+          CSUB Lbl1709
+          RSUB 
+
+Lbl1440:  GGP 153, 2
+          CALCX LOAD
+          GAP 1, 4
+          CALCX SUB
+          CSUB Lbl1847
+          GGP 153, 2
+          COMP 60
+          JC GE, Lbl1457
+          GGP 153, 2
+          COMP -60
+          JC LE, Lbl1457
+          GGP 192, 2
+          CALCX LOAD
+          GGP 153, 2
+          CALCX ADD
+          AGP 192, 2
+          CALC DIV, 100
+
+Lbl1457:  RSUB
+
+Lbl1458:  CSUB Lbl1482
+          SAP 4, 0, 600
+          MVP ABS, 0, -945
+          CSUB Lbl1709
+          GGP 49, 2
+          MVPA ABS, 4
+          GGP 47, 2
+          MVPA ABS, 2
+          CSUB Lbl1850
+          CSUB Lbl1768
+          SAP 4, 0, 300
+          GGP 8, 2
+          CALC SUB, 440
+          CSUB Lbl1706
+          SAP 4, 0, 100
+          GGP 8, 2
+          CALC ADD, 37
+          MVPA ABS, 0
+          CSUB Lbl1709
+          SAP 4, 0, 1300
+          SGP 191, 2, 1
+          CSUB Lbl900
+          SGP 191, 2, 0
+          RSUB 
+
+Lbl1482:  GGP 47, 2
+          CALC ADD, 40
+          CSUB Lbl1765
+          SAP 194, 2, 50
+          SAP 195, 2, 30
+          SAP 193, 2, 135
+          RFS START, 2
+          WAIT RFS, 2, 70
+          JC ETO, Lbl1498
+          GAP 197, 2
+          AAP 1, 2
+          GGP 55, 2
+          MVPA REL, 2
+          CSUB Lbl1768
+          CSUB Lbl1503
+          JA Lbl1502
+
+Lbl1498:  RFS STOP, 2
+          WAIT RFS, 2, 70
+          GGP 47, 2
+          CSUB Lbl1765
+
+Lbl1502:  RSUB
+
+Lbl1503:  GAP 1, 2
+          CALCX LOAD
+          GGP 47, 2
+          CALCX SUB
+          CALCX LOAD
+          AGP 142, 2
+          COMP 122
+          JC GE, Lbl1515
+          GGP 142, 2
+          COMP -122
+          JC LE, Lbl1515
+          JA Lbl1521
+
+Lbl1515:  GGP 28, 2
+          CALC OR, 512
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2010
+          JA Lbl463
+
+Lbl1521:  RSUB
+
+Lbl1522:  GGP 5, 2
+          COMP 30
+          JC NE, Lbl1549
+          GGP 8, 2
+          CALC ADD, -5600
+          CALCAV SUB, 129
+          CALCAV ADD, 128
+          CALCAV SUB, 132
+          CALCAV ADD, 130
+          MVPA ABS, 0
+          CSUB Lbl1709
+          GGP 47, 2
+          CALC ADD, 40
+          CSUB Lbl1765
+          SAP 194, 2, 50
+          SAP 195, 2, 30
+          SAP 193, 2, 135
+          RFS START, 2
+          WAIT RFS, 2, 70
+          JC ETO, Lbl1548
+          GAP 197, 2
+          AAP 1, 2
+          GGP 55, 2
+          MVPA REL, 2
+          CSUB Lbl1768
+          JA Lbl1549
+
+Lbl1548:  CSUB Lbl209
+
+Lbl1549:  RSUB
+
+Lbl1550:  SAP 6, 0, 150
+          SAP 4, 0, 1200
+          GGP 17, 2
+          SGP 16, 2, 1
+          MVPA ABS, 0
+          WAIT POS, 0, 1500
+          JC ETO, Lbl975
+          SGP 16, 2, 0
+          SAP 6, 0, 200
+          RSUB 
+
+Lbl1560:  GAP 1, 0
+          CALC SUB, 20000
+          COMP 0
+          JC LT, Lbl1569
+          CSUB Lbl900
+          CSUB Lbl887
+          MVP REL, 3, 292
+          CSUB Lbl1821
+          CSUB Lbl876
+
+Lbl1569:  RSUB
+
+Lbl1570:  SAP 6, 0, 255
+          SAP 4, 0, 1000
+          SGP 195, 2, 0
+          EI 35
+          MVP ABS, 0, -9300
+          CSUB Lbl1714
+          GGP 195, 2
+          COMP 1
+          JC NE, Lbl967
+          DI 35
+          CSUB Lbl1591
+          CSUB Lbl1604
+          GGP 45, 2
+          CSUB Lbl1737
+          SAP 4, 0, 800
+          SAP 6, 0, 200
+          MVP ABS, 0, 2500
+          CSUB Lbl1709
+          DI 37
+          CSUB Lbl887
+          RSUB 
+
+Lbl1591:  MVP ABS, 0, -6000
+          CSUB Lbl1709
+          GGP 46, 2
+          CSUB Lbl1737
+          MVP REL, 1, 400
+          CSUB Lbl1740
+          SAP 4, 0, 600
+          GGP 53, 2
+          CSUB Lbl1706
+          MVP REL, 0, -125
+          CSUB Lbl1709
+          CSUB Lbl887
+          RSUB 
+
+Lbl1604:  GGP 1, 2
+          COMP 4
+          JC EQ, Lbl1624
+          GGP 47, 2
+          CSUB Lbl1765
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1624
+          MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1624
+          MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1624
+          CSUB Lbl1628
+          SGP 197, 2, 1
+
+Lbl1624:  MVP ABS, 0, -9300
+          CSUB Lbl1709
+          CSUB Lbl900
+          RSUB 
+
+Lbl1628:  MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1653
+          MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1653
+          MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1653
+          MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC EQ, Lbl1653
+          MVP REL, 2, -160
+          CSUB Lbl1768
+          GIO 3, 0
+          COMP 0
+          JC NE, Lbl1659
+
+Lbl1653:  GGP 28, 2
+          CALC OR, 2048
+          AGP 28, 2
+          STGP 28, 2
+          CSUB Lbl2010
+          JA Lbl463
+
+Lbl1659:  RSUB
+
+Lbl1660:  SAP 6, 0, 255
+          SAP 4, 0, 1000
+          SGP 195, 2, 0
+          EI 35
+          MVP ABS, 0, -350
+          CSUB Lbl1709
+          GGP 8, 2
+          MVPA ABS, 0
+          CSUB Lbl1709
+          GGP 195, 2
+          COMP 1
+          JC NE, Lbl967
+          DI 35
+          SAP 4, 0, 400
+          SAP 6, 0, 200
+          GGP 46, 2
+          CSUB Lbl1737
+          GGP 47, 2
+          CSUB Lbl1765
+          CSUB Lbl887
+          RSUB 
+
+Lbl1681:  SGP 44, 2, 0
+          RSUB 
+
+Lbl1683:  GGP 193, 2
+          CALC ADD, 1
+          AGP 193, 2
+          RSUB 
+
+Lbl1687:  GGP 12, 2
+          CALC ADD, 1
+          AGP 12, 2
+          STGP 12, 2
+          RSUB 
+
+Lbl1692:  SGP 5, 2, 10
+          GGP 19, 2
+          CALC MUL, 125
+          CALC DIV, 1000
+          CALCX LOAD
+          GAP 1, 0
+          CALCX ADD
+          ACO 10, 0
+          MVP COORD, 0, 10
+          SGP 16, 2, 1
+          WAIT POS, 0, 200
+          JC ETO, Lbl967
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1706:  MVPA ABS, 0
+          CSUB Lbl1709
+          RSUB 
+
+Lbl1709:  SGP 16, 2, 1
+          WAIT POS, 0, 1000
+          JC ETO, Lbl967
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1714:  SGP 16, 2, 1
+          WAIT POS, 0, 1500
+          JC ETO, Lbl967
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1719:  SGP 16, 2, 1
+          WAIT RFS, 0, 1500
+          JC ETO, Lbl967
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1724:  SGP 5, 2, 10
+          GGP 19, 2
+          CALC MUL, 88
+          CALC DIV, 1000
+          CALCX LOAD
+          GAP 1, 1
+          CALCX ADD
+          ACO 1, 1
+          MVP COORD, 1, 1
+          SGP 16, 2, 1
+          WAIT POS, 1, 200
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1737:  MVPA ABS, 1
+          CSUB Lbl1740
+          RSUB 
+
+Lbl1740:  SGP 16, 2, 1
+          WAIT POS, 1, 1000
+          JC ETO, Lbl983
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1745:  SGP 16, 2, 1
+          WAIT RFS, 1, 1000
+          JC ETO, Lbl983
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1750:  SAP 7, 2, 200
+          SGP 5, 2, 10
+          GGP 19, 2
+          CALC MUL, 88
+          CALC DIV, 1000
+          CALCX LOAD
+          GAP 1, 2
+          CALCX ADD
+          ACO 2, 2
+          MVP COORD, 2, 2
+          SGP 16, 2, 1
+          WAIT POS, 2, 200
+          JC ETO, Lbl991
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1765:  MVPA ABS, 2
+          CSUB Lbl1768
+          RSUB 
+
+Lbl1768:  SGP 16, 2, 1
+          WAIT POS, 2, 1000
+          JC ETO, Lbl991
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1773:  SGP 16, 2, 1
+          WAIT RFS, 2, 1000
+          JC ETO, Lbl991
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1778:  SGP 5, 2, 10
+          GGP 19, 2
+          CALC MUL, 656
+          CALC DIV, 1000
+          CALCX LOAD
+          GAP 1, 3
+          CALCX ADD
+          ACO 3, 3
+          MVP COORD, 3, 3
+          SGP 16, 2, 1
+          WAIT POS, 3, 200
+          JC ETO, Lbl999
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1792:  CALCAV MUL, 54
+          CALC DIV, 100
+          COMP 29500
+          JC LE, Lbl1797
+          CALC LOAD, 29500
+
+Lbl1797:  MVPA ABS, 3
+          CSUB Lbl1821
+          RSUB 
+
+Lbl1800:  CALCAV MUL, 146
+          CALC DIV, 100
+          CALCAV ADD, 48
+          CSUB Lbl1792
+          RSUB 
+
+Lbl1805:  CALCAV MUL, 146
+          CALC DIV, 100
+          CSUB Lbl1809
+          RSUB 
+
+Lbl1809:  CALCVA LOAD, 165
+          GAP 1, 3
+          CALCAV ADD, 165
+          COMP 29500
+          JC LE, Lbl1817
+          CALC LOAD, 29500
+          CSUB Lbl1792
+          JA Lbl1820
+
+Lbl1817:  CALCAV LOAD, 165
+          MVPA REL, 3
+          CSUB Lbl1821
+
+Lbl1820:  RSUB
+
+Lbl1821:  SGP 16, 2, 1
+          WAIT POS, 3, 1000
+          JC ETO, Lbl999
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1826:  SGP 16, 2, 1
+          WAIT RFS, 3, 1000
+          JC ETO, Lbl999
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1831:  SAP 7, 4, 200
+          SAP 13, 4, 1
+          SGP 5, 2, 10
+          GGP 19, 2
+          CALC MUL, 177
+          CALC DIV, 1000
+          CALCX LOAD
+          GAP 1, 4
+          CALCX ADD
+          ACO 4, 4
+          MVP COORD, 4, 4
+          SGP 16, 2, 1
+          WAIT POS, 4, 200
+          JC ETO, Lbl1007
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1847:  MVPA ABS, 4
+          CSUB Lbl1850
+          RSUB 
+
+Lbl1850:  SGP 16, 2, 1
+          WAIT POS, 4, 1000
+          JC ETO, Lbl1007
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1855:  SGP 16, 2, 1
+          WAIT POS, 4, 1500
+          JC ETO, Lbl1007
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1860:  SGP 16, 2, 1
+          WAIT RFS, 4, 1500
+          JC ETO, Lbl1007
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1865:  SGP 16, 2, 1
+          WAIT RFS, 4, 200
+          JC ETO, Lbl1007
+          SGP 16, 2, 0
+          RSUB 
+
+Lbl1870:  SGP 16, 2, 1
+          WAIT RFS, 4, 550
+          JC ETO, Lbl1874
+          JA Lbl1881
+
+Lbl1874:  SGP 5, 2, 10
+          CSUB Lbl2018
+          GGP 34, 2
+          CALC OR, 8
+          AGP 34, 2
+          STGP 34, 2
+          JA Lbl463
+
+Lbl1881:  SGP 16, 2, 0
+          RSUB 
+
+Lbl1883:  GGP 25, 2
+          COMP 0
+          JC EQ, Lbl1899
+          GGP 25, 2
+          COMP 1
+          JC EQ, Lbl1901
+          GGP 25, 2
+          COMP 2
+          JC EQ, Lbl1903
+          GGP 25, 2
+          COMP 3
+          JC EQ, Lbl1905
+          GGP 25, 2
+          COMP 4
+          JC EQ, Lbl1907
+          JA Lbl1908
+
+Lbl1899:  CSUB Lbl876
+          JA Lbl1908
+
+Lbl1901:  CSUB Lbl887
+          JA Lbl1908
+
+Lbl1903:  CSUB Lbl900
+          JA Lbl1908
+
+Lbl1905:  CSUB Lbl917
+          JA Lbl1908
+
+Lbl1907:  CSUB Lbl931
+
+Lbl1908:  RSUB
+
+Lbl1909:  GAP 1, 4
+          COMP 31500
+          JC GT, Lbl1918
+          GGP 34, 2
+          CALC OR, 16
+          AGP 34, 2
+          STGP 34, 2
+          CSUB Lbl2010
+          JA Lbl463
+
+Lbl1918:  GGP 49, 2
+          CALC ADD, 31920
+          CSUB Lbl1847
+          CSUB Lbl1245
+          GGP 150, 2
+          AAP 1, 4
+          RSUB 
+
+Lbl1925:  CSUB Lbl1015
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl1948
+          GGP 5, 2
+          COMP 30
+          JC EQ, Lbl1938
+          GGP 44, 2
+          CALC OR, 2
+          AGP 44, 2
+          STGP 44, 2
+          CSUB Lbl2022
+          JA Lbl1948
+
+Lbl1938:  CSUB Lbl900
+          CSUB Lbl887
+          SAP 6, 0, 255
+          SAP 4, 0, 1000
+          GGP 7, 2
+          CSUB Lbl1706
+          MVP ABS, 4, 16000
+          CSUB Lbl1855
+          SAP 6, 0, 200
+          SGP 5, 2, 10
+
+Lbl1948:  RSUB
+
+Lbl1949:  CSUB Lbl1015
+          GGP 29, 2
+          COMP 1
+          JC EQ, Lbl1970
+          GGP 5, 2
+          COMP 30
+          JC EQ, Lbl1962
+          GGP 44, 2
+          CALC OR, 2
+          AGP 44, 2
+          STGP 44, 2
+          CSUB Lbl2022
+          JA Lbl1970
+
+Lbl1962:  CSUB Lbl900
+          CSUB Lbl887
+          SAP 6, 0, 255
+          SAP 4, 0, 1200
+          GGP 17, 2
+          MVPA ABS, 0
+          CSUB Lbl1714
+          SAP 6, 0, 200
+
+Lbl1970:  RSUB
+
+Lbl1971:  GAP 1, 0
+          CALCAV SUB, 9
+          COMP 1259
+          JC GT, Lbl1979
+          GAP 1, 0
+          CALCAV SUB, 9
+          COMP -1385
+          JC GT, Lbl1985
+
+Lbl1979:  GGP 30, 2
+          CALC OR, 32
+          AGP 30, 2
+          STGP 30, 2
+          CSUB Lbl2018
+          JA Lbl2005
+
+Lbl1985:  CSUB Lbl900
+          CSUB Lbl887
+          SAP 6, 0, 100
+          SAP 4, 0, 200
+          GGP 9, 2
+          MVPA ABS, 0
+          CSUB Lbl1714
+          MVP REL, 3, 292
+          CSUB Lbl1821
+          MVP ABS, 0, 14500
+          CSUB Lbl1709
+          CSUB Lbl1236
+          SAP 6, 0, 200
+          SAP 4, 0, 400
+          MVP ABS, 0, 24000
+          CSUB Lbl1714
+          SAP 4, 4, 100
+          MVP REL, 4, -16000
+          CSUB Lbl1855
+          SGP 5, 2, 10
+
+Lbl2005:  SGP 198, 2, 1
+          DI 35
+          DI 37
+          DI 38
+          RSUB 
+
+Lbl2010:  SGP 5, 2, 70
+          STGP 5, 2
+          CSUB Lbl2018
+          RSUB 
+
+Lbl2014:  SGP 5, 2, 70
+          STGP 5, 2
+          CSUB Lbl2022
+          RSUB 
+
+Lbl2018:  SGP 29, 2, 1
+          STGP 29, 2
+          CSUB Lbl209
+          RSUB 
+
+Lbl2022:  SGP 29, 2, 1
+          STGP 29, 2
+          CSUB Lbl212
+          RSUB 
+
+          SGP 29, 2, 0
+          STGP 29, 2
+          CSUB Lbl206
+          RSUB 
+
+Lbl2030:  RSUB
+
+Lbl2031:  RSUB
+
+Lbl2032:  CSUB Lbl698
+          RSUB 
+
+Lbl2034:  CSUB Lbl1367
+          CSUB Lbl1398
+          RSUB 
+
+          STOP 

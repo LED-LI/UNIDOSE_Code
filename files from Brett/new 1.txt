@@ -1,0 +1,94 @@
+
+FUNC_0:    CSUB FIRST_RUN        //  will run on power ON
+FUNC_2:    CSUB FIND_HOMES       //  Will test all axis and sensors
+FUNC_4:    JA   CLEAR_ALL_ERRORS //  resets all errors to start. JA because of the RST function that clears stack any way
+FUNC_6:    CSUB INIT_DRAW_DOSE   //  Run the initial setup, detect if there is a initial volume in the system
+FUNC_8:    CSUB DRAW_DOSE        //  Draw the requested activity
+FUNC_10:   CSUB CHECK_DONE       //  ok, put the syringe in PIG
+func_12:   CSUB ABORT            //  stop all motors and program
+func_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syringe and pig are ready to draw
+FUNC_16:   CSUB INIT             //  Initialize parameters.
+func_18:   CSUB FIND_HOMES_SHORT
+func_20:   CSUB HomeCalibration
+func_22:   CSUB LEDS_OFF
+func_24:   CSUB RED_ON
+func_26:   CSUB GREEN_ON
+func_28:   CSUB YELLOW_ON
+
+// for FUNC_2 (FIND_HOMES)
+
+func_30:   CSUB positionVerticalMotor  // will not search bottom side. for debugging
+func_32:   CSUB homePigHolderMotorBoth
+func_34:   CSUB homeCapHolderMotorBoth
+func_36:   CSUB homePistonMotorBoth
+func_38:   CSUB PositionHeadRotateMotor
+func_40:   CSUB verticalMotorTOerr
+func_42:   CSUB pigMotorTOerr
+func_44:   CSUB capHolderMotorTOerr
+func_46:   CSUB pistonMotorTOerr
+func_48:   CSUB headRotateMotorTOerr
+func_50:   CSUB verticalMotorTOerr
+func_52:   CSUB capHolderMotorTOerr
+func_54:   CSUB pistonMotorTOerr
+func_56:   CSUB headRotateMotorTOerr
+func_58:   CSUB homeHeadRotateMotor
+
+// for FUNC_6  (INIT_DRAW_DOSE)
+
+func_60:   CSUB checkCapSensor
+func_62:   CSUB checkNoSyringe
+func_64:   CSUB movePlungerToPrefill
+func_66:   CSUB checkSyrPoppedOut
+func_68:   CSUB checkPigPoppedOut
+
+// for FUNC_8   (DRAW_DOSE)
+
+func_70:   CSUB addBacklashPrefill
+func_72:   CSUB startPullAir70
+func_74:   CSUB decapSyringe
+func_76:   CSUB moveBelowVial
+func_78:   CSUB insertNeedle
+func_80:   CSUB push70air
+func_82:   CSUB drawVial
+func_84:   CSUB ClearRunningErrors
+func_86:   CSUB moveSlowlyBottom
+func_88:   CSUB bumpPlunger
+func_90:   CSUB recapSyringe
+func_92:   CSUB insertIntoDozeCalib
+func_94:   CSUB openVialCover
+func_96:   CSUB closeVialCover
+func_98:   CSUB rotateDown
+func_100:  CSUB drawVialMoreBack
+func_102:  CSUB homeVerticalMotor
+func_104:  CSUB homePistonMotor
+func_106:  CSUB setCenterOfSeptum
+func_108:  CSUB findCenterCapHolderManual
+
+// for FUNC_10   (CHECK_DONE)
+
+func_110:  CSUB putSyringeInPig
+func_112:  CSUB incrementCycles
+
+// more functions
+
+func_114:  CSUB homeVerticalMotorBoth
+func_116:  CSUB checkVialPoppedOut
+func_118:  CSUB getRandom
+func_120:  CSUB homePigHolderMotor
+func_122:  CSUB homeCapHolderMotor
+func_124:  CSUB startHomePistonMotor
+func_126:  CSUB armIntoDoseCalibrator
+func_128:  CSUB waitHomePistonMotor
+func_130:  CSUB findCapHolderAtNeedle
+
+// manual movements functions
+
+func_134:  CSUB retreatFromVial
+func_136:  CSUB VerticalManual
+func_138:  CSUB PigHolderManual
+func_140:  CSUB CapHolderManual
+func_142:  CSUB PistonManual
+func_144:  CSUB RotationManual
+func_146:  CSUB DoseCalibratorCheck
+func_150:  CSUB ExtractFromDoseCalibrator
+func_152:  CSUB tapTap

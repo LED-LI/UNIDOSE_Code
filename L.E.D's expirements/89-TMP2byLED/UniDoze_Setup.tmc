@@ -499,6 +499,8 @@ GB_squeezeCapHeight           =  53
    ACC_VERT_HIGH                   =    40
    SEARCH_SPEED_VERT               =   400  // 400
    SWITCH_SPEED_VERT               =   400  //  80
+   HIGHT_TO_GET_SOME_AIR           =  13825
+
 
 GB_needleLengthInMicroSteps   = 130        // verticalMicroStepsPerMM * GB_needleLength = 5039 [steps] for 40 [mm]
 GB_lastCapRefPosition         = 131
@@ -661,6 +663,8 @@ GB_microMeterRandom     = 26    // +/- random insertion into vial in uM
    limitNeedleBentMicroS         =  rotateMicroStepsPerMM * LIMIT_UM_BENT_NEEDLE / 1000  // 3.0 [mm] // 2.0 [mm] = 88 us
    NUMBER_OF_KICKS               =      0
    ROTATE_BUBBLES_uM             =   1000  //  +/- 1 mm at the end of the needle
+   LEAVE_WATER_FOR_AIR           =   5000
+
 
 GB_lastTopRefPosition         = 150
 GB_rotateMicroStepsPerMM      = 151

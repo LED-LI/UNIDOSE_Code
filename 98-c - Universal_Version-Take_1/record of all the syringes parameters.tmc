@@ -1,0 +1,195 @@
+// GB_Syringe_Type            =   1    //
+  // DEFAULT_SYRINGE_TYPE  = 1           // irelevant now
+  // Andemed_2ml_syringe   = 1
+  // wego_2_5ml_syringe    = 2
+  // BD_2ml_syringe        = 3
+  // BD_3ml_syringe        = 4
+  
+// BD_Luer_5ml	 = 1
+  // BD_Slip_5ml	 = 2
+  // TERUMO_5ml	 = 3
+
+  // // BD_3ml_syringe = 1
+  // // B_BRAUN_2ml	 = 2 
+  // // DPS_3ml	     = 3 
+  // // TERUMO_3ml	 = 4 
+
+  // // Andemed_2ml_syringe   = 1
+  // // wego_2_5ml_syringe    = 2
+  // // BD_2ml_syringe        = 3
+  // // BD_3ml_syringe        = 4
+  
+// // GB_Syringe_Type            =   1    //
+  // // DEFAULT_SYRINGE_TYPE  = 1
+  // // BD_syringe            = 1
+  // // HenryShine_syringe    = 2
+  // // DPS_syringe           = 3 
+  // // Terumo_2_5ml_syringe  = 4    
+  // // Terumo_5ml_syringe    = 5     // 5ml  Taiwan
+  // // BD_2ml_syringe        = 6
+  // // wego_2_5ml_syringe    = 7
+  // // // other_7               = 7
+
+
+
+// // // // Syringe_1 = Andemed_2ml_syringe
+// // // Max_Volume_1           =      2500 // [uL]
+// // // um_per_1mL_1           =     16250 // [um] // take this value divide 10^8 by value to get microL_per_100mm_2
+// // // microL_per_100mm_1     = 100000000 / um_per_1mL_1 //  6098  // [uL]
+// // // Limit_for_Prefill_1    = Max_Volume_1 - 1000 // was 2000 // [uL]
+// // // SIZE_A_1               =     64700 // [um]
+// // // SIZE_B_1               =    107700 // [um]
+// // // SIZE_C_1               =    118500 // [um]
+// // // SIZE_D_1               =     17500 // [um]
+// // // Thumbrestfromwings_1   =     17500 // [um]
+// // // Syring_Length_1        =     64700 // [um]
+// // // CapLength_1            =     53800 // [um]
+// // // CapToNeedleBase_1      =     13000 // [um]
+// // // NEEDLE_LENGTH_SYRING_1 =        32
+
+
+
+// // // // Syringe_2 = wego_2_5ml_syringe
+// // // Max_Volume_2           =      2500 // [uL]
+// // // um_per_1mL_2           =     16000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_2
+// // // microL_per_100mm_2     = 100000000 / um_per_1mL_2 //  6211  // [uL]
+// // // Limit_for_Prefill_2    = Max_Volume_2 - 1000 // was 2000  // [uL]
+// // // SIZE_A_2               =     65100 // [um]
+// // // SIZE_B_2               =    103100 // [um]
+// // // SIZE_C_2               =    109400 // [um]
+// // // SIZE_D_2               =     16500 // [um]
+// // // Thumbrestfromwings_2   =     16500 // [um]
+// // // Syring_Length_2        =     65100 // [um]
+// // // CapLength_2            =     44300 // [um]
+// // // CapToNeedleBase_2      =     13000 // [um]
+// // // NEEDLE_LENGTH_SYRING_2 =        25
+
+// // // // Syringe_3 = BD_2ml_syringe
+// // // Max_Volume_3           =      2000 // [uL]
+// // // um_per_1mL_3           =     16450 // [um] // take this value divide 10^8 by value to get microL_per_100mm_3
+// // // microL_per_100mm_3     = 100000000 / um_per_1mL_3 // 6060  // [uL]
+// // // Limit_for_Prefill_3    = Max_Volume_3 - 1000 // was 1500 // [uL]
+// // // SIZE_A_3               =     58900 // [um]
+// // // SIZE_B_3               =    102800 // [um]
+// // // SIZE_C_3               =    114200 // [um]
+// // // SIZE_D_3               =     13900 // [um]
+// // // Thumbrestfromwings_3   =     13900 // [um]
+// // // Syring_Length_3        =     58900 // [um]
+// // // CapLength_3            =     55300 // [um]
+// // // CapToNeedleBase_3      =     13900 // [um]
+// // // NEEDLE_LENGTH_SYRING_3 =        32
+
+// // // // Syringe_4 = BD_3ml_syringe
+// // // Max_Volume_4           =      3000 // [uL]
+// // // um_per_1mL_4           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+// // // microL_per_100mm_4     = 100000000 / um_per_1mL_4 // 5877  // 6035
+// // // Limit_for_Prefill_4    = Max_Volume_4 - 1000 // was 2500 // [uL]
+// // // SIZE_A_4               =     78500 // [um]
+// // // SIZE_B_4               =    117400 // [um]
+// // // SIZE_C_4               =    121100 // [um]
+// // // SIZE_D_4               =     14400 // [um]
+// // // Thumbrestfromwings_4   =     14400 // [um]
+// // // Syring_Length_4        =     78500 // [um]
+// // // CapLength_4            =     42600 // [um]
+// // // CapToNeedleBase_4      =     14400 // [um]
+// // // NEEDLE_LENGTH_SYRING_4 =        25
+                                                                                                            
+               
+// // Syringe_1 = BD_Luer_5ml	
+// Max_Volume_1           =      5000
+// um_per_1mL_1           =      8900 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+// microL_per_100mm_1     = 100000000 / um_per_1mL_1 // 5877  // 6035
+// Limit_for_Prefill_1    = Max_Volume_1 - 1000 // [uL]
+// SIZE_A_1               =     74500
+// SIZE_B_1               =    112000
+// SIZE_C_1               =    117000
+// SIZE_D_1               =     14800
+
+// // Syringe_2 = BD_Slip_5ml	
+// Max_Volume_2           =      5000
+// um_per_1mL_2           =      8900 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+// microL_per_100mm_2     = 100000000 / um_per_1mL_2 // 5877  // 6035
+// Limit_for_Prefill_2    = Max_Volume_2 - 1000 // [uL]
+// SIZE_A_2               =     74500
+// SIZE_B_2               =    112000
+// SIZE_C_2               =    117000
+// SIZE_D_2               =     14800
+
+// // Syringe_3 = TERUMO_5ml	
+// Max_Volume_3           =      5000
+// um_per_1mL_3           =      7520 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+// microL_per_100mm_3     = 100000000 / um_per_1mL_3 // 5877  // 6035
+// Limit_for_Prefill_3    = Max_Volume_3 - 1000 // [uL]
+// SIZE_A_3               =     67700
+// SIZE_B_3               =    106500
+// SIZE_C_3               =    110600
+// SIZE_D_3               =     14200
+                                                                         
+                                                    
+                                  
+                                  
+
+
+
+
+
+
+// // // Syringe_1 = BD 3ml syringe - SYRINGE TO CALIBRATE BY !!!!
+// // Max_Volume_1         =  3000  // [uL]
+// // microL_per_100mm_1   =  5877  //6035
+// // Syring_Length_1      = 50680  // [um]
+// // Limit_for_Prefill_1  =  2500  // [uL]
+// // // LoadingDistance_1    =  1500  // [usteps]
+
+// // // Syringe_2 = Henry Shine
+// // Max_Volume_2         =  3000  // [uL]
+// // microL_per_100mm_2   =  6417  //  6346
+// // Syring_Length_2      = 47000  // [um]
+// // Limit_for_Prefill_2  =  2500  // [uL]
+// // // LoadingDistance_2    =  1500  // [usteps]
+
+// // // Syringe_3 = DPS
+// // Max_Volume_3         =  3000  // [uL]
+// // microL_per_100mm_3   =  5837
+// // Syring_Length_3      = 51600  // [um]
+// // Limit_for_Prefill_3  =  2500  // [uL]
+// // // LoadingDistance_3    =  1500  // [usteps]
+
+// // // Syringe_4 = Terumo_2_5ml_syringe
+// // Max_Volume_4         =  2500  // [uL]
+// // microL_per_100mm_4   =  6417
+// // Syring_Length_4      = 40000  // [um]
+// // Limit_for_Prefill_4  =  2000  // [uL]
+// // // LoadingDistance_4    =  1500  // [usteps]
+
+// // // Syringe_5 = Terumo_5ml_syringe
+// // Max_Volume_5         =  6000  // [uL]
+// // microL_per_100mm_5   = 13196
+// // Syring_Length_5      = 45000  // [um]
+// // Limit_for_Prefill_5  =  4500  // [uL]
+// // // LoadingDistance_5    =  1500  // [usteps]
+
+// // // Syringe_6 = BD_2ml_syringe
+// // Max_Volume_6         =  2000  // [uL]
+// // microL_per_100mm_6   =  6060  // [uL]
+// // Syring_Length_6      = 59500  // [um]
+// // Limit_for_Prefill_6  =  1500  // [uL]
+// // CapLength_6          = 55300  // [usteps]
+// // // LoadingDistance_6    =  1500  // [usteps]
+
+// // // Syringe_7 = wego_2_5ml_syringe
+// // Max_Volume_7         =  2500  // [uL]
+// // microL_per_100mm_7   =  6211  // [uL]
+// // Syring_Length_7      = 65300  // [um]
+// // Limit_for_Prefill_7  =  2000  // [uL]
+// // CapLengthDelta_7_uS  =  1142  // [{usteps}] !!!
+// // // LoadingDistance_7 =  1500  // [usteps]
+
+// // // // // Syringe_7 = Other_7
+// // // // Max_Volume_7         =  3000  // [uL]
+// // // // microL_per_100mm_7   =  6000
+// // // // Syring_Length_7      = 50000  // [um]
+// // // // Limit_for_Prefill_7  =  2500  // [uL]
+// // // // // LoadingDistance_7    =  1500  // [usteps]
+
+

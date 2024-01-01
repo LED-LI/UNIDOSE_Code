@@ -143,12 +143,21 @@
 //                       less currrent when moving into dose calibrator :150
 //                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
+//         125. V1040090 fast speed for withdraw (1800) and more delay after draw, draw to full syringe in full speed and return piston to requested volume
+//         126. V1040091 added "rinse" before withdraw 
+//         127.
+//         128. V1040093 de-bubbles
+//         129. V1040094 completely reorder procedure
+//            :
+//            :
+//         140. V1040109 debubbled
+//         141. V1040110 debubbled-optimizing
 //
 //***********************************************************************************************************
 
-// this file 2022-11-24-V40089-UniDoze-Setup-extract from DC.tmc
+// this file 2023-01-04-V40110-UniDoze-Setup-debubbled-optimizing.tmc
 
-CURRENT_VERSION      =  1040089
+CURRENT_VERSION      =  1040110
 
 //*******************************
 //Definitions of motor numbers
@@ -217,7 +226,7 @@ LED_ON               =    1
 LED_OFF              =    0
 PIG_WAS_REPLACED     =    1
 PIG_NOT_REPLACED     =    0
-DEF_DRAW_WAIT_TIME   =  200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
+DEF_DRAW_WAIT_TIME   =  400 // 200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
 AT_HOME              =    1
 DEFAULT_NEEDLE_LENGTH =  25
 DEFAULT_DRAW_VOLUME  = 1000  // 1[ml]
@@ -234,7 +243,7 @@ IN_HOME_CAP_HOLDER_MOTOR =1
 GB_currentVersion          =   0    // Current SW version
 
 GB_Syringe_Type            =   1    //
-  DEFAULT_SYRINGE_TYPE  = 2
+  DEFAULT_SYRINGE_TYPE  = 1
   BD_syringe            = 1
   HenryShine_syringe    = 2
   DPS_syringe           = 3 
@@ -473,7 +482,7 @@ GB_squeezeCapHeight           =  53
    VERTICAL_FOR_ROTATION           = 14500  // ABS
    VERTICAL_FOR_RETRETE            = 24000  // go lower to exit syringe from sheet metal when rotating
    VERTICAL_FOR_NEEDLE_DELTA       =  2900  // from bump, parameter 9
-   ABOVE_BUMP                      =     8  // insert neddle to this hight [mm]
+   ABOVE_BUMP                      =    10  // insert neddle to this hight [mm]
    VERTICAL_IN_VIAL_DELTA          = -verticalMicroStepsPerMM * ABOVE_BUMP  // ~1000 usteps = 8.0 [mm] from bump hight into the vial, to get most of the fluid
    STOP_CHECK_DIPPER_VERTICAL      =  4000  // 3000  //  delta from deepest vertical in dose (GP 17)
    ABOVE_PIG                       = -9300  // ABS
@@ -483,6 +492,7 @@ GB_squeezeCapHeight           =  53
    DETECT_CAP_HIGHT_REL            = -verticalMicroStepsPerMM 
    ABOVE_SQUEEZE_CAP               = -6000
    MIN_DEPTH_FOR_EXTRACT           =  20000
+   HIGHT_TO_GET_SOME_AIR           =  13825
 
    MAX_CURRENT_VERT                =   200
    MAX_CURRENT_VERT_HIGH           =   255
@@ -571,14 +581,14 @@ GB_144                       = 144
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // GB_Motor_3 = M_pistonMotor
-   pistonFeedPerRevolution       =  4877 /// from version 74 // 2420  // micrometer
-   pistonStepsPerRev             =   200
-   pistonMicrosteps              =    16
-   pistonMicroStepsPerRev        = pistonMicrosteps * pistonStepsPerRev  // = 3200 [uS/rev]
-   pistonMicroStepsPerMM         = 1000 * pistonMicroStepsPerRev / pistonFeedPerRevolution // = 1322
-// GB_microL_per_100mm_current    =  6522
-   PISTON_POS_COORD              =     3
-GB_PistonHomePos       = 48         // for empty syringe ~1300
+   pistonFeedPerRevolution         =  4877 /// from version 74 // 2420  // micrometer
+   pistonStepsPerRev               =   200
+   pistonMicrosteps                =    16
+   pistonMicroStepsPerRev          = pistonMicrosteps * pistonStepsPerRev  // = 3200 [uS/rev]
+   pistonMicroStepsPerMM           =  1000 * pistonMicroStepsPerRev / pistonFeedPerRevolution // = 1322
+// GB_microL_per_100mm_current     =  6522
+   PISTON_POS_COORD                =     3
+   GB_PistonHomePos                =    48    // for empty syringe ~1300
 
 //   BUMP_DOWN_REL                 =   500 /// 1000 // 0.05 mL // 1600 // tampa  // 800 // 0.04 mL 
 //   PISTON_BACKLASH               =     0 // (done) will be added to the "70%" push back = 60[uL]
@@ -586,15 +596,17 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
 //   ADD_FOR_PREFILL               =   830 ///  1666 // (done) add 0.08 mL
 //   PUSH_PISTON_MORE              =   300 ///   600 // 0.03 mL // 15 uL = 0.015 mL
 
-   BUMP_DOWN_REL_uL              =    60  // 46 ///  
+   BUMP_DOWN_REL_uL                =    60 // 46 ///  
 //   PISTON_BACKLASH_uL            =     0 //  (done) will be added to the "70%" push back = 60[uL]
-   PISTON_MORE_uL                =   368 /// to the draw and then pushed back    = 0.6 mL
-   ADD_FOR_PREFILL_uL            =    76 ///  1666 // (done) add 0.08 mL
-   PUSH_PISTON_MORE_uL           =     0 /// 28 ///   600 // 0.03 mL // 15 uL = 0.015 mL
-   BUBBLES_PULL_uL               =   700 // 0.7 ml
-   MIN_DRAW_PISTON_uL            =  1000 // uL
-   MINIMUM_DRAW_VOLUME_uL        =   100  // not less than 0.1 ml
-   MINIMUM_DRAW_PREFILL_uL       =   100  // not less than 0.1 ml
+   PISTON_MORE_uL                  =   368 /// to the draw and then pushed back    = 0.6 mL
+   ADD_FOR_PREFILL_uL              =    76 ///  1666 // (done) add 0.08 mL
+   PUSH_PISTON_MORE_uL             =     0 /// 28 ///   600 // 0.03 mL // 15 uL = 0.015 mL
+   BUBBLES_PULL_uL                 =   700 // 0.7 ml
+   MIN_DRAW_PISTON_uL              =  1000 // uL
+   MINIMUM_DRAW_VOLUME_uL          =   100  // not less than 0.1 ml
+   MINIMUM_DRAW_PREFILL_uL         =   100  // not less than 0.1 ml
+   LEAVE_WATER_FOR_AIR             =  2000
+   PULL_TO_PREVENT_DRIPPING        =  1000
 
 
    MAX_POS_SPEED_PIST            =   600 //   800
@@ -607,6 +619,8 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    SEARCH_SPEED_PIST             =   400 /// 800
    SWITCH_SPEED_PIST             =   100
 
+   MAX_PIST_IN_USTEPS            =   29500 // mesured - with curent hardware
+
    ACC_PIST                      =   200
    STBY_CURRENT_PIST             =    25
    MAX_CURRENT_PIST              =   128
@@ -614,11 +628,30 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    WAIT_TICKS_PUSH_AIR           =    50  //  [0.5s]
    WAIT_TICKS_BUBBLES            =   100 //   [1s]
    WAIT_TICKS_BUBBLES_BACK       =    20  //  [0.2s]
- 
-GB_145                         = 145
+
+
+// func_36:   CSUB homePistonMotorBoth
+// func_54:   CSUB pistonMotorTOerr
+// func_66:   CSUB checkSyrPoppedOut
+// func_72:   CSUB startPullAir70
+// func_80:   CSUB push70air
+// func_82:   CSUB drawVial
+// func_88:   CSUB bumpPlunger
+// func_98:   CSUB startPullAir70
+// func_100:  CSUB drawVialMoreBack
+// func_104:  CSUB homePistonMotor
+// func_128:  CSUB waitHomePistonMotor
+// func_142:  CSUB PistonManual
+// func_154:  CSUB rinseSyringe
+// func_162:  CSUB emptyItSlow
+// func_164:  CSUB emptyItSlow
+// func_156:  CSUB fillItFast
+
+
+GB_tempPistonCalculation_uL       = 145
 GB_pistonMicroStepPer100microL = 146 // 10000 * pistonMicroStepsPerMM / GB_microL_per_100mm_current = 2190
 GB_minDrawPistonTemp_uL        = 147 //
-GB_148                         = 148
+GB_pisonDestination               = 148
 GB_149                         = 149
 
 
@@ -677,7 +710,7 @@ GB_Limit_for_Prefill_current = 163
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // bubbles
 GB_numberOfKicksTemp             =  182
-GB_                              =  183  
+GB_183_tmp                       =  183  
 GB_184                           =  184  
 GB_185                           =  185   
 GB_186                           =  186    
@@ -715,7 +748,7 @@ FUNC_10:   CSUB CHECK_DONE       //  ok, put the syringe in PIG
            JA   BACK_GROUND_PROCESS
 func_12:   CSUB ABORT            //  stop all motors and program
            JA   BACK_GROUND_PROCESS
-func_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syrine and pig are ready to draw
+func_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syringe and pig are ready to draw
            JA   BACK_GROUND_PROCESS
 FUNC_16:   CSUB INIT             //  Initialize parameters.
            JA   BACK_GROUND_PROCESS
@@ -873,6 +906,29 @@ func_150:  CSUB ExtractFromDoseCalibrator
            JA   BACK_GROUND_PROCESS
 func_152:  CSUB dummy_sub
            JA   BACK_GROUND_PROCESS
+
+// debugging bubbles funcs
+
+// func_154:  CSUB rinseSyringe
+           // JA   BACK_GROUND_PROCESS
+// func_156:  CSUB fillItFast
+           // JA   BACK_GROUND_PROCESS
+// func_158:  CSUB preGetSomeAir
+           // JA   BACK_GROUND_PROCESS
+// func_160:  CSUB getSomeAir
+           // JA   BACK_GROUND_PROCESS
+// func_162:  CSUB emptyItSlow
+           // JA   BACK_GROUND_PROCESS
+// func_164:  CSUB emptyItSlow
+           // JA   BACK_GROUND_PROCESS
+// func_166:  CSUB dummy_sub
+           // JA   BACK_GROUND_PROCESS
+// func_168:  CSUB dummy_sub
+           // JA   BACK_GROUND_PROCESS
+// func_170:  CSUB dummy_sub
+           // JA   BACK_GROUND_PROCESS
+// func_172:  CSUB dummy_sub
+           // JA   BACK_GROUND_PROCESS
 
 
 //*****************************
@@ -1042,7 +1098,7 @@ syringe7:
     JA      returnInitSyringes
 
 defaultSyringe:  // Henry Shine
-    SGP     GB_Syringe_Type, GPbank_2, DEFAULT_SYRINGE_TYPE     // HenryShine_syringe
+    SGP     GB_Syringe_Type, GPbank_2, DEFAULT_SYRINGE_TYPE     // BD_syringe
     JA      initSyringes
 
 returnInitSyringes:    // save in EEPROM

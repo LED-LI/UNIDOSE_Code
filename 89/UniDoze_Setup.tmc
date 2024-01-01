@@ -472,7 +472,7 @@ GB_squeezeCapHeight           =  53
    VERTICAL_CAP_VIBRATE_DELTA      =  3500  // [um]
    VERTICAL_FOR_ROTATION           = 14500  // ABS
    VERTICAL_FOR_RETRETE            = 24000  // go lower to exit syringe from sheet metal when rotating
-   VERTICAL_FOR_NEEDLE_DELTA       =  2900  // from bump, parameter 9
+   VERTICAL_FOR_NEEDLE_DELTA       =  2900  // from bump, parameter 9 (distance of the LOCATION for the needle sensor from the BUMP was 23.3 mm when developed)
    ABOVE_BUMP                      =     8  // insert neddle to this hight [mm]
    VERTICAL_IN_VIAL_DELTA          = -verticalMicroStepsPerMM * ABOVE_BUMP  // ~1000 usteps = 8.0 [mm] from bump hight into the vial, to get most of the fluid
    STOP_CHECK_DIPPER_VERTICAL      =  4000  // 3000  //  delta from deepest vertical in dose (GP 17)

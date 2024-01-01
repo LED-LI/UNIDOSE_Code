@@ -143,12 +143,34 @@
 //                       less currrent when moving into dose calibrator :150
 //                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
+//         125. V1040090 fast speed for withdraw (1800) and more delay after draw, draw to full syringe in full speed and return piston to requested volume
+//         126. V1040091 added "rinse" before withdraw 
+//         127.
+//         128. V1040093 de-bubbles
+//         129. V1040094 completely reorder procedure
+//            :
+//            :
+//         140. V1040109 debubbled
+//         141. V1040110 debubbled-optimizing
+//         142. V1040111 bubbled-fix
+//         14x. V1040112 
+//         14x. V1040113 
+//         14x. V1040114 
+//         14x. V1040115 re-everything
+//           ..
+//           ..
+//           ..
+//         150. V1040122 adding PistonFactor 
+//         151. V1040123 PRIME SYRINGE procedures selectable by a parameter
+//         152. V1040124 fix adjust procedure
+//         153. V1040125 add adaptation to different needle length
+//         154. V1040126 2023-02-26 adjust priming variables by current syringe
 //
 //***********************************************************************************************************
 
-// this file 2022-11-24-V40089-UniDoze-Setup-extract from DC.tmc
+// this file 2023-02-26-V40126-UniDoze-Setup-adjust_priming_variables_by_current_syringe.tmc
 
-CURRENT_VERSION      =  1040089
+CURRENT_VERSION      =  1040126
 
 //*******************************
 //Definitions of motor numbers
@@ -181,8 +203,8 @@ In_PigInPlace          = 7 // The Pig is in place
 
 Out_GreenLED      = 0 //  yellow color when both red and green are on
 Out_RedLED        = 1 //
-//Out_needlePower   = 2 //  power for LED of needle sensor
-      //Out_ShieldVail    = 3 //  1A  rotating solenoid - machines 1&2
+//Out_needlePower = 2 //  power for LED of needle sensor
+//Out_ShieldVail  = 3 //  1A  rotating solenoid - machines 1&2
 DCtoDC_power_0    = 3   // was Curtain_power // machine 3+
 Out_spare_4       = 4   // was vial_lock
 Out_spare_5       = 5   // was for LED 24V
@@ -193,37 +215,43 @@ Out_ShieldVail    = 7 //  1A  rotating solenoid - machine 3+
 //***********
 // Defines
 //***********
-PIG_IS_LOADED        =    1
-VIAL_IS_LOADED       =    1
-VIAL_IS_UNSHIELDED   =    1
-HAND_IS_IN           =    1
-SYRINGE_IN_PLACE     =    1
- // SYRINGE_IN_PLACE     =    0  // V002
-ANY_ERROR_EXISTS     =    1
-PRE_FILL_REQUEST     =    1
-ADJUST_STATE         =    1
-TRY_AGAIN_STATE      =    1
-CORRECT_ACTIVITY     =    1
-WAIT_TICKS_200ms     =   20 // [200ms]
-WAIT_TICKS_CAP       =  100  // [ 2s]
-WAIT_TICKS_SHORT     =  200  // [ 2s]
-WAIT_TICKS           = 1000  // [10s]
-WAIT_TICKS_LONG      = 1500  // [15s]
-PIG_HOLDER_AT_HOME   =    1
-CAP_HOLDER_AT_HOME   =    1
-BELOW_VIAL_COORD     =    7
-ABOVE_CAP_COORD      =    8
-LED_ON               =    1
-LED_OFF              =    0
-PIG_WAS_REPLACED     =    1
-PIG_NOT_REPLACED     =    0
-DEF_DRAW_WAIT_TIME   =  200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
-AT_HOME              =    1
+PIG_IS_LOADED         =    1
+VIAL_IS_LOADED        =    1
+VIAL_IS_UNSHIELDED    =    1
+HAND_IS_IN            =    1
+SYRINGE_IN_PLACE      =    1
+ANY_ERROR_EXISTS      =    1
+PRE_FILL_REQUEST      =    1
+ADJUST_STATE          =    1
+TRY_AGAIN_STATE       =    1
+CORRECT_ACTIVITY      =    1
+WAIT_TICKS_200ms      =   20 // [200ms]
+WAIT_TICKS_CAP        =  100  // [ 2s]
+WAIT_TICKS_SHORT      =  200  // [ 2s]
+WAIT_TICKS            = 1000  // [10s]
+WAIT_TICKS_LONG       = 1500  // [15s]
+PIG_HOLDER_AT_HOME    =    1
+CAP_HOLDER_AT_HOME    =    1
+BELOW_VIAL_COORD      =    7
+ABOVE_CAP_COORD       =    8
+LED_ON                =    1
+LED_OFF               =    0
+PIG_WAS_REPLACED      =    1
+PIG_NOT_REPLACED      =    0
+DEF_DRAW_WAIT_TIME    =  400 // 200 // 300 /// 3s // 200 // // 2s // 1s // 200 // default for 25 mm needle length and 22 Gauge = 2[s]
+AT_HOME               =    1
+// DEFAULT_SYRINGE_LENGTH =  50680 // when the default syringe is 1 
+// DEFAULT_SYRINGE_LENGTH =  47000 // when the default syringe is 2 
+// DEFAULT_SYRINGE_LENGTH =  51600 // when the default syringe is 3 
+// DEFAULT_SYRINGE_LENGTH =  40000 // when the default syringe is 4 
+// DEFAULT_SYRINGE_LENGTH =  45000 // when the default syringe is 5 
+DEFAULT_SYRINGE_LENGTH =  33000 // when the default syringe is 6 
 DEFAULT_NEEDLE_LENGTH =  25
-DEFAULT_DRAW_VOLUME  = 1000  // 1[ml]
-CAP_SENSOR_BLOCKED   =    0
-DIPPER_IS_BLOCKED    =    1
-IN_HOME_CAP_HOLDER_MOTOR =1
+DEFAULT_DRAW_VOLUME   = 1000  // 1[ml]
+CAP_SENSOR_BLOCKED    =    0
+DIPPER_IS_BLOCKED     =    1
+IN_HOME_CAP_HOLDER_MOTOR = 1
+HIEGHTFORDEBUBBLINGINUL  = 500
 
 //********************************
 // User variables map (bank 2)
@@ -234,12 +262,12 @@ IN_HOME_CAP_HOLDER_MOTOR =1
 GB_currentVersion          =   0    // Current SW version
 
 GB_Syringe_Type            =   1    //
-  DEFAULT_SYRINGE_TYPE  = 2
+  DEFAULT_SYRINGE_TYPE  = 6
   BD_syringe            = 1
   HenryShine_syringe    = 2
   DPS_syringe           = 3 
   Terumo_2_5ml_syringe  = 4    
-  Terumo_6ml_syringe    = 5     // 6ml  Taiwan
+  Terumo_5ml_syringe    = 5     // 6ml  Taiwan
   BD_2ml_syringe        = 6
   other_7               = 7
 
@@ -267,8 +295,8 @@ GB_RobotSerialNumber   =    6        // (1030006)  1= unidose, 03= HW ver,  0006
 //  GB_LoadingHight         =   8    // syringe loading
 //  GB_BumpPosVert          =   9    // needle touches the vial rubber
 
-GB_needleLength            =  10    // 25, 16 [mm]
-GB_needleGauge             =  11    // 21, 22, 23 [gauge]
+GB_needleLength            =  10    // 25, 16 [mm]          - (default and base for calculations is 25mm )
+GB_needleGauge             =  11    // 21, 22, 23 [gauge]   - (default and base for calculations is 22G  )
 GB_cyclesTotal             =  12    //
 GB_adjustCycle             =  13    //
 GB_readyToDraw             =  14    // after verifyReady
@@ -276,7 +304,8 @@ GB_initialVolume           =  15    // including prefill + withdraw + adjust
 GB_MotorIsMoving           =  16    //
 // the following global parameter will appear at motor 0 (vertical)
 // GB_InDoseCalibrator     =  17    // Depth of dose calibrator
-GB_HomingShortDone         =  18    //
+GB_ProcedureParameter      =  18    //
+GB_HomingShortDone         =  180    //
 
 //*********************************
 //  prameters from PC to Trinamic:
@@ -368,7 +397,7 @@ GB_errors_wrong_PC_command      = 44
 // GB_PigBelowSyringe              = 45   // pig is under the syringe
 // GB_RecapPositionPig             = 46   // to hold the cap for recap
 // GB_CapHoldsSyringe              = 47   // cap holder is under the syringe
-// GB_PistonHomePos                = 48   // for empty syringe
+// GB_PistonHomePos                = 48   // for empty syringe // seggested value -> 40 [USteps]
 // GB_HeadRotateHomePos            = 49   // center of syringe cap
 // GB_CenterOfVial                 = 50   // at the top
 
@@ -378,54 +407,54 @@ GB_errors_wrong_PC_command      = 44
 //********************
 //********************
 
-// Syringe_1 = BD 3ml syringe
+// Syringe_1 = BD 3ml syringe - SYRINGE TO CALIBRATE BY !!!!
 Max_Volume_1         =  3000  // [uL]
-microL_per_100mm_1   =  5865  //6035
-Syring_Length_1      = 50000  // [um]
+microL_per_100mm_1   =  5877  //6035
+Syring_Length_1      = 50680  // [um]
 Limit_for_Prefill_1  =  2500  // [uL]
-LoadingDistance_1    =  1500  // [usteps]6
+// LoadingDistance_1    =  1500  // [usteps]
 
 // Syringe_2 = Henry Shine
 Max_Volume_2         =  3000  // [uL]
 microL_per_100mm_2   =  6417  //  6346
-Syring_Length_2      = 50000  // [um]
+Syring_Length_2      = 47000  // [um]
 Limit_for_Prefill_2  =  2500  // [uL]
-LoadingDistance_2    =  1500  // [usteps]
+// LoadingDistance_2    =  1500  // [usteps]
 
 // Syringe_3 = DPS
 Max_Volume_3         =  3000  // [uL]
 microL_per_100mm_3   =  5837
-Syring_Length_3      = 50000  // [um]
+Syring_Length_3      = 51600  // [um]
 Limit_for_Prefill_3  =  2500  // [uL]
-LoadingDistance_3    =  1500  // [usteps]
+// LoadingDistance_3    =  1500  // [usteps]
 
 // Syringe_4 = Terumo_2_5ml_syringe
 Max_Volume_4         =  2500  // [uL]
 microL_per_100mm_4   =  6417
-Syring_Length_4      = 50000  // [um]
+Syring_Length_4      = 40000  // [um]
 Limit_for_Prefill_4  =  2000  // [uL]
-LoadingDistance_4    =  1500  // [usteps]
+// LoadingDistance_4    =  1500  // [usteps]
 
-// Syringe_5 = Terumo_6ml_syringe
+// Syringe_5 = Terumo_5ml_syringe
 Max_Volume_5         =  6000  // [uL]
 microL_per_100mm_5   = 13196
-Syring_Length_5      = 50000  // [um]
+Syring_Length_5      = 45000  // [um]
 Limit_for_Prefill_5  =  4500  // [uL]
-LoadingDistance_5    =  1500  // [usteps]
+// LoadingDistance_5    =  1500  // [usteps]
 
 // Syringe_6 = BD_2ml_syringe
 Max_Volume_6         =  2000  // [uL]
 microL_per_100mm_6   =  6060
-Syring_Length_6      = 50000  // [um]
+Syring_Length_6      = 33000  // [um]
 Limit_for_Prefill_6  =  1500  // [uL]
-LoadingDistance_6    =  1500  // [usteps]
+// LoadingDistance_6    =  1500  // [usteps]
 
 // Syringe_7 = Other_7
 Max_Volume_7         =  3000  // [uL]
 microL_per_100mm_7   =  6000
 Syring_Length_7      = 50000  // [um]
 Limit_for_Prefill_7  =  2500  // [uL]
-LoadingDistance_7    =  1500  // [usteps]
+// LoadingDistance_7    =  1500  // [usteps]
 
 // current syringe
 // GB_Max_Volume_current        = 160
@@ -436,7 +465,7 @@ LoadingDistance_7    =  1500  // [usteps]
 // GB_adjustNeedleSensingHightMM  =  51
 GB_tryAgainCycle    = 52
 // GB_squeezeCapHeight    = 53
-GB_54               = 54
+GB_PistonFactor               = 54
 
 // the following global parameters will appear at motor 2 (cap holder)
 // GB_needleAtCapOffset         = 55     // offset from cap sensor finds needle position to true center of cap holder
@@ -462,7 +491,7 @@ GB_54               = 54
 
 GB_VerticalHomePos            =   7         // position for rotation adjustment  ~1100
 GB_LoadingHight               =   8         // syringe loading  ~700
-GB_BumpPosVert                =   9         // needle touches the vial rubber  ~9490
+GB_BumpPosVert                =   9         // needle touches the vial rubber  ~9490 - CALIBRATED WITH A 25MM NEEDLE !!
 GB_InDoseCalibrator           =  17         // Depth of dose calibrator ~ 38000
 GB_adjustNeedleSensingHightMM =  51         // mm to move down the hight of needle sensing. for special bump hight
 GB_squeezeCapHeight           =  53
@@ -473,7 +502,7 @@ GB_squeezeCapHeight           =  53
    VERTICAL_FOR_ROTATION           = 14500  // ABS
    VERTICAL_FOR_RETRETE            = 24000  // go lower to exit syringe from sheet metal when rotating
    VERTICAL_FOR_NEEDLE_DELTA       =  2900  // from bump, parameter 9
-   ABOVE_BUMP                      =     8  // insert neddle to this hight [mm]
+   ABOVE_BUMP                      =    10  // insert neddle to this hight [mm]
    VERTICAL_IN_VIAL_DELTA          = -verticalMicroStepsPerMM * ABOVE_BUMP  // ~1000 usteps = 8.0 [mm] from bump hight into the vial, to get most of the fluid
    STOP_CHECK_DIPPER_VERTICAL      =  4000  // 3000  //  delta from deepest vertical in dose (GP 17)
    ABOVE_PIG                       = -9300  // ABS
@@ -483,6 +512,7 @@ GB_squeezeCapHeight           =  53
    DETECT_CAP_HIGHT_REL            = -verticalMicroStepsPerMM 
    ABOVE_SQUEEZE_CAP               = -6000
    MIN_DEPTH_FOR_EXTRACT           =  20000
+   HIGHT_TO_GET_SOME_AIR           =  13825
 
    MAX_CURRENT_VERT                =   200
    MAX_CURRENT_VERT_HIGH           =   255
@@ -500,11 +530,13 @@ GB_squeezeCapHeight           =  53
    SEARCH_SPEED_VERT               =   400  // 400
    SWITCH_SPEED_VERT               =   400  //  80
 
-GB_needleLengthInMicroSteps   = 130        // verticalMicroStepsPerMM * GB_needleLength = 5039 [steps] for 40 [mm]
-GB_lastCapRefPosition         = 131
-GB_defaultNeedleLengthInMicroSteps = 132
-GB_vertical133                = 133
-GB_vertical134                = 134
+GB_syringeLengthInMicroSteps        = 128
+GB_defaultSyringeLengthInMicroSteps = 129
+GB_needleLengthInMicroSteps         = 130   // verticalMicroStepsPerMM * GB_needleLength = 5039 [steps] for 40 [mm]
+GB_lastCapRefPosition               = 131
+GB_defaultNeedleLengthInMicroSteps  = 132
+GB_vertical133                      = 133
+GB_vertical134                      = 134
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // GB_Motor_1 = M_pigHolderMotor
@@ -565,20 +597,20 @@ GB_NeedleAtCapOffset  = 55     // offset from cap sensor finds needle position t
 GB_capMicroStepsPerMM        = 140
 GB_limitCapBentMicroS        = 141
 GB_NeedleCapError            = 142   // error of needle at capholder position
-GB_143                       = 143
-GB_144                       = 144
+
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // GB_Motor_3 = M_pistonMotor
-   pistonFeedPerRevolution       =  4877 /// from version 74 // 2420  // micrometer
-   pistonStepsPerRev             =   200
-   pistonMicrosteps              =    16
-   pistonMicroStepsPerRev        = pistonMicrosteps * pistonStepsPerRev  // = 3200 [uS/rev]
-   pistonMicroStepsPerMM         = 1000 * pistonMicroStepsPerRev / pistonFeedPerRevolution // = 1322
-// GB_microL_per_100mm_current    =  6522
-   PISTON_POS_COORD              =     3
-GB_PistonHomePos       = 48         // for empty syringe ~1300
+   pistonFeedPerRevolution         =  4877 /// from version 74 // 2420  // micrometer
+   pistonStepsPerRev               =   200
+   pistonMicrosteps                =    16
+   pistonMicroStepsPerRev          = pistonMicrosteps * pistonStepsPerRev  // = 3200 [uS/rev]
+   pistonMicroStepsPerMM           =  1000 * pistonMicroStepsPerRev / pistonFeedPerRevolution // = 1322
+// GB_microL_per_100mm_current     =  6522
+   PISTON_POS_COORD                =     3
+   GB_PistonHomePos                =    48    // for empty syringe ~1300
+// GB_PistonFactor                 =    54
 
 //   BUMP_DOWN_REL                 =   500 /// 1000 // 0.05 mL // 1600 // tampa  // 800 // 0.04 mL 
 //   PISTON_BACKLASH               =     0 // (done) will be added to the "70%" push back = 60[uL]
@@ -586,15 +618,17 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
 //   ADD_FOR_PREFILL               =   830 ///  1666 // (done) add 0.08 mL
 //   PUSH_PISTON_MORE              =   300 ///   600 // 0.03 mL // 15 uL = 0.015 mL
 
-   BUMP_DOWN_REL_uL              =    60  // 46 ///  
+   BUMP_DOWN_REL_uL                =    60 // 46 ///  
 //   PISTON_BACKLASH_uL            =     0 //  (done) will be added to the "70%" push back = 60[uL]
-   PISTON_MORE_uL                =   368 /// to the draw and then pushed back    = 0.6 mL
-   ADD_FOR_PREFILL_uL            =    76 ///  1666 // (done) add 0.08 mL
-   PUSH_PISTON_MORE_uL           =     0 /// 28 ///   600 // 0.03 mL // 15 uL = 0.015 mL
-   BUBBLES_PULL_uL               =   700 // 0.7 ml
-   MIN_DRAW_PISTON_uL            =  1000 // uL
-   MINIMUM_DRAW_VOLUME_uL        =   100  // not less than 0.1 ml
-   MINIMUM_DRAW_PREFILL_uL       =   100  // not less than 0.1 ml
+   PISTON_MORE_uL                  =   368 /// to the draw and then pushed back    = 0.6 mL
+   ADD_FOR_PREFILL_uL              =    76 ///  1666 // (done) add 0.08 mL
+   PUSH_PISTON_MORE_uL             =     0 /// 28 ///   600 // 0.03 mL // 15 uL = 0.015 mL
+   BUBBLES_PULL_uL                 =   700 // 0.7 ml
+   MIN_DRAW_PISTON_uL              =  1000 // uL
+   MINIMUM_DRAW_VOLUME_uL          =   100  // not less than 0.1 ml
+   MINIMUM_DRAW_PREFILL_uL         =   100  // not less than 0.1 ml
+   LEAVE_WATER_FOR_AIR             =  2000
+   PULL_TO_PREVENT_DRIPPING        =  1000
 
 
    MAX_POS_SPEED_PIST            =   600 //   800
@@ -607,6 +641,8 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    SEARCH_SPEED_PIST             =   400 /// 800
    SWITCH_SPEED_PIST             =   100
 
+   MAX_PIST_IN_USTEPS            =   29500 // mesured - with curent hardware
+
    ACC_PIST                      =   200
    STBY_CURRENT_PIST             =    25
    MAX_CURRENT_PIST              =   128
@@ -614,12 +650,32 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    WAIT_TICKS_PUSH_AIR           =    50  //  [0.5s]
    WAIT_TICKS_BUBBLES            =   100 //   [1s]
    WAIT_TICKS_BUBBLES_BACK       =    20  //  [0.2s]
- 
-GB_145                         = 145
-GB_pistonMicroStepPer100microL = 146 // 10000 * pistonMicroStepsPerMM / GB_microL_per_100mm_current = 2190
-GB_minDrawPistonTemp_uL        = 147 //
-GB_148                         = 148
-GB_149                         = 149
+
+
+// func_36:   CSUB homePistonMotorBoth
+// func_54:   CSUB pistonMotorTOerr
+// func_66:   CSUB checkSyrPoppedOut
+// func_72:   CSUB startPullAir70
+// func_80:   CSUB push70air
+// func_82:   CSUB drawVial
+// func_88:   CSUB bumpPlunger
+// func_98:   CSUB startPullAir70
+// func_100:  CSUB drawVialMoreBack
+// func_104:  CSUB homePistonMotor
+// func_128:  CSUB waitHomePistonMotor
+// func_142:  CSUB PistonManual
+// func_154:  CSUB rinseSyringe
+// func_162:  CSUB emptyItSlow
+// func_164:  CSUB emptyItSlow
+// func_156:  CSUB fillItFast
+
+GB_143                              = 143
+GB_HieghtForDebubblInginUL          = 144 // HIEGHTFORDEBUBBLINGINUL
+GB_tempPistonCalculation_uL         = 145
+GB_pistonMicroStepPer100microL      = 146 // 10000 * pistonMicroStepsPerMM / GB_microL_per_100mm_current = 2190
+GB_minDrawPistonTemp_uL             = 147 //
+GB_primingPisonLocationAssistant    = 148
+GB_reservedPisonLocation            = 149
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -673,11 +729,13 @@ GB_Max_Volume_current        = 160
 GB_microL_per_100mm_current  = 161
 GB_Syring_Length_current     = 162
 GB_Limit_for_Prefill_current = 163
+GB_Syring_Length_Default     = 164
+GB_current_Volume_Temp_saver = 165
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // bubbles
 GB_numberOfKicksTemp             =  182
-GB_                              =  183  
+GB_183_tmp                       =  183  
 GB_184                           =  184  
 GB_185                           =  185   
 GB_186                           =  186    
@@ -715,7 +773,7 @@ FUNC_10:   CSUB CHECK_DONE       //  ok, put the syringe in PIG
            JA   BACK_GROUND_PROCESS
 func_12:   CSUB ABORT            //  stop all motors and program
            JA   BACK_GROUND_PROCESS
-func_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syrine and pig are ready to draw
+func_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syringe and pig are ready to draw
            JA   BACK_GROUND_PROCESS
 FUNC_16:   CSUB INIT             //  Initialize parameters.
            JA   BACK_GROUND_PROCESS
@@ -848,7 +906,7 @@ func_128:  CSUB waitHomePistonMotor
            JA   BACK_GROUND_PROCESS
 func_130:  CSUB findCapHolderAtNeedle
            JA   BACK_GROUND_PROCESS
-func_132:  CSUB BubblesVibrateSyringe
+func_132:  CSUB dummy_sub // BubblesVibrateSyringe
            JA   BACK_GROUND_PROCESS
 
 // manual movements functions
@@ -867,11 +925,34 @@ func_144:  CSUB RotationManual
            JA   BACK_GROUND_PROCESS
 func_146:  CSUB DoseCalibratorCheck
            JA   BACK_GROUND_PROCESS
-func_148:  CSUB capVibrate
+func_148:  CSUB dummy_sub // was : capVibrate
            JA   BACK_GROUND_PROCESS
 func_150:  CSUB ExtractFromDoseCalibrator
            JA   BACK_GROUND_PROCESS
 func_152:  CSUB dummy_sub
+           JA   BACK_GROUND_PROCESS
+
+// debugging bubbles funcs
+
+func_154:  CSUB dummy_sub
+           JA   BACK_GROUND_PROCESS
+func_156:  CSUB dummy_sub
+           JA   BACK_GROUND_PROCESS
+func_158:  CSUB LEDs_dummy_sub
+           JA   BACK_GROUND_PROCESS
+func_160:  CSUB LEDs_dummy_sub2
+           JA   BACK_GROUND_PROCESS
+func_162:  CSUB LEDs_dummy_sub3 // primeSyringe
+           JA   BACK_GROUND_PROCESS
+func_164:  CSUB LEDs_dummy_sub4 // drawVial
+           JA   BACK_GROUND_PROCESS
+func_166:  CSUB dummy_sub
+           JA   BACK_GROUND_PROCESS
+func_168:  CSUB dummy_sub
+           JA   BACK_GROUND_PROCESS
+func_170:  CSUB dummy_sub
+           JA   BACK_GROUND_PROCESS
+func_172:  CSUB dummy_sub
            JA   BACK_GROUND_PROCESS
 
 
@@ -1012,7 +1093,7 @@ syringe4:
     JA      returnInitSyringes
 syringe5:
     GGP     GB_Syringe_Type, GPbank_2
-    COMP    Terumo_6ml_syringe                          // is it Terumo_6ml_syringe?
+    COMP    Terumo_5ml_syringe                          // is it Terumo_5ml_syringe?
     JC      NE, syringe6                                // no, try next
     SGP     GB_Max_Volume_current, GPbank_2, Max_Volume_5
     SGP     GB_microL_per_100mm_current, GPbank_2, microL_per_100mm_5
@@ -1041,8 +1122,8 @@ syringe7:
 //    SGP     GB_LoadingDistance_current, GPbank_2, LoadingDistance_7
     JA      returnInitSyringes
 
-defaultSyringe:  // Henry Shine
-    SGP     GB_Syringe_Type, GPbank_2, DEFAULT_SYRINGE_TYPE     // HenryShine_syringe
+defaultSyringe:  // BD 3ml
+    SGP     GB_Syringe_Type, GPbank_2, DEFAULT_SYRINGE_TYPE     // BD_syringe
     JA      initSyringes
 
 returnInitSyringes:    // save in EEPROM
@@ -1060,6 +1141,7 @@ returnInitSyringes:    // save in EEPROM
 //****
 justLoadMaxVol:
     RSUB
+
 
 //**********************************
 
@@ -1192,6 +1274,18 @@ initVerticalMotor:
     SAP     AP_PulseDivisor, M_verticalMotor, 3                   		// Set pulse divisor
     SAP     AP_SoftStopFlag, M_verticalMotor, set                       // Soft stop (using deceleration ramp) when a stop switch is hit
     SIO     MotorUpRelease, OutBank_2, set                              // un short and relesae the motor coils
+
+//GB_syringeLengthInMicroSteps        = 128
+    GGP     GB_Syring_Length_current, GPbank_2                          // still need to div by 1000 (change from micro to mili)
+    CALC    MUL, verticalMicroStepsPerMM                                // 
+    CALC    DIV, 1000                                                   // div by 1000 to change from microM to miliM
+    AGP     GB_syringeLengthInMicroSteps, GPbank_2                      // load to parameter 
+
+//GB_defaultSyringeLengthInMicroSteps = 129
+    CALC    LOAD, DEFAULT_SYRINGE_LENGTH                                // still need to div by 1000 (change from micro to mili)
+    CALC    MUL, verticalMicroStepsPerMM                                // 
+    CALC    DIV, 1000                                                   // div by 1000 to change from microM to miliM
+    AGP     GB_defaultSyringeLengthInMicroSteps, GPbank_2               // load to parameter 
 
 //GB_needleLengthInMicroSteps = 130                                     // verticalMicroStepsPerMM * GB_needleLength
     GGP     GB_needleLength, GPbank_2                                   // A = GB_needleLength

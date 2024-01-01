@@ -483,11 +483,13 @@ GB_squeezeCapHeight           =  53
    DETECT_CAP_HIGHT_REL            = -verticalMicroStepsPerMM 
    ABOVE_SQUEEZE_CAP               = -6000
    MIN_DEPTH_FOR_EXTRACT           =  20000
+   HIGHT_TO_GET_SOME_AIR           =  13825
 
    MAX_CURRENT_VERT                =   200
    MAX_CURRENT_VERT_HIGH           =   255
    MAX_CURRENT_VERT_INTO_CALIBRATOR  = 150
    STBY_CURRENT_VERT               =   100
+   MAX_POS_SPEED_BUNJI_JUMP        =  2000
    MAX_POS_SPEED_VER_ROT           =  1300  // needs same speed for vertical and rotation for coordinated move
    MAX_POS_SPEED_VER_INTO_CAP      =   600  //
    MAX_POS_SPEED_VER_TO_VIAL       =   200
@@ -497,6 +499,7 @@ GB_squeezeCapHeight           =  53
    MAX_POS_SPEED_VER_RETREAT       =   400
    ACC_VERT                        =    10  // 20  // show 10
    ACC_VERT_HIGH                   =    40
+   ACC_VERT_VERY_HIGH              =   100
    SEARCH_SPEED_VERT               =   400  // 400
    SWITCH_SPEED_VERT               =   400  //  80
 
@@ -597,15 +600,16 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    MINIMUM_DRAW_PREFILL_uL       =   100  // not less than 0.1 ml
 
 
-   MAX_POS_SPEED_PIST            =   600 //   800
-   MAX_POS_SPEED_PIST_DRAW       =  1800 /// 1200 // 1500
-   MAX_POS_SPEED_PIST_TRYAGAIN   =   600 /// 1200 //  800
-   MAX_POS_SPEED_PIST_BUBBLE     =  1800 /// 1500
+   MAX_POS_SPEED_PIST             =   600 //   800
+   MAX_POS_SPEED_PIST_DRAW        =  1800 /// 1200 // 1500
+   MAX_POS_SPEED_PIST_DRAW_SLOWER =   600 /// 1200 // 1500
+   MAX_POS_SPEED_PIST_TRYAGAIN    =   600 /// 1200 //  800
+   MAX_POS_SPEED_PIST_BUBBLE      =  1800 /// 1500
    MAX_POS_SPEED_PIST_BUBBLE_BACK =  800 /// 1200
-   MAX_POS_SPEED_PIST_MORE       =   200 //// 1800 ///  100 /// 200 // 1500 //  200
-   MAX_POS_SPEED_PIST_MORE_BACK  =   600 /// 1200
-   SEARCH_SPEED_PIST             =   400 /// 800
-   SWITCH_SPEED_PIST             =   100
+   MAX_POS_SPEED_PIST_MORE        =   200 //// 1800 ///  100 /// 200 // 1500 //  200
+   MAX_POS_SPEED_PIST_MORE_BACK   =   600 /// 1200
+   SEARCH_SPEED_PIST              =   400 /// 800
+   SWITCH_SPEED_PIST              =   100
 
    ACC_PIST                      =   200
    STBY_CURRENT_PIST             =    25
@@ -647,6 +651,7 @@ GB_CenterOfVial         = 50           // at the top  ~ 32150
    STBY_CUR_ROTATE               =    100  // normal
    STBY_CUR_ROTATE_HIGH          =    200  // while syringe loading
 // MAX_POS_SPEED_VER_ROT         =   1300  // needs same speed for vertical and rotation for coordinated move
+   SHAKE_SPEED_ROT               =   1200
    SEARCH_SPEED_ROT              =    100
    SWITCH_SPEED_ROT              =     50
    SEARCH_SPEED_ROT_SLOW         =     20
@@ -659,8 +664,9 @@ GB_microMeterRandom     = 26    // +/- random insertion into vial in uM
    MAX_RANDOM_IN_VIAL            =    700 // uM = 0.7mm
    LIMIT_UM_BENT_NEEDLE          =   3000 // 1650 // [um]
    limitNeedleBentMicroS         =  rotateMicroStepsPerMM * LIMIT_UM_BENT_NEEDLE / 1000  // 3.0 [mm] // 2.0 [mm] = 88 us
-   NUMBER_OF_KICKS               =      0
-   ROTATE_BUBBLES_uM             =   1000  //  +/- 1 mm at the end of the needle
+   NUMBER_OF_KICKS               =     10
+   ROTATE_BUBBLES_uM             = 200000  //  +/- 1 mm at the end of the needle
+   LEAVE_WATER_FOR_AIR           =   5000
 
 GB_lastTopRefPosition         = 150
 GB_rotateMicroStepsPerMM      = 151

@@ -363,6 +363,70 @@ returnInitDraw:
 
     RSUB
 
+//*******************************************************************************
+//*******************************************************************************
+//*******************************************************************************
+//*******************************************************************************
+//*******************************************************************************
+// Name: special_INIT   (156)
+//
+// Summary: does almost all initialise proccesses when the robot is after an error so it will find all of the reference points after it put the requested option
+//
+//*******************************************************************************
+
+special_INIT_DRAW_DOSE:  
+
+//  EI      TI_INPUT2                       //  hands in machine
+    DI      TI_STOPLEFT4                    //  Left rotate reference
+    EI      TI_STOPLEFT5                    //  syringe pop out interrupt
+    DI      TI_STOPRIGHT5                   //  dipper interrupt // why is it disabled
+
+// clear errors and check for syringe
+    CSUB    ClearRunningErrors                 
+    CSUB    checkOkToInitDrawDoze           // check if in right state,         sets STOPPED_ON_ERROR state
+    CSUB    checkPrefillVolume              // verify prefill volume,           sets STOPPED_ON_ERROR state
+    CSUB    checkNoSyringe                  // check syringe exists,            sets STOPPED_ON_ERROR state
+    CSUB    checkCapSensor                  // check cap sensor is not blocked, sets STOPPED_ON_ERROR state
+    GGP     GB_any_Error, GPbank_2          // get any error status
+    COMP    ANY_ERROR_EXISTS                // exists?
+    JC      NE, special_INIT_HandOKinitDraw              // no, continue 
+// error exists
+    SGP     GB_CurrentState, GPbank_2, WAITING_INIT_DRAW_DOSE // (not necesssary) enable easy recovery after hand is out
+    JA      special_INIT_returnInitDraw                             
+
+HandOKinitDraw:
+    CSUB    FIND_HOMES_SHORT
+    GGP     GB_LoadingHight, GPbank_2
+    CALCAV  ADD, GB_DELTA_A
+    CSUB    moveCoordVertical
+// extend capHolder
+//    GGP     GB_CapHoldsSyringe, GPbank_2                              // go to required height
+//    ACO     CAP_POS_COORD, M_capHolderMotor                           // target position into coordinate
+//    MVP     COORD, M_capHolderMotor, CAP_POS_COORD                    // run to coord position
+// prefill or regular?
+    GGP     GB_preFillRequest, GPbank_2                               // check for requested prefill
+    COMP    PRE_FILL_REQUEST                                          // pre-fill?
+    JC      NE, special_INIT_waitMotors                                            // if not, continue
+initPrefill:                                                          // prefill volume was inserted before by the PC
+    CSUB    movePlungerToPrefill
+waitMotors:  // wait for both                                         // **** ADD DRAW VOLUME INITIALIZATION ****
+    CSUB    waitCapHolder
+    SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE_HIGH   // Set standby current 
+    SAP     AP_StandbyCurrent, M_capHolderMotor, STBY_CUR_CAP_HIGH       // Set standby current
+    SGP     GB_CurrentState, GPbank_2, WAITING_DRAW_DOSE
+
+special_INIT_returnInitDraw:
+//  DI      TI_INPUT2                       //  hands in machine
+    DI      TI_STOPLEFT4                    //  Left rotate reference
+    DI      TI_STOPLEFT5                    //  syringe pop out interrupt
+    DI      TI_STOPRIGHT5                   //  dipper interrupt
+
+    RSUB
+
+//*******************************************
+//*******************************************
+//*******************************************
+//*******************************************
 //*******************************************
 // Name: DRAW_DOSE  (8)
 //
@@ -2773,25 +2837,9 @@ clrAnyError:
     RSUB
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-               
 
+returnContentToVial:
 
-        
-                                                                              
-                
-
-
-        
-                                                                              
-                
-
-                        
-
-        
-                                                                              
-                
-
-                    
-                            
-
-        
+    CSUB    special_INIT
+    CSUB    special_tryAgain
+    RSUB

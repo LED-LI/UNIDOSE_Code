@@ -886,6 +886,10 @@ func_150:  CSUB ExtractFromDoseCalibrator
            JA   BACK_GROUND_PROCESS
 func_152:  CSUB tapTap
            JA   BACK_GROUND_PROCESS
+func_154:  CSUB returnContentToVial
+           JA   BACK_GROUND_PROCESS
+func_156:  CSUB special_INIT
+           JA   BACK_GROUND_PROCESS
 
 
 //*****************************

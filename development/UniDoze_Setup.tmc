@@ -99,7 +99,7 @@
 //          86. V1040050 added gauges 20, 24, draw at fast speed (800), Default draw wait = 100, random needle in vial +- 0.4mm
 //          87. V1040051 for adjust cycle go up to absolute hight for short needle
 //          88. V1040052 needle interrupt only, no more checkings, always 3 check before error, changed 2 "JC ZE" to "COMP + JC "
-//                       function: "func_134:  CSUB retreatFromVial"  if stuck in vial
+//                       function: "FUNC_134:  CSUB retreatFromVial"  if stuck in vial
 //                       removed restore and backup subroutines (148, 150)
 //          89. V1040053 GP 26 holds the random movement in um. If <=0, sets to 0, 
 //                       if >MAX_RANDOM_IN_VIAL sets to RANDOM_um_TO_MOVE_DEF
@@ -142,7 +142,7 @@
 //         123. V1040088 Bump amount 46 -> 60 microL (BUMP_DOWN_REL_uL)
 //         124. V1040089 cancel: Bump amount 60 -> 46 microL (BUMP_DOWN_REL_uL), 
 //                       less currrent when moving into dose calibrator :150
-//                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
+//                       Added new function: FUNC_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
 //         125. V1040089-a returned Bump amount 60 -> 46 microL (BUMP_DOWN_REL_uL)
 //         126. V1040089-b made extract dipper work with UI
@@ -161,7 +161,7 @@
 //
 //***********************************************************************************************************
 
-// this file 2024-2-29-V40098-c-from_ISORAD-UniDoze-SW.tmc
+// this file 2024-03-03-V40098-c-UniDoze-SW.tmc
 
 CURRENT_VERSION      =  1040098
 
@@ -266,15 +266,19 @@ GB_InitDone                = 203  // INIT (func 0) done. starts automaticaly
 GB_HomingDone              =   4  // FIND_HOME, only at power up
 // SW states
 GB_CurrentState            =   5  // defines the current state of the process
-WAITING_INIT_DRAW_DOSE = 10       // this the state after the power up as well
-RUNNING_INIT_DRAW_DOSE = 20
-WAITING_DRAW_DOSE      = 30       // at this state it is possible as well to run INIT_DRAW_DOSE (6)
-RUNNING_DRAW_DOSE      = 40
-WAITING_CHECK_DONE     = 50
-RUNNING_CHECK_DONE     = 60
-STOPPED_ON_ERROR       = 70
-STOPPED_TIME_OUT       = 80
-ABORTED                = 90
+WAITING_INIT_DRAW_DOSE     = 10   // this the state after the power up as well
+RUNNING_INIT_DRAW_DOSE     = 20
+WAITING_DRAW_DOSE          = 30   // at this state it is possible as well to run INIT_DRAW_DOSE (6)
+RUNNING_DRAW_DOSE          = 40
+WAITING_CHECK_DONE         = 50
+RUNNING_CHECK_DONE         = 60
+STOPPED_ON_ERROR           = 70
+STOPPED_TIME_OUT           = 80
+ABORTED                    = 90
+RUNNING_RTV_INIT           = 6    // RTV = Return To Vial
+RUNNING_RTV_TRY_AGAIN      = 66
+RUNNING_RETURN_TO_VIAL     = 69
+FINISHED_RETURN_TO_VIAL    = 666
 
 
 GB_RobotSerialNumber   =    6        // (1030006)  1= unidose, 03= HW ver,  0006= machine #)
@@ -402,6 +406,8 @@ GB_PistonFactor                    = 54
 // the following global parameters will appear at motor 0 (vertical)
 // GB_LoadingDistance_current      = 56     // future option, not used
 GB_Default_Needle_Length           = 57    // 25 [mm]
+GB_temp_place_holder               = 58    
+GB_temp_place_holder2              = 59    
 
 //********************
 //********************
@@ -726,171 +732,172 @@ FUNC_8:    CSUB DRAW_DOSE        //  Draw the requested activity
            JA   BACK_GROUND_PROCESS
 FUNC_10:   CSUB CHECK_DONE       //  ok, put the syringe in PIG
            JA   BACK_GROUND_PROCESS
-func_12:   CSUB ABORT            //  stop all motors and program
+FUNC_12:   CSUB ABORT            //  stop all motors and program
            JA   BACK_GROUND_PROCESS
-func_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syringe and pig are ready to draw
+FUNC_14:   CSUB VERIFY_READY_DRAW //  checks if the vial' syringe and pig are ready to draw
            JA   BACK_GROUND_PROCESS
 FUNC_16:   CSUB INIT             //  Initialize parameters.
            JA   BACK_GROUND_PROCESS
-func_18:   CSUB FIND_HOMES_SHORT
+FUNC_18:   CSUB FIND_HOMES_SHORT
            JA   BACK_GROUND_PROCESS
-func_20:   CSUB HomeCalibration
+FUNC_20:   CSUB HomeCalibration
            JA   BACK_GROUND_PROCESS
-func_22:   CSUB LEDS_OFF
+FUNC_22:   CSUB LEDS_OFF
            JA   BACK_GROUND_PROCESS
-func_24:   CSUB RED_ON
+FUNC_24:   CSUB RED_ON
            JA   BACK_GROUND_PROCESS
-func_26:   CSUB GREEN_ON
+FUNC_26:   CSUB GREEN_ON
            JA   BACK_GROUND_PROCESS
-func_28:   CSUB YELLOW_ON
+FUNC_28:   CSUB YELLOW_ON
            JA   BACK_GROUND_PROCESS
 
 // for FUNC_2 (FIND_HOMES)
 
-func_30:   CSUB positionVerticalMotor  // will not search bottom side. for debugging
+FUNC_30:   CSUB positionVerticalMotor  // will not search bottom side. for debugging
            JA   BACK_GROUND_PROCESS
-func_32:   CSUB homePigHolderMotorBoth
+FUNC_32:   CSUB homePigHolderMotorBoth
            JA   BACK_GROUND_PROCESS
-func_34:   CSUB homeCapHolderMotorBoth
+FUNC_34:   CSUB dummy_sub // homeCapHolderMotorBoth
            JA   BACK_GROUND_PROCESS
-func_36:   CSUB homePistonMotorBoth
+FUNC_36:   CSUB homePistonMotorBoth
            JA   BACK_GROUND_PROCESS
-func_38:   CSUB PositionHeadRotateMotor
+FUNC_38:   CSUB PositionHeadRotateMotor
            JA   BACK_GROUND_PROCESS
-func_40:   CSUB verticalMotorTOerr
+FUNC_40:   CSUB verticalMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_42:   CSUB pigMotorTOerr
+FUNC_42:   CSUB pigMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_44:   CSUB capHolderMotorTOerr
+FUNC_44:   CSUB capHolderMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_46:   CSUB pistonMotorTOerr
+FUNC_46:   CSUB pistonMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_48:   CSUB headRotateMotorTOerr
+FUNC_48:   CSUB headRotateMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_50:   CSUB verticalMotorTOerr
+FUNC_50:   CSUB verticalMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_52:   CSUB capHolderMotorTOerr
+FUNC_52:   CSUB capHolderMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_54:   CSUB pistonMotorTOerr
+FUNC_54:   CSUB pistonMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_56:   CSUB headRotateMotorTOerr
+FUNC_56:   CSUB headRotateMotorTOerr
            JA   BACK_GROUND_PROCESS
-func_58:   CSUB homeHeadRotateMotor
+FUNC_58:   CSUB homeHeadRotateMotor
            JA   BACK_GROUND_PROCESS
 
 // for FUNC_6  (INIT_DRAW_DOSE)
 
-func_60:   CSUB checkCapSensor
+FUNC_60:   CSUB checkCapSensor
            JA   BACK_GROUND_PROCESS
-func_62:   CSUB checkNoSyringe
+FUNC_62:   CSUB checkNoSyringe
            JA   BACK_GROUND_PROCESS
-func_64:   CSUB movePlungerToPrefill
+FUNC_64:   CSUB movePlungerToPrefill
            JA   BACK_GROUND_PROCESS
-func_66:   CSUB checkSyrPoppedOut
+FUNC_66:   CSUB checkSyrPoppedOut
            JA   BACK_GROUND_PROCESS
-func_68:   CSUB checkPigPoppedOut
+FUNC_68:   CSUB checkPigPoppedOut
            JA   BACK_GROUND_PROCESS
 
 // for FUNC_8   (DRAW_DOSE)
 
-func_70:   CSUB addBacklashPrefill
+FUNC_70:   CSUB addBacklashPrefill
            JA   BACK_GROUND_PROCESS
-func_72:   CSUB startPullAir70
+FUNC_72:   CSUB startPullAir70
            JA   BACK_GROUND_PROCESS
-func_74:   CSUB decapSyringe
+FUNC_74:   CSUB decapSyringe
            JA   BACK_GROUND_PROCESS
-func_76:   CSUB moveBelowVial
+FUNC_76:   CSUB moveBelowVial
            JA   BACK_GROUND_PROCESS
-func_78:   CSUB insertNeedle
+FUNC_78:   CSUB insertNeedle
            JA   BACK_GROUND_PROCESS
-func_80:   CSUB push70air
+FUNC_80:   CSUB push70air
            JA   BACK_GROUND_PROCESS
-func_82:   CSUB drawVial
+FUNC_82:   CSUB drawVial
            JA   BACK_GROUND_PROCESS
-func_84:   CSUB ClearRunningErrors
+FUNC_84:   CSUB ClearRunningErrors
            JA   BACK_GROUND_PROCESS
-func_86:   CSUB moveSlowlyBottom
+FUNC_86:   CSUB moveSlowlyBottom
            JA   BACK_GROUND_PROCESS
-func_88:   CSUB bumpPlunger
+FUNC_88:   CSUB bumpPlunger
            JA   BACK_GROUND_PROCESS
-func_90:   CSUB recapSyringe
+FUNC_90:   CSUB recapSyringe
            JA   BACK_GROUND_PROCESS
-func_92:   CSUB insertIntoDozeCalib
+FUNC_92:   CSUB insertIntoDozeCalib
            JA   BACK_GROUND_PROCESS
-func_94:   CSUB openVialCover
+FUNC_94:   CSUB openVialCover
            JA   BACK_GROUND_PROCESS
-func_96:   CSUB closeVialCover
+FUNC_96:   CSUB closeVialCover
            JA   BACK_GROUND_PROCESS
-func_98:   CSUB startPullAir70
+FUNC_98:   CSUB startPullAir70
            JA   BACK_GROUND_PROCESS
-func_100:  CSUB drawVialMoreBack
+FUNC_100:  CSUB drawVialMoreBack
            JA   BACK_GROUND_PROCESS
-func_102:  CSUB homeVerticalMotor
+FUNC_102:  CSUB homeVerticalMotor
            JA   BACK_GROUND_PROCESS
-func_104:  CSUB homePistonMotor
+FUNC_104:  CSUB homePistonMotor
            JA   BACK_GROUND_PROCESS
-func_106:  CSUB setCenterOfSeptum
+FUNC_106:  CSUB setCenterOfSeptum
            JA   BACK_GROUND_PROCESS
-func_108:  CSUB findCenterCapHolderManual
+FUNC_108:  CSUB findCenterCapHolderManual
            JA   BACK_GROUND_PROCESS
 
 // for FUNC_10   (CHECK_DONE)
 
-func_110:  CSUB putSyringeInPig
+FUNC_110:  CSUB putSyringeInPig
            JA   BACK_GROUND_PROCESS
-func_112:  CSUB incrementCycles
+FUNC_112:  CSUB incrementCycles
            JA   BACK_GROUND_PROCESS
 
 // more functions
 
-func_114:  CSUB homeVerticalMotorBoth
+FUNC_114:  CSUB homeVerticalMotorBoth
            JA   BACK_GROUND_PROCESS
-func_116:  CSUB checkVialPoppedOut
+FUNC_116:  CSUB checkVialPoppedOut
            JA   BACK_GROUND_PROCESS
-func_118:  CSUB getRandom
+FUNC_118:  CSUB getRandom
            JA   BACK_GROUND_PROCESS
-func_120:  CSUB homePigHolderMotor
+FUNC_120:  CSUB homePigHolderMotor
            JA   BACK_GROUND_PROCESS
-func_122:  CSUB homeCapHolderMotor
+FUNC_122:  CSUB homeCapHolderMotor
            JA   BACK_GROUND_PROCESS
-func_124:  CSUB startHomePistonMotor
+FUNC_124:  CSUB startHomePistonMotor
            JA   BACK_GROUND_PROCESS
-func_126:  CSUB armIntoDoseCalibrator
+FUNC_126:  CSUB armIntoDoseCalibrator
            JA   BACK_GROUND_PROCESS
-func_128:  CSUB waitHomePistonMotor
+FUNC_128:  CSUB waitHomePistonMotor
            JA   BACK_GROUND_PROCESS
-func_130:  CSUB findCapHolderAtNeedle
+FUNC_130:  CSUB findCapHolderAtNeedle
            JA   BACK_GROUND_PROCESS
-func_132:  CSUB dummy_sub // BubblesVibrateSyringe
+FUNC_132:  CSUB dummy_sub // BubblesVibrateSyringe
            JA   BACK_GROUND_PROCESS
 
 // manual movements functions
 
-func_134:  CSUB retreatFromVial
+FUNC_134:  CSUB retreatFromVial
            JA   BACK_GROUND_PROCESS
-func_136:  CSUB VerticalManual
+FUNC_136:  CSUB VerticalManual
            JA   BACK_GROUND_PROCESS
-func_138:  CSUB PigHolderManual
+FUNC_138:  CSUB PigHolderManual
            JA   BACK_GROUND_PROCESS
-func_140:  CSUB CapHolderManual
+FUNC_140:  CSUB CapHolderManual
            JA   BACK_GROUND_PROCESS
-func_142:  CSUB PistonManual
+FUNC_142:  CSUB PistonManual
            JA   BACK_GROUND_PROCESS
-func_144:  CSUB RotationManual
+FUNC_144:  CSUB RotationManual
            JA   BACK_GROUND_PROCESS
-func_146:  CSUB DoseCalibratorCheck
+FUNC_146:  CSUB DoseCalibratorCheck
            JA   BACK_GROUND_PROCESS
-func_148:  CSUB dummy_sub // was : capVibrate
+FUNC_148:  CSUB dummy_sub // was : capVibrate
            JA   BACK_GROUND_PROCESS
-func_150:  CSUB ExtractFromDoseCalibrator
+FUNC_150:  CSUB ExtractFromDoseCalibrator
            JA   BACK_GROUND_PROCESS
-func_152:  CSUB tapTap
+FUNC_152:  CSUB tapTap
            JA   BACK_GROUND_PROCESS
-func_154:  CSUB returnContentToVial
+FUNC_154:  CSUB returnContentToVial
            JA   BACK_GROUND_PROCESS
-func_156:  CSUB special_INIT
-           JA   BACK_GROUND_PROCESS
-
+// FUNC_156:  CSUB special_INIT
+           // JA   BACK_GROUND_PROCESS
+// FUNC_158:  CSUB special_tryAgain
+           // JA   BACK_GROUND_PROCESS
 
 //*****************************
     STOP     // just in case

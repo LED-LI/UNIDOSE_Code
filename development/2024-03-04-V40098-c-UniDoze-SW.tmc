@@ -167,7 +167,7 @@
 
 #Include UniDoze_TMCLParam.tmc                         // TMCL Parameters
 #Include UniDoze_Setup.tmc                             // UniDoze Parameters & initialization
-// this file 2024-03-03-V40098-c-from_ISORAD-UniDoze-SW.tmc
+// this file 2024-03-04-V40098-c-from_ISORAD-UniDoze-SW.tmc
 
 //*********************************
 //*********************************
@@ -2800,28 +2800,21 @@ returnContentToVial: // FUNC_154
     SGP     GB_any_Error, GPbank_2, clr                                         // clear any error status
     // CSUB    capIntoCapHolder // probably in a variation of this function
     // CSUB    FIND_HOMES_SHORT                                                 // will find the homes of most Axis with out homing the piston 
-    
+
     // SAP 5, 0, 10 	// Maximum acceleration [int]   // M_verticalMotor
-    SAP       AP_MaxAcceleration, M_verticalMotor, ACC_VERT              // Set maximum acceleration
-    
+    SAP     AP_MaxAcceleration, M_verticalMotor, ACC_VERT              // Set maximum acceleration
     // SAP 7, 2, 200 	// Standby current              // M_capHolderMotor
     SAP     AP_StandbyCurrent, M_capHolderMotor, STBY_CUR_CAP_HIGH      // Set standby current
-
     // SAP 7, 4, 200 	// Standby current              // M_headRotateMotor
     SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE_HIGH  // Set standby current 
-
-    
-
-
-	// SAP 193, 4, 1 	// Reference search mode        // M_headRotateMotor
+    // SAP 193, 4, 1 	// Reference search mode        // M_headRotateMotor
 	SAP     AP_RefSearchMode,  M_headRotateMotor, APV_RefLeftSwitch
-
     // SAP 194, 4, 20 	// Reference search speed [int] // M_headRotateMotor
 	SAP     AP_RefSearchSpeed, M_headRotateMotor, SEARCH_SPEED_ROT_SLOW   // speed for search
-
-
     // SAP 195, 4, 10 	// Reference switch speed [int] // M_headRotateMotor
 	SAP     AP_RefSwitchSpeed, M_headRotateMotor, SWITCH_SPEED_ROT_SLOW   // speed for final search
+    // SAP 13, 4, 1 	// Left limit switch disable 
+    SAP     AP_LeftLimitSwitchDisable, M_headRotateMotor, set        // re-Enable left limit switch
 
 
     CSUB    homePigHolderMotor                 // Pig and Cap holders first to clear the way for vertical

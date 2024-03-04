@@ -161,7 +161,7 @@
 //
 //***********************************************************************************************************
 
-// this file 2024-03-03-V40098-c-UniDoze-SW.tmc
+// this file 2024-03-04-V40098-c-UniDoze-SW.tmc
 
 CURRENT_VERSION      =  1040098
 
@@ -1384,10 +1384,10 @@ ABORT:
 ABORT_NoReport:
     SAP     AP_MaxAcceleration, M_verticalMotor, ACC_VERT_HIGH     // stop quicker
     MST     M_verticalMotor                             // Stop up down
-    MST     M_pigHolderMotor                            // Stop rotate head
+    MST     M_pigHolderMotor                            // Stop move pig
     MST     M_capHolderMotor                            // Stop hold syringe
     MST     M_pistonMotor                               // Stop fill syringe
-    MST     M_headRotateMotor                           // Stop move pig
+    MST     M_headRotateMotor                           // Stop rotate head
     SGP     GB_MotorIsMoving, GPbank_2, clr             
     CSUB    RED_ON                                      // red LED
 //  DI      TI_INPUT2                                   //  hands in machine

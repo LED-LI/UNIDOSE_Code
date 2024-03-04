@@ -757,7 +757,7 @@ FUNC_30:   CSUB positionVerticalMotor  // will not search bottom side. for debug
            JA   BACK_GROUND_PROCESS
 FUNC_32:   CSUB homePigHolderMotorBoth
            JA   BACK_GROUND_PROCESS
-FUNC_34:   CSUB dummy_sub // homeCapHolderMotorBoth
+FUNC_34:   CSUB capIntoCapHolder // dummy_sub // homeCapHolderMotorBoth
            JA   BACK_GROUND_PROCESS
 FUNC_36:   CSUB homePistonMotorBoth
            JA   BACK_GROUND_PROCESS
@@ -1360,8 +1360,10 @@ initHeadRotateMotor:
 
 initNotUsedMotor:
     SGP     GB_EndSwitchPlarity, GPbank_0, reversePolarity3to5       // set in motor 5. reverse polarity for motors 3-5
-    SAP     AP_RightLimitSwitchDisable, M_headRotateMotor, clr       // Disable right limit switch
-    SAP     AP_LeftLimitSwitchDisable, M_headRotateMotor, set        // Enable left limit switch
+    SAP     AP_RightLimitSwitchDisable, M_headRef_sensors, clr       // Disable right limit switch
+    // SAP     AP_RightLimitSwitchDisable, M_headRotateMotor, clr       // Disable right limit switch
+    SAP     AP_LeftLimitSwitchDisable, M_headRef_sensors, set        // Enable left limit switch
+    // SAP     AP_LeftLimitSwitchDisable, M_headRotateMotor, set        // Enable left limit switch
     RSUB
 
 //******************************************

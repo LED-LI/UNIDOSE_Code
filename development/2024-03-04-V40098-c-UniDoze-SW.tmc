@@ -2787,12 +2787,24 @@ clrAnyError:
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
-//*******************************************************************************
+// *******************************************************************************
 // Name: returnContentToVial   (154)
 //
 // Summary: does almost all initialise proccesses when the robot is after an error so it will find all of the reference points after it put the requested option
 //
-//*******************************************************************************
+// *******************************************************************************
+// ******************************************************************************
+// ******************************************************************************
+
+DeCap_B4_RST_B4_RCTV: // FUNC_158
+    CSUB    decapSyringe                                                        // for when we are with the cap on before RCTV
+
+// *******************************************************************************
+
+RST_B4_RCTV: // FUNC_156
+    RST     returnContentToVial                                                 // Reset all of the programs data and continue to the RVT func
+
+// ******************************************************************************
 
 returnContentToVial: // FUNC_154
 
@@ -2823,10 +2835,11 @@ returnContentToVial: // FUNC_154
 
     // instead of 
     CSUB    PositionHeadRotateMotor
-    // CSUB    homeHeadRotateMotorSlow                                           // find fast, before slow
-    // GGP     GB_HeadRotateHomePos, GPbank_2                                    // go to required height
-    // CSUB    moveCoordRotate                                                   // move, wait and error if delay
+    // CSUB    homeHeadRotateMotorSlow                                          // find fast, before slow
+    // GGP     GB_HeadRotateHomePos, GPbank_2                                   // go to required height
+    // CSUB    moveCoordRotate                                                  // move, wait and error if delay
 
+    CSUB    capIntoCapHolder                                                    // need to put cap back into cap holder
 
     CSUB    decapSyringe
     SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE       // Set standby hear rotate current normal
@@ -2850,21 +2863,3 @@ returnContentToVial: // FUNC_154
 
 // ******************************************************************************
 
-    // CSUB    special_INIT
-    // CSUB    special_tryAgain
-
-// ******************************************************************************
-// ******************************************************************************
-
-// special_INIT: // FUNC_156
-    // SGP     GB_CurrentState, GPbank_2, RUNNING_RTV_INIT
-    // RSUB
-
-// ******************************************************************************
-
-// special_tryAgain:
-    // SGP     GB_CurrentState, GPbank_2, RUNNING_RTV_TRY_AGAIN
-
-    // RSUB
-
-// *******************************************************************************

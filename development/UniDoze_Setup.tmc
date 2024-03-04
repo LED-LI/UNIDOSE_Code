@@ -275,8 +275,8 @@ RUNNING_CHECK_DONE         = 60
 STOPPED_ON_ERROR           = 70
 STOPPED_TIME_OUT           = 80
 ABORTED                    = 90
-RUNNING_RTV_INIT           = 6    // RTV = Return To Vial
-RUNNING_RTV_TRY_AGAIN      = 66
+RUNNING_RCTV_INIT           = 6    // RCTV = Return To Vial
+RUNNING_RCTV_TRY_AGAIN      = 66
 RUNNING_RETURN_TO_VIAL     = 69
 FINISHED_RETURN_TO_VIAL    = 666
 
@@ -894,10 +894,10 @@ FUNC_152:  CSUB tapTap
            JA   BACK_GROUND_PROCESS
 FUNC_154:  CSUB returnContentToVial
            JA   BACK_GROUND_PROCESS
-// FUNC_156:  CSUB special_INIT
-           // JA   BACK_GROUND_PROCESS
-// FUNC_158:  CSUB special_tryAgain
-           // JA   BACK_GROUND_PROCESS
+FUNC_156:  CSUB DeCap_B4_RST_B4_RCTV
+           JA   BACK_GROUND_PROCESS
+FUNC_158:  CSUB RST_B4_RCTV
+           JA   BACK_GROUND_PROCESS
 
 //*****************************
     STOP     // just in case

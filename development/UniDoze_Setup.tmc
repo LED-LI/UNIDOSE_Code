@@ -894,9 +894,9 @@ FUNC_152:  CSUB tapTap
            JA   BACK_GROUND_PROCESS
 FUNC_154:  CSUB returnContentToVial
            JA   BACK_GROUND_PROCESS
-FUNC_156:  CSUB DeCap_B4_RST_B4_RCTV
+FUNC_156:  CSUB RST_B4_RCTV
            JA   BACK_GROUND_PROCESS
-FUNC_158:  CSUB RST_B4_RCTV
+FUNC_158:  CSUB dummy_sub // DeCap_B4_RST_B4_RCTV
            JA   BACK_GROUND_PROCESS
 
 //*****************************

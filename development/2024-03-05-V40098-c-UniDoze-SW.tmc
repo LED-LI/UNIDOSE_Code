@@ -2114,9 +2114,9 @@ capIntoCapHolder:
     SAP     AP_MaxCurrent, M_verticalMotor, MAX_CURRENT_VERT_HIGH             // Set absolute max. current
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_HIGH   // Set maximum positioning speed
     SGP     GB_TouchedLeftRef, GPbank_2, clr                                  // wait for set interrupt when going up
- // for moved up from dose calibrator
-    VECT    TI_STOPLEFT4, StopLeft4Irq                // left rotate ref touched
-    SGP     TI_STOPLEFT4, GPbank_3, both              // 
+ // // // // for moved up from dose calibrator
+    // // // VECT    TI_STOPLEFT4, StopLeft4Irq                // left rotate ref touched
+    // // // SGP     TI_STOPLEFT4, GPbank_3, both              // 
     EI      TI_STOPLEFT4                                                      // touched interrupt
     MVP     ABS, M_verticalMotor, UP_FOR_SENSOR_ABS                           // run to position move to rotate sensor for interrupt
     CSUB    waitVertical
@@ -2808,11 +2808,13 @@ DeCap_B4_RST_B4_RCTV: // FUNC_158
 
 RST_B4_RCTV: // FUNC_156
     RST     returnContentToVial                                                 // Reset all of the programs data and continue to the RVT func
+    
 
 // ******************************************************************************
 
 returnContentToVial: // FUNC_154
 
+    CSUB    INIT_DRAW_DOSE
     SGP     GB_CurrentState, GPbank_2, RUNNING_RETURN_TO_VIAL                   // used to avoid 
     SGP     GB_any_Error, GPbank_2, clr                                         // clear any error status
     // CSUB    capIntoCapHolder // probably in a variation of this function

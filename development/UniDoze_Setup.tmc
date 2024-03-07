@@ -899,6 +899,8 @@ FUNC_156:  CSUB RST_B4_RCTV
            JA   BACK_GROUND_PROCESS
 FUNC_158:  CSUB dummy_sub // DeCap_B4_RST_B4_RCTV
            JA   BACK_GROUND_PROCESS
+FUNC_160:  CSUB returnContentToVial666
+           JA   BACK_GROUND_PROCESS
 
 //*****************************
     STOP     // just in case

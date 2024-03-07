@@ -405,9 +405,10 @@ GB_PistonFactor                    = 54
 
 // the following global parameters will appear at motor 0 (vertical)
 // GB_LoadingDistance_current      = 56     // future option, not used
-GB_Default_Needle_Length           = 57    // 25 [mm]
+GB_Default_Needle_Length           = 57     // 25 [mm]
 GB_temp_place_holder               = 58    
 GB_temp_place_holder2              = 59    
+GB_Cap_Is_On_Syringe              = 60     // set = the cap is on the syringe , clr = the syringe is without a cap
 
 //********************
 //********************
@@ -927,6 +928,7 @@ BACK_GROUND_PROCESS:
 //**********************************
 FIRST_RUN:
     SGP     GB_ShowOveride, GPbank_2, clr           // in the show it must be set after each power ON
+    SGP     GB_Cap_Is_On_Syringe, GPbank_2, clr
     CSUB    initInterrups
     GGP     GB_CenterOfVial, GPbank_2
     CALC    MUL, AVERAGE_CENTER_VIAL_WEIGHT         // for running average of center of vial
@@ -1383,11 +1385,12 @@ ABORT:
 
 ABORT_NoReport:
     SAP     AP_MaxAcceleration, M_verticalMotor, ACC_VERT_HIGH     // stop quicker
-    MST     M_verticalMotor                             // Stop up down
-    MST     M_pigHolderMotor                            // Stop move pig
-    MST     M_capHolderMotor                            // Stop hold syringe
-    MST     M_pistonMotor                               // Stop fill syringe
-    MST     M_headRotateMotor                           // Stop rotate head
+    CSUB    stopAllMotors
+    // MST     M_verticalMotor                             // Stop up down
+    // MST     M_pigHolderMotor                            // Stop move pig
+    // MST     M_capHolderMotor                            // Stop hold syringe
+    // MST     M_pistonMotor                               // Stop fill syringe
+    // MST     M_headRotateMotor                           // Stop rotate head
     SGP     GB_MotorIsMoving, GPbank_2, clr             
     CSUB    RED_ON                                      // red LED
 //  DI      TI_INPUT2                                   //  hands in machine
@@ -1397,6 +1400,18 @@ ABORT_NoReport:
     SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE_LOW    // Set standby current low to enable moving the rotation down
     SAP     AP_MaxAcceleration, M_verticalMotor, ACC_VERT                // Set maximum acceleration
     RST     BACK_GROUND_PROCESS                         // Stop a running TMCL program. Reset program counter and stack pointer 
+
+//************************************
+
+stopAllMotors:
+
+    MST     M_verticalMotor                             // Stop up down
+    MST     M_pigHolderMotor                            // Stop move pig
+    MST     M_capHolderMotor                            // Stop hold syringe
+    MST     M_pistonMotor                               // Stop fill syringe
+    MST     M_headRotateMotor                           // Stop rotate head
+
+    RSUB
 
 //************************************
 //

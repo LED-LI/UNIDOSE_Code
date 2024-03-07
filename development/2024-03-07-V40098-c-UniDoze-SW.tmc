@@ -2840,7 +2840,7 @@ RST_B4_RCTV: // FUNC_156
     RST     returnContentToVial                                                 // Reset all of the programs data and continue to the RVT func
 
 // ******************************************************************************
-
+// still need to adjust the detection of with or without cap 
 returnContentToVial: // FUNC_154
 
     CSUB    INIT

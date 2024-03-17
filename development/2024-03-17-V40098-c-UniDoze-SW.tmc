@@ -2869,7 +2869,11 @@ returnContentToVial666:
 // need to add a test if the cap is on the syringe or not 
 
     CSUB    squeeze                                                                 // will place syringe in the vertical location to test if a cap is detected
-    
+    // need to go up on vertical 200 uSteps - to avoid detection of needle as cap
+    // testing
+    MVP     REL, M_verticalMotor, -200
+    CSUB    waitVertical
+    // end of test
     CSUB    checkCapOnSyringe                                                       // tests if RCTV will need to start by removing the cap from the syringe
 
     GGP     GB_Cap_Is_On_Syringe, GPbank_2                                     // was removing the cap requested ?
@@ -2878,8 +2882,9 @@ returnContentToVial666:
     CSUB    capIntoCapHolder                                                    // need to put cap back into cap holder
     JA      withCapOrNot
 noCapDetected:
-    CSUB    decapSyringe
-    CSUB    recapSyringe    
+    // *** wht would i want to recap and the decap again ?!? - canceling it ...  
+    // CSUB    decapSyringe
+    // CSUB    recapSyringe    
 withCapOrNot:
     CSUB    decapSyringe
     SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE               // Set standby hear rotate current normal

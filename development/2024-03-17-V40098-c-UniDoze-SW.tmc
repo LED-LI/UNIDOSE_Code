@@ -2844,10 +2844,12 @@ RST_B4_RCTV: // FUNC_156
 // still need to adjust the detection of with or without cap 
 returnContentToVial: // FUNC_154
 
-    CSUB    INIT
+    // CSUB    INIT
     CSUB    stopAllMotors
-    CSUB    INIT_DRAW_DOSE
-    CSUB    GREEN_ON
+    // CSUB    INIT_DRAW_DOSE
+    // CSUB    GREEN_ON
+    CSUB    ClearRunningErrors                 
+
 returnContentToVial666:
     SGP     GB_CurrentState, GPbank_2, RUNNING_RETURN_TO_VIAL                   // used to avoid 
     SGP     GB_any_Error, GPbank_2, clr                                         // clear any error status

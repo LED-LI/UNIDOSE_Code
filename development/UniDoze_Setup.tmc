@@ -607,12 +607,14 @@ GB_143                       = 143
    MAX_POS_SPEED_PIST_BUBBLE_BACK =  800 /// 1200
    MAX_POS_SPEED_PIST_MORE       =   200 //// 1800 ///  100 /// 200 // 1500 //  200
    MAX_POS_SPEED_PIST_MORE_BACK  =   600 /// 1200
+   MAX_POS_SPEED_PIST_BUMP_PLUNGER =   MAX_POS_SPEED_PIST / 8       // = 75
    SEARCH_SPEED_PIST             =   150 // 400 /// 800
    SWITCH_SPEED_PIST             =    50 // 100
 
    MAX_PIST_IN_USTEPS            =   29500 // mesured - with curent hardware
 
    ACC_PIST                      =   200
+   ACC_PIST_BUMP_PLUNGER         =   ACC_PIST / 8                   // = 25
    STBY_CURRENT_PIST             =    25
    MAX_CURRENT_PIST              =   128
 

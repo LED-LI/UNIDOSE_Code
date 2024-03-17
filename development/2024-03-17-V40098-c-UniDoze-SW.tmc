@@ -1704,8 +1704,12 @@ returnMoreBack:
 
 bumpPlunger:   // 
 
+    SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_BUMP_PLUNGER  // lower maximum positioning speed for anti-drip precaution procedure
+    SAP     AP_MaxAcceleration, M_pistonMotor,  ACC_PIST_BUMP_PLUNGER               // lower maximum acceleration for anti-drip precaution procedure
     CALC    LOAD, BUMP_DOWN_REL_uL
     CSUB    moveCoordPistonREL_uL
+    SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST   // return maximum positioning speed to default value
+    SAP     AP_MaxAcceleration, M_pistonMotor,  ACC_PIST                // return maximum acceleration to default value
 // the piston bump will run in parallel to the vertical down, and wait after start of vertical
     RSUB
 

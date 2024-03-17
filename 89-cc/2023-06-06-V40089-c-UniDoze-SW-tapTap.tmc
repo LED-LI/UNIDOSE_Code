@@ -6,11 +6,11 @@
 //***********************************************************************************************************
 // Changes: V2018-01-22 - initial code
 //          V2018-07-05 - after Philadelphia show
-//           1. review production: V=ok  G=move to global var
 //           2. remove PIG types
 //           3. remove BACK_PREFILL
 //           4. Manual movements
 //           5. 9 global parameters for calibration
+//           6. functions for coord movents, wait moves (+long +rfs)
 //           6. functions for coord movents, wait moves (+long +rfs)
 //           7. Parameters removed, new functions
 //           8. Clear dose calibrator
@@ -30,7 +30,7 @@
 //          22. parameter for dose calibrator depth
 //          23. INIT runs on a new board
 //          24. Enable curtain at initDraw, DrawDose, checkDone
-//          25. increment draw cycles insteat of completed , acceleration of piston 10 -> 200
+//          25. increment draw cycles insteat of completed
 //          26. Report ABORT condition - state 90, set anyError, error 28 -> BitEr_machineAborted
 //          27. default syringe
 //          28. Enable full fill vial from prefill syringe
@@ -38,7 +38,7 @@
 //          30. Standby current of cap holder changed from 150 to 200
 //          31. After detection of syringe or vial pop out, ABORT
 //          32. New version each release
-//          33. interrupt for syringe pop off in DRAW_DOSE and CHECK_DONE
+//          33. interrupt for syringe pop off in draw_doze
 //          34. double click on DoseCalibratorCheck creates error but enables re-click
 //          35. if syringe is bent more than 1.6 mm, do not draw, move to 90 degrees
 //  End of V002
@@ -48,8 +48,8 @@
 //          38. V003002 check on DoseCalibratorCheck no syringe
 //          39. V001003003 syringeIsIn at motor 5 REF
 //          40. V001003004 research for needle at capHolder, if error, put in parameter position
-//          41. V001003005 serial # of the machine, GB_RobotSerialNumber = 6
-//              If the serial # is 001003005,
+//          41. V001003005 serial # of the machine, GB_RobotSerialNumber = 6 
+//              If the serial # is 001003005, 
 //              Machine 001= Unidose, HW version 003 = Sensor on cap holder,  Machine # = 005
 //          42. move cap to position relative to GB_CapHoldsSyringe before RFS
 //          43. V1030007 calibration function 108: findCapHolderAtNeedle
@@ -72,7 +72,7 @@
 //          60. V1040024 fixed setCenterOfSeptum for starting operation
 //          61. V1040025 Checks before "Fill Dose" that the dipper sensor if not blocked
 //          62. V1040026 correct outbank_2 -> GPbank_2  sould not differ
-//          63. V1040027 add error for cap bent needle         BitEr_needleBentCap = %1000000000 // bit 512
+//          63. V1040027 add error for cap bent needle
 //          64. V1040028 RFS wait short for second rotation search
 //          65. V1040029 Retry syringe pop out at the cap holder
 //          66. V1040030 Retry syringe whithin interrupt routine
@@ -81,7 +81,6 @@
 //          69. V1040033 check cap sensor before initialize, so that the syringe holder is not there
 //          70. V1040034 calculate decap height, relative to loading height
 //          71. V1040035 top needle higher at sensor (12000), shorter timeout if miss
-//          72. V1040036 longer timeout for rotation rfs 1s --> 2s
 //          73. V1040037 variable for needle from bump GB to full entrance
 //          74. V1040038 Added syringe #3: DPS
 //          75. V1040039 GB_CoordinateStorage 0=RAM only, remove un-neccessaray STGP to save EEPROM
@@ -99,7 +98,7 @@
 //          86. V1040050 added gauges 20, 24, draw at fast speed (800), Default draw wait = 100, random needle in vial +- 0.4mm
 //          87. V1040051 for adjust cycle go up to absolute hight for short needle
 //          88. V1040052 needle interrupt only, no more checkings, always 3 check before error, changed 2 "JC ZE" to "COMP + JC "
-//                       function: "FUNC_134:  CSUB retreatFromVial"  if stuck in vial
+//                       function: "func_134:  CSUB retreatFromVial"  if stuck in vial
 //                       removed restore and backup subroutines (148, 150)
 //          89. V1040053 GP 26 holds the random movement in um. If <=0, sets to 0, 
 //                       if >MAX_RANDOM_IN_VIAL sets to RANDOM_um_TO_MOVE_DEF
@@ -142,22 +141,11 @@
 //         123. V1040088 Bump amount 46 -> 60 microL (BUMP_DOWN_REL_uL)
 //         124. V1040089 cancel: Bump amount 60 -> 46 microL (BUMP_DOWN_REL_uL), 
 //                       less currrent when moving into dose calibrator :150
-//                       Added new function: FUNC_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
+//                       Added new function: func_150: ExtractFromDoseCalibrator  and error BitEr_stuckInDoseCalibrator
 //                       The function will run only if lower than 20000
 //         125. V1040089-a returned Bump amount 60 -> 46 microL (BUMP_DOWN_REL_uL)
 //         126. V1040089-b made extract dipper work with UI
 //         127. V1040089-c created tapTap to flick the syringe with the vial shield cover 
-//         128. V1040090-c implementing adaptation to different needle length sizes
-//         129. V1040091-c optimizing taptap timing
-//         130. V1040092-c adding factor for adjusting volume
-//         131. V1040093-c needle adaptation
-//         132. V1040094-c insert needle adaptation
-//         133. V1040095-c-China_patch cap_adaptation
-//         134. V1040096-c-China_patch fixing squeeze
-//         135. V1040097-c-China_patch SIZES ABCD 
-//         136. V1040097-c-ISORAD patch
-//         137. .......... 70%
-//         138. V1040098-c-from_ISORAD patch - development of the return content back into the vial after an error
 //
 //***********************************************************************************************************
 
@@ -167,7 +155,7 @@
 
 #Include UniDoze_TMCLParam.tmc                         // TMCL Parameters
 #Include UniDoze_Setup.tmc                             // UniDoze Parameters & initialization
-// this file 2024-03-17-V40098-c-UniDoze-SW.tmc
+// this file 2023-06-06-V40089-c-UniDoze-SW-tapTap.tmc
 
 //*********************************
 //*********************************
@@ -213,14 +201,13 @@ FIND_HOMES_SHORT:
     SAP     AP_MaxCurrent, M_headRotateMotor, 0        // Set absolute max. current
     CSUB    homePigHolderMotor                 // Pig and Cap holders first to clear the way for vertical
     CSUB    homeCapHolderMotor
-    
     CSUB    startHomePistonMotor
     CSUB    positionVerticalMotor              // get it out of pig and cap
-    
 // extend capHolder
     GGP     GB_CapHoldsSyringe, GPbank_2              // go to required height
     ACO     CAP_POS_COORD, M_capHolderMotor           // target position into coordinate
     MVP     COORD, M_capHolderMotor, CAP_POS_COORD    // run to coord position
+
     CSUB    PositionHeadRotateMotor
     CSUB    waitHomePistonMotor
     SGP     GB_HomingShortDone, GPbank_2, set  // home done
@@ -317,23 +304,20 @@ endClearRunningErrors:
 
 INIT_DRAW_DOSE:  
 
-//  EI      TI_INPUT2                       //  hands in machine
-    DI      TI_STOPLEFT4                    //  Left rotate reference
-    EI      TI_STOPLEFT5                    //  syringe pop out interrupt
-    DI      TI_STOPRIGHT5                   //  dipper interrupt
-
-// reset the need to remove the cap in RCTV
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, clr
+//  EI      TI_INPUT2                  //  hands in machine
+    DI      TI_STOPLEFT4               //  Left rotate reference
+    EI      TI_STOPLEFT5               //  syringe pop out interrupt
+    DI      TI_STOPRIGHT5              //  dipper interrupt
 
 // clear errors and check for syringe
     CSUB    ClearRunningErrors                 
-    CSUB    checkOkToInitDrawDoze           // check if in right state,         sets STOPPED_ON_ERROR state
-    CSUB    checkPrefillVolume              // verify prefill volume,           sets STOPPED_ON_ERROR state
-    CSUB    checkNoSyringe                  // check syringe exists,            sets STOPPED_ON_ERROR state
-    CSUB    checkCapSensor                  // check cap sensor is not blocked, sets STOPPED_ON_ERROR state
-    GGP     GB_any_Error, GPbank_2          // get any error status
-    COMP    ANY_ERROR_EXISTS                // exists?
-    JC      NE, HandOKinitDraw              // no, continue 
+    CSUB    checkOkToInitDrawDoze            // check if in right state,         sets STOPPED_ON_ERROR state
+    CSUB    checkPrefillVolume               // verify prefill volume,           sets STOPPED_ON_ERROR state
+    CSUB    checkNoSyringe                   // check syringe exists,            sets STOPPED_ON_ERROR state
+    CSUB    checkCapSensor                   // check cap sensor is not blocked, sets STOPPED_ON_ERROR state
+    GGP     GB_any_Error, GPbank_2           // get any error status
+    COMP    ANY_ERROR_EXISTS                 // exists?
+    JC      NE, HandOKinitDraw               // no, continue 
 // error exists
     SGP     GB_CurrentState, GPbank_2, WAITING_INIT_DRAW_DOSE // (not necesssary) enable easy recovery after hand is out
     JA      returnInitDraw                             
@@ -341,7 +325,6 @@ INIT_DRAW_DOSE:
 HandOKinitDraw:
     CSUB    FIND_HOMES_SHORT
     GGP     GB_LoadingHight, GPbank_2
-    CALCAV  ADD, GB_DELTA_A
     CSUB    moveCoordVertical
 // extend capHolder
 //    GGP     GB_CapHoldsSyringe, GPbank_2                              // go to required height
@@ -360,10 +343,10 @@ waitMotors:  // wait for both                                         // **** AD
     SGP     GB_CurrentState, GPbank_2, WAITING_DRAW_DOSE
 
 returnInitDraw:
-//  DI      TI_INPUT2                       //  hands in machine
-    DI      TI_STOPLEFT4                    //  Left rotate reference
-    DI      TI_STOPLEFT5                    //  syringe pop out interrupt
-    DI      TI_STOPRIGHT5                   //  dipper interrupt
+//  DI      TI_INPUT2                  //  hands in machine
+    DI      TI_STOPLEFT4               //  Left rotate reference
+    DI      TI_STOPLEFT5               //  syringe pop out interrupt
+    DI      TI_STOPRIGHT5              //  dipper interrupt
 
     RSUB
 
@@ -375,30 +358,29 @@ returnInitDraw:
 
 DRAW_DOSE:
  
-//    EI      TI_TIMER0                     //  time calculate
-//  EI      TI_INPUT2                       //  hands in machine
-    DI      TI_STOPLEFT4                    //  Left rotate reference
-    EI      TI_STOPLEFT5                    //  syringe pop out interrupt
-    DI      TI_STOPRIGHT5                   //  dipper interrupt
+//    EI      TI_TIMER0                  //  time calculate
+//  EI      TI_INPUT2                  //  hands in machine
+    DI      TI_STOPLEFT4               //  Left rotate reference
+    EI      TI_STOPLEFT5               //  syringe pop out interrupt
+    DI      TI_STOPRIGHT5              //  dipper interrupt
 
-    CSUB    initDeltas
     SGP     GB_drawCycleTime, GPbank_2, 0   // clear draw cycle timer
-    SGP     GB_TMCLtickTimer, GPbank_2, 0   // reset the timer // is this supposed to be in GPbank_0 ???
+    SGP     GB_TMCLtickTimer, GPbank_2, 0   // reset the timer
     CSUB    ClearRunningErrors                 
     SGP     GB_syringeWOcapInPIG, GPbank_2, clr    
-    CSUB    checkOkToDrawDoze               // check if in right state, sets STOPPED_ON_ERROR state
-    CSUB    checkPrefillVolume              // verify prefill volume,   sets STOPPED_ON_ERROR state
-    CSUB    checkDrawVolume                 // verify draw volume,      sets STOPPED_ON_ERROR state
-    CSUB    checkDipperSensorBlocked        // dipper sensor blocked?
-    GGP     GB_any_Error, GPbank_2          // get any error status
-    COMP    ANY_ERROR_EXISTS                // any error?
-    JC      EQ, returnDrawDose              // yes, return with STOPPED_ON_ERROR state
+    CSUB    checkOkToDrawDoze          // check if in right state, sets STOPPED_ON_ERROR state
+    CSUB    checkPrefillVolume         // verify prefill volume,   sets STOPPED_ON_ERROR state
+    CSUB    checkDrawVolume            // verify draw volume,      sets STOPPED_ON_ERROR state
+    CSUB    checkDipperSensorBlocked   // dipper sensor blocked?
+    GGP     GB_any_Error, GPbank_2     // get any error status
+    COMP    ANY_ERROR_EXISTS           // any error?
+    JC      EQ, returnDrawDose         // yes, return with STOPPED_ON_ERROR state
 
-    CSUB    VERIFY_READY_DRAW               // check if syringe, vial and pig are loaded, checks if PIG was replaced
-                                            // keeps STATE WAITING_DRAW_DOSE for easy recovery
-    GGP     GB_any_Error, GPbank_2          // get any error status
-    COMP    ANY_ERROR_EXISTS                // exists?
-    JC      NE, noErrorFound                // yes, return with WAITING_DRAW_DOSE state for easy recovery
+    CSUB    VERIFY_READY_DRAW          // check if syringe, vial and pig are loaded, checks if PIG was replaced
+                                       // keeps STATE WAITING_DRAW_DOSE for easy recovery
+    GGP     GB_any_Error, GPbank_2     // get any error status
+    COMP    ANY_ERROR_EXISTS           // exists?
+    JC      NE, noErrorFound           // yes, return with WAITING_DRAW_DOSE state for easy recovery
  // errors found
     SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE_HIGH  // Set standby current 
     SAP     AP_StandbyCurrent, M_capHolderMotor, STBY_CUR_CAP_HIGH      // Set standby current
@@ -407,22 +389,18 @@ DRAW_DOSE:
 noErrorFound: 
     CSUB    GREEN_ON
     CSUB    decapSyringe
-    SAP     AP_StandbyCurrent, M_capHolderMotor, STBY_CUR_CAP           // Set standby cap  holder current normal
-    SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE       // Set standby hear rotate current normal
+    SAP     AP_StandbyCurrent, M_capHolderMotor, STBY_CUR_CAP       // Set standby cap  holder current normal
+    SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE   // Set standby hear rotate current normal
 
-////////////////////////////////////////////  
-//  CALCV   LOAD, GB_airToPullBefore, 70 // make sure air to pull is set to 70%
-//////////////////////////////////////////
-
-    CSUB    startPullAir70                                           // if no prefill, pull 70% of the air
+    CSUB    startPullAir70                             // if no prefill, pull 70% of the air
     CSUB    moveBelowVial   
     CSUB    waitPiston                 // wait pull air
     CSUB    checkVialShieldOpen
-    GGP     GB_any_Error, GPbank_2          // get any error status
-    COMP    ANY_ERROR_EXISTS                // exists?
-    JC      EQ, returnDrawDose              // yes, return 
+    GGP     GB_any_Error, GPbank_2     // get any error status
+    COMP    ANY_ERROR_EXISTS           // exists?
+    JC      EQ, returnDrawDose         // yes, return 
     CSUB    insertNeedle
-    CSUB    addBacklashPrefill
+    CSUB    addBacklashPrefill 
 //if tryAgain, push the liquid in the syringe back to vial
     GGP     GB_tryAgainCycle, GPbank_2     // check for requested operation: try again?
     COMP    TRY_AGAIN_STATE                // tryAgain?
@@ -438,7 +416,6 @@ pushDone:
     CSUB    drawVialMoreBack
     CSUB    moveSlowlyBottom
     CSUB    bumpPlunger
-    
     CSUB    rotateDown
     CSUB    recapSyringe
 
@@ -462,13 +439,9 @@ pushDone:
     DI      TI_STOPLEFT5               //  syringe pop out interrupt
     DI      TI_STOPRIGHT5              //  dipper interrupt
 
-// the cap is now on the syringe - in case of RCTV
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, set
-
     RSUB
 
 //**************************
-
 // Name: CHECK_DONE  (10)
 //
 // Summary: 
@@ -553,7 +526,6 @@ errorAdjustOrAgain:
     CSUB    setStateSTOPPED_ON_ERROR_Yellow
 // move up to enable service        
     GGP     GB_LoadingHight, GPbank_2                      // move vertical to loading hight
-    CALCAV  ADD, GB_DELTA_C
     MVPA    ABS, M_verticalMotor                           
     CSUB    waitVertical
     JA      returnCheckDone
@@ -574,7 +546,7 @@ returnCheckDone:
 //***********************************************************************
 // Name: VERIFY_READY_DRAW     
 //
-// Summary:  checks if the vial' syringe and pig are ready to draw
+// Summary:  checks if the vial' syrine and pig are ready to draw
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 VERIFY_READY_DRAW:    //  checks if syringe, vail and pig are in place
@@ -718,16 +690,16 @@ homePigHolderMotor:
 
 //*********************************
 
-// // // // homeCapHolderMotorBoth:  
- // // // // // set vertical motor current to zero for a case that the cap holder pushes the vertical axis:
-    // // // // SAP       AP_MaxCurrent, M_headRotateMotor, 0                       // Set absolute max. current
-    // // // // SAP       AP_RefSearchSpeed, M_capHolderMotor, SEARCH_SPEED_CAP   // speed for search
-    // // // // SAP       AP_RefSwitchSpeed, M_capHolderMotor, SWITCH_SPEED_CAP   // speed for final search
-    // // // // SAP       AP_RefSearchMode, M_capHolderMotor, APV_RefTwoSwitches
-    // // // // RFS       START, M_capHolderMotor                                 // Start reference search
-    // // // // CSUB      waitCapHolderRfs
-    // // // // SAP       AP_MaxCurrent, M_headRotateMotor, MAX_CURRENT_ROT        // Set absolute max. current
-    // // // // RSUB
+homeCapHolderMotorBoth:  
+ // set vertical motor current to zero for a case that the cap holder pushes the vertical axis:
+    SAP       AP_MaxCurrent, M_headRotateMotor, 0                       // Set absolute max. current
+    SAP       AP_RefSearchSpeed, M_capHolderMotor, SEARCH_SPEED_CAP   // speed for search
+    SAP       AP_RefSwitchSpeed, M_capHolderMotor, SWITCH_SPEED_CAP   // speed for final search
+    SAP       AP_RefSearchMode, M_capHolderMotor, APV_RefTwoSwitches
+    RFS       START, M_capHolderMotor                                 // Start reference search
+    CSUB      waitCapHolderRfs
+    SAP       AP_MaxCurrent, M_headRotateMotor, MAX_CURRENT_ROT        // Set absolute max. current
+    RSUB
 
 homeCapHolderMotor:  
     GGP     GB_CurrentState, GPbank_2   // InitDrawDoze can run if WAITING_INIT_DRAW_DOSE or if WAITING_DRAW_DOSE
@@ -1240,7 +1212,6 @@ movePlungerToPrefill:
 //    CALC    DIV, 100                                    // now in uSteps
 //    CALCX   LOAD                                        // move it to X [uStep/100uL]
 //    GGP     GB_PistonHomePos, GPbank_2                  // go to required height
-//    CALCAV  SUB, GB_DELTA_D                 // adjust Thumbrest location from the finger flange in difrenet syringes
 //    CALCX   ADD                                         // add home of piston
     CALC    ADD, ADD_FOR_PREFILL_uL                       // pull liquid from needle to eliminate drop
     CSUB    moveCoordPistonREL_uL
@@ -1251,24 +1222,20 @@ movePlungerToPrefill:
 decapSyringe:    // 
 
 //    GGP     GB_NeedleDecapLen_current, GPbank_2
-    GGP     GB_LoadingHight, GPbank_2                // get reference height
-    // CALCAV  SUB, GB_Cap_Length_current_us            // add delta for required height
-    CALC    ADD, DECAP_HEIGHT_DELTA                  // add delta for required height
-    CALCAV  ADD, GB_DELTA_B                          // add delta when pointing down (for abs movment in vert)
-    MVPA    ABS, M_verticalMotor                     // move to location
+    GGP     GB_LoadingHight, GPbank_2               // get reference height
+    CALC    ADD, DECAP_HEIGHT_DELTA                 // add delta for required height
+    CALCAV  ADD, GB_defaultNeedleLengthInMicroSteps // add default 25 needle steps
+    CALCAV  SUB, GB_needleLengthInMicroSteps        // sub current needle steps
+    MVPA    ABS, M_verticalMotor                    // move to location
     CSUB    waitVertical
     CSUB    homeCapHolderMotor                      // cap holder out of the way
 //    CSUB    checkSyrPoppedOut                       // verify that the syringe did not pop out
-    // the syringes cap was removed - in case of the RCTV
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, clr
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 startPullAir70:  //  if no prefill, pull 70% of the air
 
-    GAP     AP_ActualPosition, M_pistonMotor            // get current position to A
-    CALCVA  LOAD, GB_reservedPisonLocation
     GGP     GB_preFillRequest, GPbank_2                 // check for requested operation: prefill?
     COMP    PRE_FILL_REQUEST                            // prefill?
     JC      EQ, returnStartPullAir70                    // prefill? do not 70%
@@ -1280,33 +1247,28 @@ startPullAir70:  //  if no prefill, pull 70% of the air
     JC      EQ, returnStartPullAir70                    // if yes, do not 70%
   // if noPrefill or adjust, pull air 70%
     GGP     GB_pistonMicroStepPer100microL, GPbank_2    // load to A
-    CALCAV  MUL, GB_microLtoWithdraw               // load the withdraw volume [uL] into A
+    CALCX   LOAD                                        // move it to X [uStep/100uL]
+    GGP     GB_microLtoWithdraw, GPbank_2               // load the withdraw volume [uL] into A
+    CALCX   MUL                                         // A <-- A*X [uSteps*100]
     CALC    DIV, 100                                    // now in uSteps
-    CALCAV  MUL, GB_airToPullBefore                // get the "70%"
+    CALCX   LOAD                                        // copy to X
+    GGP     GB_airToPullBefore, GPbank_2                // get the "70%"
+    CALCX   MUL                                         // calculate 70%
     CALC    DIV, 100                                    // now in uSteps
-    // CALCX   LOAD
-    // GAP     AP_ActualPosition, M_pistonMotor            // get current position to A
-    // CALCX   ADD                                         // add current position to required relative
-    CSUB    moveCoordPistonREL
-/////////////////////////////////////////////////////////////
-  // // // // // if noPrefill or adjust, pull air 70%
-    // // // // GGP     GB_pistonMicroStepPer100microL, GPbank_2    // load to A
-    // // // // CALCX   LOAD                                        // move it to X [uStep/100uL]
-    // // // // GGP     GB_microLtoWithdraw, GPbank_2               // load the withdraw volume [uL] into A
-    // // // // CALCX   MUL                                         // A <-- A*X [uSteps*100]
-    // // // // CALC    DIV, 100                                    // now in uSteps
-    // // // // CALCX   LOAD                                        // copy to X
-    // // // // GGP     GB_airToPullBefore, GPbank_2                // get the "70%"
-    // // // // CALCX   MUL                                         // calculate 70%
-    // // // // CALC    DIV, 100                                    // now in uSteps
-    // // // // CALCX   LOAD                                        // relative uSteps in X
-    // // // // GAP     AP_ActualPosition, M_pistonMotor            // get current position to A
-    // // // // CALCX   ADD                                         // add current position to required relative
-    // // // // ACO     PISTON_POS_COORD, M_pistonMotor             // target position into coordinate #1
-    // // // // MVP     COORD, M_pistonMotor, PISTON_POS_COORD      // run to coord 1 position
-// // // // returnStartPullAir70:
-/////////////////////////////////////////////////////////////
+    CALCX   LOAD                                        // relative uSteps in X
+    GAP     AP_ActualPosition, M_pistonMotor            // get current position to A
+    CALCX   ADD                                         // add current position to required relative
+    ACO     PISTON_POS_COORD, M_pistonMotor             // target position into coordinate #1
+    MVP     COORD, M_pistonMotor, PISTON_POS_COORD      // run to coord 1 position
 returnStartPullAir70:
+    RSUB
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+waitVialCover:
+
+    WAIT    TICKS, 0, 15
+
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1314,8 +1276,7 @@ returnStartPullAir70:
 openVialCover:
 
     SIO    Out_ShieldVail, OutBank_2, 1        // open cover
-//  wait cover to open
-    WAIT    TICKS, 0, 5
+    CSUB   waitVialCover
 
     RSUB
 
@@ -1324,8 +1285,8 @@ openVialCover:
 closeVialCover:
 
     SIO     Out_ShieldVail, OutBank_2, 0        // close cover
-//  wait cover to close
-    WAIT    TICKS, 0, 6
+//  wait cover open
+    CSUB   waitVialCover
 
     RSUB
 
@@ -1333,13 +1294,11 @@ closeVialCover:
 
 moveBelowVial:   //   
 
-    SAP     AP_MaxPositioningSpeed, M_headRotateMotor, MAX_POS_SPEED_VER_ROT // Set maximum positioning speed
-    SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_ROT // Set maximum positioning speed
     MVP     COORD, $51, BELOW_VIAL_COORD                 // interpolate down and CCW to position
     CSUB    waitRotateLong
     CSUB    waitVerticalLong
 //    CSUB    checkSyrPoppedOut                           // verify that the syringe did not pop out
-    CSUB    checkVialPoppedOut                          // verify that the vial did not pop out
+    CSUB    checkVialPoppedOut                          // verify that the syringe did not pop out
     CSUB    findCenterOfNeedleSensor
     CSUB    checkBentLimit
     RSUB
@@ -1363,18 +1322,17 @@ checkMaxAdjust:
     SGP     GB_adjustNeedleSensingHightMM, GPbank_2, 0
 
 calcSensingHight:
-    CSUB    openVialCover
-    GGP     GB_adjustNeedleSensingHightMM, GPbank_2     // load mm to move down
-    CALC    MUL, verticalMicroStepsPerMM                // noe in staeps
-    CALCAV  ADD, GB_BumpPosVert                         // add the bump position
-    CALC    ADD, VERTICAL_FOR_NEEDLE_DELTA              // now at the needle sensor for default distance
-    CALCAV  SUB, GB_DELTA_B                          // sub delta when pointing up (for abs movment in vert)
-    MVPA    ABS, M_verticalMotor                        // move, wait later
+    GGP     GB_adjustNeedleSensingHightMM, GPbank_2      // load mm to move down
+    CALC    MUL, verticalMicroStepsPerMM                 // noe in staeps
+    CALCAV  ADD, GB_BumpPosVert                          // add the bump position
+    CALC    ADD, VERTICAL_FOR_NEEDLE_DELTA               // now at the needle sensor for default distance
+    MVPA    ABS, M_verticalMotor                         // move, wait later
  // adjust for home position
     GGP     GB_HeadRotateHomePos, GPbank_2               // where was the cap location (80)
     CALC    ADD, HEAD_ROTATE_NEEDLE_SEARCH               // add current rotation location (31920)
     CSUB    moveCoordRotate                              // move, wait and error if delay
     CSUB    waitVertical
+    CSUB    openVialCover
  // first RFS
     SAP     AP_RefSearchSpeed, M_headRotateMotor, SEARCH_SPEED_ROT_SLOW   // speed for search
     SAP     AP_RefSwitchSpeed, M_headRotateMotor, SWITCH_SPEED_ROT_SLOW   // speed for final search
@@ -1392,7 +1350,6 @@ secondRFSback:
     RFS     START, M_headRotateMotor                                 // Start reference search
     CSUB    waitRotateRfsNeedleSecond
 endFindNeedle:
-    SAP     AP_RefSearchMode,  M_headRotateMotor, APV_RefHomeLeft    // return to default mode
     SAP     AP_RefSearchSpeed, M_headRotateMotor, SEARCH_SPEED_ROT   // speed for search
     SAP     AP_RefSwitchSpeed, M_headRotateMotor, SWITCH_SPEED_ROT   // speed for final search
 
@@ -1438,18 +1395,16 @@ insertNeedle:    //
  // randomly move the needle right or left +/-20 us (+/-0.5mm)
 
     CSUB    getRandom
-    MVPA    REL, M_headRotateMotor                       // move to random location. A holds the amount
+    MVPA    REL, M_headRotateMotor                  // move to random location. A holds the amount
     CSUB    waitRotate  
   
-    SGP     GB_errors_needleInVial, GPbank_2, set     // assume error: the needle is in the vial
+    SGP     GB_errors_needleInVial, GPbank_2, set   // assume error: the needle is in the vial
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_TO_VIAL // Set maximum positioning speed
     GGP     GB_BumpPosVert, GPbank_2                // get bump height
-    CALC    ADD, VERTICAL_IN_VIAL_DELTA            // add delta for required height ~ 10mm
-    CALCAV  SUB, GB_DELTA_B                       // sub delta when pointing up (for abs movment in vert)
-    MVPA    ABS, M_verticalMotor                 // move to location
+    CALC    ADD, VERTICAL_IN_VIAL_DELTA             // add delta for required height ~ 8mm
+    MVPA    ABS, M_verticalMotor                    // move to location
     CSUB    waitVertical
-    CSUB    checkVialPoppedOut                 // verify that the vial did not pop out
-    
+    CSUB    checkVialPoppedOut                      // verify that the vial did not pop out
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1505,7 +1460,7 @@ returnAddBacklashPrefill:
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-push70air:
+push70air:    
 
     GGP     GB_preFillRequest, GPbank_2                 // check for prefill operation
     COMP    PRE_FILL_REQUEST                            // prefill?
@@ -1514,12 +1469,10 @@ push70air:
     COMP    ADJUST_STATE                                // adjust? do not 70% 
     JC      EQ, returnPush70Air                         // if yes, do not 70%
 
-    // GGP     GB_microLtoWithdraw, GPbank_2               // load the withdraw volume [uL] into A
-    // CALCAV  MUL, GB_airToPullBefore                     // get the "70%"
-    // CALC    DIV, -100                                    // A = 70% in uL
-    // CSUB    moveCoordPistonREL_uL
-    CALCAV  LOAD, GB_reservedPisonLocation
-    CSUB    moveCoordPiston
+    GGP     GB_microLtoWithdraw, GPbank_2               // load the withdraw volume [uL] into A
+    CALCAV  MUL, GB_airToPullBefore                     // get the "70%"
+    CALC    DIV, -100                                    // A = 70% in uL
+    CSUB    moveCoordPistonREL_uL
 
 returnPush70Air:
     CSUB    pushPistonMore
@@ -1530,10 +1483,9 @@ returnPush70Air:
 
 pushTryAgain:     // push liquid into vial +"push more" 0.015ml
 
-    SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_TRYAGAIN  // Set slow positioning speed
-    GGP     GB_PistonHomePos, GPbank_2                                          // go to required height
-    CALCAV  SUB, GB_DELTA_D                                         // adjust Thumbrest location from the finger flange in difrenet syringes
-    CSUB    moveCoordPiston                                                     // move, wait and error if delay
+    SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_TRYAGAIN     // Set slow positioning speed
+    GGP     GB_PistonHomePos, GPbank_2                                         // go to required height
+    CSUB    moveCoordPiston                                                    // move, wait and error if delay
     CSUB    pushPistonMore
     RSUB
 
@@ -1546,31 +1498,30 @@ pushPistonMore:
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-// bubblesOut:   // disabled // pull and push piston to fill the needle with liquid 
-// // GB_pistonMicroStepPer100microL   = 146   // = 2083
+bubblesOut:   // disabled // pull and push piston to fill the needle with liquid 
+// GB_pistonMicroStepPer100microL   = 146   // = 2083
 
-  // // Set highest positioning speed for bubbles destroy
-    // SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_BUBBLE   // Set slow positioning speed
-    // CALC    LOAD, BUBBLES_PULL_uL                    // A = uL to pull
-    // CALCAV  MUL, GB_pistonMicroStepPer100microL      // A = 100 * micro steps to go
-    // CALC    DIV, 100                                 // A = micro steps to go
-    // MVPA    REL, M_pistonMotor
-    // CSUB    waitPiston
-// //    CSUB    BubblesVibrateSyringe
-    // WAIT    TICKS, 0, WAIT_TICKS_BUBBLES             // wait 
-    // SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_BUBBLE_BACK   // Set slow positioning speed
-    // CALC    LOAD, BUBBLES_PULL_uL                    // A = uL to pull
-    // CALCAV  MUL, GB_pistonMicroStepPer100microL      // A = 100 * micro steps to go
-    // CALC    DIV, -100                                // A = micro steps to go
-    // MVPA    REL, M_pistonMotor
-    // CSUB    waitPiston
-    // WAIT    TICKS, 0, WAIT_TICKS_BUBBLES_BACK        // wait 
-    // RSUB
+  // Set highest positioning speed for bubbles destroy
+    SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_BUBBLE   // Set slow positioning speed
+    CALC    LOAD, BUBBLES_PULL_uL                    // A = uL to pull
+    CALCAV  MUL, GB_pistonMicroStepPer100microL      // A = 100 * micro steps to go
+    CALC    DIV, 100                                 // A = micro steps to go
+    MVPA    REL, M_pistonMotor
+    CSUB    waitPiston
+//    CSUB    BubblesVibrateSyringe
+    WAIT    TICKS, 0, WAIT_TICKS_BUBBLES             // wait 
+    SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_BUBBLE_BACK   // Set slow positioning speed
+    CALC    LOAD, BUBBLES_PULL_uL                    // A = uL to pull
+    CALCAV  MUL, GB_pistonMicroStepPer100microL      // A = 100 * micro steps to go
+    CALC    DIV, -100                                // A = micro steps to go
+    MVPA    REL, M_pistonMotor
+    CSUB    waitPiston
+    WAIT    TICKS, 0, WAIT_TICKS_BUBBLES_BACK        // wait 
+    RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 drawVial:    // just pull to required volume
-
 
 // piston more first
     CALCV   LOAD, GB_minDrawPistonTemp_uL, 0 // assume prefil or adjust
@@ -1580,10 +1531,8 @@ drawVial:    // just pull to required volume
     JC      EQ, drawAfterMore                                               // if yes, continue
     GGP     GB_adjustCycle, GPbank_2                                        // check for requested operation: "more"?
     COMP    ADJUST_STATE                                                    // adjust? do not "more"
-    JC      EQ, drawAdjustCycle                                               // if yes, do not "more"
+    JC      EQ, drawAfterMore                                               // if yes, do not "more"
 // not prefill, not adjust  move piston 1mL
-                        
-                      
     CALCV   LOAD, GB_minDrawPistonTemp_uL, MIN_DRAW_PISTON_uL               // no prefil or adjust, just draw the required amount later
 // move "more" 0.5 mL
     SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_MORE  // Set slow positioning speed (200)
@@ -1595,9 +1544,7 @@ drawVial:    // just pull to required volume
 //****
     SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST_DRAW  // Set speed to destroy bubble  (1800)
     CALC    LOAD, MIN_DRAW_PISTON_uL                                        // load the 1mL volume [uL] into A
-
     CSUB    moveCoordPistonREL_uL
-                              
 //****
 drawAfterMore:
     SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST       // Set maximum positioning speed, after the 1ml, draw slower (800)
@@ -1611,47 +1558,17 @@ moreThanOneMl:
     CALCAV  SUB, GB_minDrawPistonTemp_uL             // if 0, will keep the draw, if 1mL, will adjust to compensate the previous 1mL move for bubbles          
     CSUB    moveCoordPistonREL_uL
 
+    CSUB    tapTap                                   // tap the syringe 
+    CSUB    tapTap                                   // tap the syringe 
+    CSUB    tapTap                                   // tap the syringe 
+
     GGP     GB_microLtoWithdraw, GPbank_2            // load the 1mL volume [uL] into A
     CALCAV  SUB, GB_minDrawPistonTemp_uL             // if 0, will keep the draw, if 1mL, will adjust to compensate the previous 1mL move for bubbles          
     COMP    0                                        // check if more ore less than 1ml
     JC      LE, returnDrawVial                       // no need to wait when going upwards
     CSUB    waitAfterDraw
-    JA      returnDrawVial
-
-drawAdjustCycle:
-    GGP     GB_microLtoWithdraw, GPbank_2            // load the adjusting volume [uL] into A
-    CSUB    moveCoordPistonREL_uL
 
 returnDrawVial:
-
-    GGP     GB_preFillRequest, GPbank_2                      // check for requested operation: "more"?
-    COMP    PRE_FILL_REQUEST                                // yes? then no "more"
-    JC      EQ, skipTapTapRinse                                               
-
-    MVP     REL, M_verticalMotor, -375                  // 3mm diference for australias vial shield
-    CSUB    waitVertical                               //
-
-	GGP     GB_SkipTapTap, GPbank_2                      // is skipping requested ?
-    COMP    Set                                         // if it is then skip
-    JC      EQ, skipTapTap                                               
-
-    CSUB    tapTap                                   // tap the syringe 
-    CSUB    tapTap                                  // tap the syringe 
-    CSUB    tapTap                                 // tap the syringe 
-    CSUB    tapTap                                // tap the syringe 
-    CSUB    tapTap                               // tap the syringe 
-    CSUB    tapTap                              // tap the syringe 
-                                               //
-skipTapTap:                                   //
-                                               //
-    MVP     REL, M_verticalMotor, 375                  // 3mm diference for australias vial shield
-    CSUB    waitVertical                              //
-
-    CALC    LOAD,  PISTON_MORE_uL            // load the 0.3mL volume [uL] into A
-    CSUB    moveCoordPistonREL_uL           //
-    CALC    LOAD, -PISTON_MORE_uL          // load the 0.3mL volume [uL] into A
-    CSUB    moveCoordPistonREL_uL         //
-skipTapTapRinse:
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1668,12 +1585,10 @@ tapTap: // use vial shield cover to tap the syringe
 drawVialMoreBack:    // just pull to required volume
 // Adjust more backwards speed according to the delay time that is related to the gauge and length
 
-
     CALC    LOAD, MAX_POS_SPEED_PIST_MORE_BACK          // load default speed to A
     CALC    MUL, DEF_DRAW_WAIT_TIME                     // and multiply by the default wait time
     CALCAV  DIV, GB_DrawWaitTime                        // divide A by the final wait time
     AAP     AP_MaxPositioningSpeed, M_pistonMotor       // Set more back positioning speed
-
 
   // always push for later bump
 //*****
@@ -1694,8 +1609,6 @@ notPrefill:
     CALC    LOAD, -PISTON_MORE_uL
     CSUB    moveCoordPistonREL_uL
 //****
-    // CALCAV  LOAD, GB_microLtoWithdraw
-    // CSUB    moveCoordPiston_uL
 returnMoreBack: 
     SAP     AP_MaxPositioningSpeed, M_pistonMotor, MAX_POS_SPEED_PIST  // Set maximum positioning speed
     RSUB
@@ -1714,9 +1627,34 @@ bumpPlunger:   //
 waitAfterDraw:
 
     GGP     GB_DrawWaitTime, GPbank_2              // get time in [100ms]
-                  
     WAIT    TICKS, 0, ACCUMULATOR_WAIT             // wait ticks as in A
 
+    RSUB
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+BubblesVibrateSyringe:   // func_132 - vibrates rotating to release bubbles
+ 
+ // bubbles
+  
+    SGP     GB_numberOfKicksTemp, GPbank_2, NUMBER_OF_KICKS    // copy to temporary GB
+kickLoop:
+    DJNZ    GB_numberOfKicksTemp, kickLoopNotDone
+    JA      kickLoopDone
+kickLoopNotDone:
+    CALC    LOAD, ROTATE_BUBBLES_uM          // A = um to rotate
+    CALC    MUL, rotateMicroStepsPerMM       // A = 1000 * micro steps to go
+    CALC    DIV, 1000                        // A = micro steps to go
+    MVPA    REL, M_headRotateMotor
+    CSUB    waitRotate
+    CALC    LOAD, ROTATE_BUBBLES_uM          // A = um to rotate
+    CALC    MUL, rotateMicroStepsPerMM       // A = 1000 * micro steps to go
+    CALC    DIV, -1000                       // A = micro steps to go
+    MVPA    REL, M_headRotateMotor
+    CSUB    waitRotate
+    JA      kickLoop
+  // done, move down back
+kickLoopDone:
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1724,19 +1662,15 @@ waitAfterDraw:
 moveSlowlyBottom:    // 
  
     GGP     GB_BumpPosVert, GPbank_2                  // go to required height
-    CALCAV  SUB, GB_DELTA_B                          // sub delta when pointing up (for abs movment in vert)
-    CSUB    moveCoordVertical                       // move, wait and error if delay
+    CSUB    moveCoordVertical                         // move, wait and error if delay
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 rotateDown:   // 
 
-    SAP     AP_MaxPositioningSpeed, M_headRotateMotor, MAX_POS_SPEED_VER_ROT // Set maximum positioning speed
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_ROT // Set maximum positioning speed
-    CALC    LOAD, VERTICAL_FOR_ROTATION                    // move head down while "bump"
-    CALCAV  SUB, GB_DELTA_B                          // sub delta when rising (in vert)
-    MVPA    ABS, M_verticalMotor
+    MVP     ABS, M_verticalMotor, VERTICAL_FOR_ROTATION                    // move head down while "bump"
     CSUB    waitPiston                                                     // wait for end of bump movement
     CSUB    waitVertical
     SGP     GB_errors_needleInVial, GPbank_2, clr    // erase assume error: the needle is out from the vial
@@ -1746,12 +1680,12 @@ rotateDown:   //
     CSUB    waitVerticalLong
     CSUB    PositionHeadRotateMotor
     CSUB    adjustNeedleLocaction                    // according to miss location at top
-    // // GGP     GB_LoadingHight, GPbank_2                // get reference height
-    // // // CALCAV  SUB, GB_Cap_Length_current_us            // add delta for required height
-    // // CALCAV  ADD, GB_needleLengthInMicroSteps
-    // // CALCAV  ADD, GB_DELTA_B                          // add delta when pointing down (for abs movment in vert) // maybe just go to highest possible location instead ?
-    // // MVPA    ABS, M_verticalMotor                     // move to location
-    // // CSUB    waitVertical
+    GGP     GB_LoadingHight, GPbank_2                // get reference height
+    CALC    ADD, DECAP_HEIGHT_DELTA                  // add delta for required height
+    CALCAV  ADD, GB_defaultNeedleLengthInMicroSteps  // add default 25 needle steps
+    CALCAV  SUB, GB_needleLengthInMicroSteps         // sub current needle steps
+    MVPA    ABS, M_verticalMotor                     // move to location
+    CSUB    waitVertical
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1801,9 +1735,7 @@ recapSyringe:   //
 //    CSUB    checkSyrPoppedOut                              // verify that the syringe did not pop out
  
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_INTO_CAP   // Set slow positioning speed
-    CALC    LOAD, VERTICAL_BACK_TO_CENTER  // move head down into cap, where we adjust back to center 
-    CALCAV  ADD, GB_DELTA_B                          // add delta when pointing down (for abs movment in vert) // maybe just go to highest possible location instead ?
-    MVPA    ABS, M_verticalMotor
+    MVP     ABS, M_verticalMotor, VERTICAL_BACK_TO_CENTER  // move head down into cap, where we adjust back to center 
     CSUB    waitVertical
  // moving head and cap holder to center
 //    CSUB    checkSyrPoppedOut                              // verify that the syringe did not pop out
@@ -1818,43 +1750,54 @@ recapSyringe:   //
  // VERTICAL_CAP_VIBRATE_DELTA um before loading 
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_INTO_CAP/2 // Set slower positioning speed
     GGP     GB_LoadingHight, GPbank_2
-    CALCAV  ADD, GB_DELTA_A
     CALC    SUB, VERTICAL_CAP_VIBRATE_DELTA * verticalMicroStepsPerMM / 1000  // A will hold the location above loading position
     CSUB    moveCoordVertical
  // 0.3 mm below loading
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_INTO_CAP/6 // Set slower positioning speed
     GGP     GB_LoadingHight, GPbank_2
-    CALCAV  ADD, GB_DELTA_A
     CALC    ADD, verticalMicroStepsPerMM * 3 / 10         // push 0.3 mm unto the cap 
     MVPA    ABS, M_verticalMotor                          // move, wait later
+// V4056 NO vibrate    CSUB    capVibrate                                    // will vibrate till reaches loading hight
     CSUB    waitVertical
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_ROT// Set high positioning speed
-
-    GGP     GB_CurrentState, GPbank_2 // if recap is run from returnContentToVial then keep the cap holder in place (on the syringe)
-    COMP    RUNNING_RETURN_TO_VIAL
-    JC      EQ, returnFromRecapSyringe
 
     SGP     GB_inHomeCapHolderMotor, GPbank_2, set       // in interrupt sub enable 3 times checking if syringe popped out + re homing
     CSUB    homeCapHolderMotor
     SGP     GB_inHomeCapHolderMotor, GPbank_2, clr
     
-returnFromRecapSyringe:
+    RSUB
 
-    // the cap is now on the syringe - in case of RCTV
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, set
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+capVibrate:   // func_148 - vibrates cap to insert syringe ti reaches required hught
+ 
+ // VIBRATE_CAP_uM           300 = 0.3 mm
+  
+capVibrateLoop:
+    GAP     AP_ActualPosition, M_verticalMotor  // get vertical current location
+    CALCAV  SUB, GB_LoadingHight                // A - LoadingHight --> A
+    COMP    0  
+    JC      GE, capVibrateLoopDone
+capLoopNotDone:
+    CALC    LOAD, VIBRATE_CAP_uM             // A = um to rotate
+    CALC    MUL, capMicroStepsPerMM          // A = 1000 * micro steps to go
+    CALC    DIV, 1000                        // A = micro steps to go
+    MVPA    REL, M_capHolderMotor
+    CSUB    waitCapHolder
+    CALC    LOAD, VIBRATE_CAP_uM             // A = um to rotate
+    CALC    MUL, capMicroStepsPerMM          // A = 1000 * micro steps to go
+    CALC    DIV, -1000                        // A = micro steps to go
+    MVPA    REL, M_capHolderMotor
+    CSUB    waitCapHolder
+    JA      capVibrateLoop
+  // done, move down back
+capVibrateLoopDone:
     RSUB
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 findCapHolderAtNeedle:         
 // any change in this function needs to be changed in "findCenterCapHolderManual" as well
-
-    GGP     GB_LoadingHight, GPbank_2               // get reference height
-    CALC    ADD, DECAP_HEIGHT_DELTA                  // add delta for required height
-    CALCAV  ADD, GB_DELTA_B                          // add delta when pointing down (for abs movment in vert)
-    MVPA    ABS, M_verticalMotor                     // move to location
-    CSUB    waitVertical
 
     GGP     GB_CapHoldsSyringe, GPbank_2                    // get center of cap holder
     CALC    ADD, CAP_HOLDER_RELATIVE_RFS                    // 40 add relative cap holder location, start of RFS
@@ -1923,11 +1866,11 @@ findCenterCapHolderManual:
     GGP     GB_CurrentState, GPbank_2               // current state to A
     COMP    WAITING_DRAW_DOSE                       // initialization done
     JC      NE, okFindCenterCap                     // if EQ, continue
-
     GGP     GB_LoadingHight, GPbank_2               // get reference height
-    CALC    ADD, DECAP_HEIGHT_DELTA                  // add delta for required height
-    CALCAV  ADD, GB_DELTA_B                          // add delta when pointing down (for abs movment in vert)
-    MVPA    ABS, M_verticalMotor                     // move to location
+    CALC    ADD, DECAP_HEIGHT_DELTA                 // add delta for required height
+    CALCAV  ADD, GB_defaultNeedleLengthInMicroSteps // add default 25 needle steps
+    CALCAV  SUB, GB_needleLengthInMicroSteps        // sub current needle steps
+    MVPA    ABS, M_verticalMotor                    // move to location
     CSUB    waitVertical
 
     GGP     GB_CapHoldsSyringe, GPbank_2            // get center of cap holder
@@ -2001,9 +1944,7 @@ putSyringeInPig:    //
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_HIGH // Set maximum positioning speed
     SGP     GB_TouchedLeftRef, GPbank_2, clr                                // wait for set interrupt when going up
     EI      TI_STOPLEFT4                                                    // touched interrupt
-    CALC    LOAD, ABOVE_PIG
-    // CALCAV  ADD, GB_DELTA_C                                                 // add delta when pointing down (for abs movment in vert) // maybe just go to highest possible location instead ?
-    MVPA    ABS, M_verticalMotor                                            // run to position move above PIG
+    MVP     ABS, M_verticalMotor, ABOVE_PIG                                 // run to position move above PIG
     CSUB    waitVerticalLong
  // check if touched sensor
     GGP     GB_TouchedLeftRef, GPBank_2                                     // check if touched ref sensor
@@ -2026,19 +1967,17 @@ putSyringeInPig:    //
 
 squeezeCap:
 
-    MVP     ABS, M_verticalMotor, ABOVE_SQUEEZE_CAP
+    MVP     ABS, M_verticalMotor, ABOVE_SQUEEZE_CAP                       
     CSUB    waitVertical
     GGP     GB_RecapPositionPig, GPbank_2
     CSUB    moveCoordPigHolder                                              // move, wait and error if delay
     MVP     REL, M_pigHolderMotor, SQUEEZE_CAP_ON_PIG_DELTA                    
     CSUB    waitPigHolder
-    CSUB    squeeze
-    // SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_INTO_CAP // Set maximum positioning speed
-    // GGP     GB_squeezeCapHeight, GPbank_2                        // go to required height
-    // CALCAV  ADD, GB_DELTA_C
-    // CSUB    moveCoordVertical                                               // move, wait and error if delay
-    // MVP     REL, M_verticalMotor, DETECT_CAP_HIGHT_REL                      // moves up 1 mm to release the pig holder                   
-    // CSUB    waitVertical
+    SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_INTO_CAP // Set maximum positioning speed
+    GGP     GB_squeezeCapHeight, GPbank_2                                       // go to required height
+    CSUB    moveCoordVertical                                               // move, wait and error if delay
+    MVP     REL, M_verticalMotor, DETECT_CAP_HIGHT_REL                      // moves up 1 mm to release the pig holder                   
+    CSUB    waitVertical
     CSUB    HomePigHolderMotor                                              // pop out the PIG holder
     RSUB
 
@@ -2046,18 +1985,21 @@ squeezeCap:
 
 checkCapOnSyringe:
 
-    GGP     GB_CapHoldsSyringe, GPbank_2                // get center of cap holder which means, the sensor is GB_NeedleAtCapOffset outwards
-//    CALCAV  SUB, GB_NeedleAtCapOffset                // subtract the offeset between the sensor an the needle, so sensor is on HOME
+    GGP     GB_Syringe_Type, GPbank_2                 // get current syringe
+    COMP    Terumo_2_5ml_syringe                      // this syringe cap is transparent and cannot be detected.
+    JC      EQ, returnCheckCAP                        // return
+
+    GGP     GB_CapHoldsSyringe, GPbank_2              // get center of cap holder which means, the sensor is GB_NeedleAtCapOffset outwards
+//    CALCAV  SUB, GB_NeedleAtCapOffset                 // subtract the offeset between the sensor an the needle, so sensor is on HOME
     CSUB    moveCoordCapHolder                        // move, wait and error if delay
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, set      // assume the cap is on the syringe - if not will change at the end of checkCapOnSyringe
 // first check
-    GIO     In_CapHolderHomeNeedle, InBankDigital_0     // is the CAP detected?
+    GIO     In_CapHolderHomeNeedle, InBankDigital_0   // is the CAP detected?
     COMP    CAP_SENSOR_BLOCKED
     JC      EQ, returnCheckCAP                        // cap exists
 // second check
     MVP     REL, M_capHolderMotor, -STEPS_FOR_CAPS_SENSING
     CSUB    waitCapHolder
-    GIO     In_CapHolderHomeNeedle, InBankDigital_0     // is the CAP detected?
+    GIO     In_CapHolderHomeNeedle, InBankDigital_0   // is the CAP detected?
     COMP    CAP_SENSOR_BLOCKED
     JC      EQ, returnCheckCAP                        // cap exists
 // third check
@@ -2069,7 +2011,6 @@ checkCapOnSyringe:
 // No cap detected 3 times
     CSUB    lookForBentSyringe                        // make now 5 more measurements. 
     SGP     GB_syringeWOcapInPIG, GPbank_2, set       // the syringe in the PIG has no cap
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, clr
 returnCheckCAP:
     MVP     ABS, M_verticalMotor, ABOVE_PIG           // run to position move above PIG
     CSUB    waitVertical
@@ -2129,14 +2070,10 @@ capIntoCapHolder:
     SAP     AP_MaxCurrent, M_verticalMotor, MAX_CURRENT_VERT_HIGH             // Set absolute max. current
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_HIGH   // Set maximum positioning speed
     SGP     GB_TouchedLeftRef, GPbank_2, clr                                  // wait for set interrupt when going up
- // // // // for moved up from dose calibrator
-    // // // VECT    TI_STOPLEFT4, StopLeft4Irq                // left rotate ref touched
-    // // // SGP     TI_STOPLEFT4, GPbank_3, both              // 
     EI      TI_STOPLEFT4                                                      // touched interrupt
     MVP     ABS, M_verticalMotor, UP_FOR_SENSOR_ABS                           // run to position move to rotate sensor for interrupt
     CSUB    waitVertical
     GGP     GB_LoadingHight, GPbank_2                                         // go to required height
-    CALCAV  ADD, GB_DELTA_A
     MVPA    ABS, M_verticalMotor                                              // run to above PIG
     CSUB    waitVertical
  // check if touched sensor
@@ -2373,31 +2310,10 @@ PistonManual:    //
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-moveCoordPiston:    //
+moveCoordPiston:    // 
 
-    COMP    0
-    JC      GE, pistCoordAreAboveMin
-    CALC    LOAD, 0
-pistCoordAreAboveMin:
-    CALCAV  MUL, GB_PistonFactor                                  // calc factor for adjustment of difference between machine (100 is no change)
-    CALC    DIV, 100
-    COMP    MAX_PIST_IN_USTEPS
-    JC      LE, pistUSeptsInRange
-    CALC    LOAD, MAX_PIST_IN_USTEPS
-pistUSeptsInRange:
     MVPA    ABS, M_pistonMotor                        // move, wait later
     CSUB    waitPiston
-    RSUB
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-moveCoordPiston_uL:    // 
-
-    CALCAV  MUL, GB_pistonMicroStepPer100microL          
-    CALC    DIV, 100                                                        // now in uSteps
-    CALCAV  ADD, GB_PistonHomePos                                           // go relative to starting position    
-    CALCAV  SUB, GB_DELTA_D                                         // adjust Thumbrest location from the finger flange in difrenet syringes
-    CSUB    moveCoordPiston
     RSUB
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2413,27 +2329,8 @@ moveCoordPistonREL_uL:    //
 
 moveCoordPistonREL:    // 
 
-// GB_current_Volume_Temp_saver = 165
-
-    CALCAV  MUL, GB_PistonFactor                                  // calc factor for adjustment of difference between machine (100 is no change)
-    CALC    DIV, 100
-
-    CALCVA  LOAD, GB_current_Volume_Temp_saver
-    GAP     AP_ActualPosition, M_pistonMotor            // get current position of piston
-    CALCAV  ADD, GB_current_Volume_Temp_saver
-    COMP    MAX_PIST_IN_USTEPS
-    JC      LE, RELpistUSeptsInRange
-    CALC    LOAD, MAX_PIST_IN_USTEPS
-    CSUB    moveCoordPiston
-    JA      RELpistUSeptsAdjusted
-RELpistUSeptsInRange: 
-    CALCAV  LOAD, GB_current_Volume_Temp_saver   
-                                                                                                                                                
-                    
     MVPA    REL, M_pistonMotor                        // move, wait later
-                    
     CSUB    waitPiston
-RELpistUSeptsAdjusted:
     RSUB
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2522,7 +2419,7 @@ waitRotateRfs:    //
 waitRotateRfsShort:    // 
 
     SGP     GB_MotorIsMoving, GPbank_2, set
-    WAIT    RFS, M_headRotateMotor, WAIT_TICKS_LONG // WAIT_TICKS_SHORT   // wait end of reference search 15 seconds
+    WAIT    RFS, M_headRotateMotor, WAIT_TICKS_SHORT   // wait end of reference search 15 seconds
     JC      ETO, headRotateMotorTOerr                  // timeout occured
     SGP     GB_MotorIsMoving, GPbank_2, clr
     RSUB
@@ -2701,15 +2598,13 @@ retreatFromVial:
 
 //  verify that the hight is above bump - 10mm
     GAP     AP_ActualPosition, M_verticalMotor
-    CALCAV  SUB, GB_BumpPosVert              // AP_ActualPosition - ( GB_BumpPosVert - DELTA_B ). if >0, below bump
-    CALCAV  ADD, GB_DELTA_B                  // actual - ( bump - delta )
+    CALCAV  SUB, GB_BumpPosVert              // AP_ActualPosition - GB_BumpPosVert. if >0, below bump
     COMP    verticalMicroStepsPerMM * 10     // 10 mm below bump is OK
     JC      GT, locationError  
 //  verify that the hight is below bump + ABOVE_BUMP + 1 (9mm)
     GAP     AP_ActualPosition, M_verticalMotor
-    CALCAV  SUB, GB_BumpPosVert              // AP_ActualPosition - ( GB_BumpPosVert - DELTA_B ). if >0, below bump
-    CALCAV  ADD, GB_DELTA_B                  // actual - ( bump - delta )
-    COMP    -verticalMicroStepsPerMM * (ABOVE_BUMP +1) // >10 mm above bump is bad
+    CALCAV  SUB, GB_BumpPosVert                        // AP_ActualPosition - GB_BumpPosVert. if >0, blow bump
+    COMP    -verticalMicroStepsPerMM * (ABOVE_BUMP +1) // >8 mm above bump is bad
     JC      GT, atCorrectHight  
 locationError:
     GGP     GB_errors_M_verticalMotor, GPbank_2        // load vertical error word
@@ -2726,16 +2621,13 @@ atCorrectHight:
     SAP     AP_MaxCurrent, M_verticalMotor, MAX_CURRENT_VERT / 2               // Set absolute max. current
     SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_TO_VIAL // Set maximum positioning speed very slow
     GGP     GB_BumpPosVert, GPbank_2                                           // go to required height
-    CALCAV  SUB, GB_DELTA_B                                                    // sub delta when pointing up (for abs movment in vert)
     MVPA    ABS, M_verticalMotor                                               // move to bump
     CSUB    waitVerticalLong
 // open piston
-    MVP     REL, M_pistonMotor, GB_pistonMicroStepPer100microL*1               // pull 0.1 mL
+    MVP     REL, M_pistonMotor, GB_pistonMicroStepPer100microL*2               // pull 0.2 mL
     CSUB    waitPiston
 // move vertical down to rotation hight
-    CALC    LOAD, VERTICAL_FOR_ROTATION
-    CALCAV  SUB, GB_DELTA_B
-    MVPA    ABS, M_verticalMotor                                               // move, wait later
+    MVP     ABS, M_verticalMotor,VERTICAL_FOR_ROTATION                         // move, wait later
     CSUB    waitVertical
     CSUB    closeVialCover
     SAP     AP_MaxCurrent, M_verticalMotor, MAX_CURRENT_VERT                   // Set absolute max. current back
@@ -2799,119 +2691,5 @@ clrAnyError:
     CSUB    GREEN_ON
     RSUB
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
-// *******************************************************************************
-// Name: returnContentToVial   (154)
-//
-// Summary: does almost all initialise proccesses when the robot is after an error so it will find all of the reference points after it put the requested option
-//
-// *******************************************************************************
-// ******************************************************************************
-
-squeeze:
-
-    SAP     AP_MaxPositioningSpeed, M_verticalMotor, MAX_POS_SPEED_VER_INTO_CAP // Set maximum positioning speed
-    GGP     GB_squeezeCapHeight, GPbank_2                        // go to required height
-    CALCAV  ADD, GB_DELTA_C
-    CSUB    moveCoordVertical                                               // move, wait and error if delay
-    MVP     REL, M_verticalMotor, DETECT_CAP_HIGHT_REL  
-    CSUB    waitVertical
-    
-    RSUB
-    
-// ******************************************************************************
-
-DeCap_B4_RST_B4_RCTV: // FUNC_158
-
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, set
-    
-    // CSUB    squeeze                                                                 // will place syringe in the vertical location to test if a cap is detected
-    
-    // CSUB    checkCapOnSyringe                                                       // tests if RCTV will need to start by removing the cap from the syringe
-    
-// *******************************************************************************
-
-RST_B4_RCTV: // FUNC_156
-
-    RST     returnContentToVial                                                 // Reset all of the programs data and continue to the RVT func
-
-// ******************************************************************************
-// still need to adjust the detection of with or without cap 
-returnContentToVial: // FUNC_154
-
-    // CSUB    INIT
-    CSUB    stopAllMotors
-    // CSUB    INIT_DRAW_DOSE
-    // CSUB    GREEN_ON
-    CSUB    ClearRunningErrors                 
-    CSUB    bumpPlunger                                                         // start by sucking a little bit of air to avoid accidental dripping
-
-returnContentToVial666:
-    SGP     GB_CurrentState, GPbank_2, RUNNING_RETURN_TO_VIAL                   // used to avoid 
-    SGP     GB_any_Error, GPbank_2, clr                                         // clear any error status
-    
-    // SAP     AP_MaxAcceleration, M_verticalMotor, ACC_VERT              // Set maximum acceleration
-    // SAP     AP_StandbyCurrent, M_capHolderMotor, STBY_CUR_CAP_HIGH      // Set standby current
-    // SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE_HIGH  // Set standby current 
-	// SAP     AP_RefSearchMode,  M_headRotateMotor, APV_RefLeftSwitch
-	// SAP     AP_RefSearchSpeed, M_headRotateMotor, SEARCH_SPEED_ROT_SLOW   // speed for search
-	// SAP     AP_RefSwitchSpeed, M_headRotateMotor, SWITCH_SPEED_ROT_SLOW   // speed for final search
-    // SAP     AP_LeftLimitSwitchDisable, M_headRotateMotor, set        // re-Enable left limit switch
-
-
-    CSUB    homePigHolderMotor                 // Pig and Cap holders first to clear the way for vertical
-    CSUB    homeCapHolderMotor
-    CSUB    positionVerticalMotor              // get it out of pig and cap
-
-    CSUB    PositionHeadRotateMotor
-
-// need to add a test if the cap is on the syringe or not 
-
-    CSUB    squeeze                                                                 // will place syringe in the vertical location to test if a cap is detected
-    // need to go up on vertical 500 uSteps - to avoid detection of needle as cap
-    // testing
-    // MVP     REL, M_verticalMotor, -500
-    // CSUB    waitVertical
-    // end of test
-    CSUB    checkCapOnSyringe                                                       // tests if RCTV will need to start by removing the cap from the syringe
-
-    GGP     GB_Cap_Is_On_Syringe, GPbank_2                                     // was removing the cap requested ?
-    COMP    set                                                                 // if it was
-    JC      NE, noCapDetected                                                   // if it wasnt
-    CSUB    capIntoCapHolder                                                    // need to put cap back into cap holder
-    JA      withCapOrNot
-noCapDetected:
-    // *** wht would i want to recap and the decap again ?!? - canceling it ...  
-    // CSUB    decapSyringe
-    // CSUB    recapSyringe    
-withCapOrNot:
-    CSUB    decapSyringe
-    SAP     AP_StandbyCurrent, M_headRotateMotor, STBY_CUR_ROTATE               // Set standby hear rotate current normal
-    CSUB    moveBelowVial
-    CSUB    insertNeedle
-    CSUB    pushTryAgain                                                        // push liquid into vial +"push more" 0.015ml - will return syringe content to vial like "try again" but without actual pulling from vial again
-    WAIT    TICKS, 0, 50                                                        // wait 0.5 seconds allow syringe to balance pressure 
-    CSUB    moveSlowlyBottom
-    CSUB    bumpPlunger
-    CSUB    rotateDown
-    CSUB    recapSyringe    
-    
-    SGP     GB_CurrentState, GPbank_2, WAITING_DRAW_DOSE
-    // CSUB    GREEN_ON
-
-//  after the RCTV - the cap stays on the syringe
-    SGP     GB_Cap_Is_On_Syringe, GPbank_2, set
-
-    // SGP     GB_CurrentState, GPbank_2, FINISHED_RETURN_TO_VIAL
-    // SGP     GB_PigWasReplaced, GPbank_2, PIG_WAS_REPLACED  // watch for pig replacement
-    // SGP     GB_CurrentState, GPbank_2, WAITING_DRAW_DOSE
-
-    JA   BACK_GROUND_PROCESS
-
-// ******************************************************************************
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

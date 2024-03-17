@@ -607,8 +607,8 @@ GB_PistonHomePos       = 48         // for empty syringe ~1300
    MAX_POS_SPEED_PIST_BUBBLE_BACK =  800 /// 1200
    MAX_POS_SPEED_PIST_MORE       =   200 //// 1800 ///  100 /// 200 // 1500 //  200
    MAX_POS_SPEED_PIST_MORE_BACK  =   600 /// 1200
-   SEARCH_SPEED_PIST             =   400 /// 800
-   SWITCH_SPEED_PIST             =   100
+   SEARCH_SPEED_PIST             =   150 // 400 /// 800
+   SWITCH_SPEED_PIST             =    50 // 100
 
    ACC_PIST                      =   200
    STBY_CURRENT_PIST             =    25

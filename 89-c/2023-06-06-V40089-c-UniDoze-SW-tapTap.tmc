@@ -724,13 +724,7 @@ homePistonMotorBoth:
     RFS       START, M_pistonMotor                                 // Start reference search
     CSUB      waitPistonRfs
     GGP       GB_PistonHomePos, GPbank_2                           // go to required height
-    CALCAV    SUB, GB_DELTA_D                                         // adjust Thumbrest location from the finger flange in difrenet syringes
-    COMP    0
-    JC      GE, ResumeHomePistonMotorBoth   
-    CALC    LOAD, 0
-  ResumeHomePistonMotorBoth:
-    MVPA    ABS, M_pistonMotor                        // move, wait later
-    CSUB    waitPiston
+    CSUB      moveCoordPiston                                      // move, wait and error if delay
     RSUB
 
 homePistonMotor:                           // only to home sensor
@@ -739,20 +733,14 @@ homePistonMotor:                           // only to home sensor
     RSUB
 
 startHomePistonMotor:
-    SAP       AP_RefSearchMode,  M_pistonMotor, APV_RefLeftSwitch      //
-    RFS       START, M_pistonMotor                                       // Start reference search
+    SAP       AP_RefSearchMode,  M_pistonMotor, APV_RefLeftSwitch  
+    RFS       START, M_pistonMotor                                 // Start reference search
     RSUB
 
 waitHomePistonMotor:                      // wait home sensor and position
     CSUB      waitPistonRfs
     GGP       GB_PistonHomePos, GPbank_2                           // go to required height
-    CALCAV    SUB, GB_DELTA_D                                         // adjust Thumbrest location from the finger flange in difrenet syringes
-    COMP    0
-    JC      GE, ResumeWaitHomePistonMotor
-    CALC    LOAD, 0
-  ResumeWaitHomePistonMotor:
-    MVPA    ABS, M_pistonMotor                        // move, wait later
-    CSUB    waitPiston
+    CSUB      moveCoordPiston                                      // move, wait and error if delay
     RSUB
 
 //*********************************

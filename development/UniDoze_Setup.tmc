@@ -985,7 +985,7 @@ GREEN_ON:
 RED_ON:
     SIO     Out_RedLED, OutBank_2, LED_ON                    // turn on red led
     SIO     Out_GreenLED, OutBank_2, LED_OFF                 // turn off green led
-    CSUB    bumpPlunger                                      // suck a little bit of air to avoid accidental dripping in case of an error that stops te machine
+    CSUB    bumpPlunger                                      // suck a little bit of air to avoid accidental dripping in case of an error that stops the machine
     RSUB
 
 YELLOW_ON:

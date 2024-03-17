@@ -480,7 +480,7 @@ GB_squeezeCapHeight           =  53
    IN_PIG                          =  2500  // ABS
    UP_FOR_SENSOR_ABS               =  -350  // where to go up from dose calibrator to meet rotate sensor for interrupt
 //   DETECT_CAP_HIGHT                = -5500
-   DETECT_CAP_HIGHT_REL            = -verticalMicroStepsPerMM 
+   DETECT_CAP_HIGHT_REL            = -5 * verticalMicroStepsPerMM 
    ABOVE_SQUEEZE_CAP               = -6000
    MIN_DEPTH_FOR_EXTRACT           =  20000
 

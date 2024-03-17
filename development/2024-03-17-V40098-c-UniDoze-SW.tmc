@@ -2038,7 +2038,7 @@ squeezeCap:
     // CALCAV  ADD, GB_DELTA_C
     // CSUB    moveCoordVertical                                               // move, wait and error if delay
     // MVP     REL, M_verticalMotor, DETECT_CAP_HIGHT_REL                      // moves up 1 mm to release the pig holder                   
-    CSUB    waitVertical
+    // CSUB    waitVertical
     CSUB    HomePigHolderMotor                                              // pop out the PIG holder
     RSUB
 
@@ -2820,6 +2820,7 @@ squeeze:
     CALCAV  ADD, GB_DELTA_C
     CSUB    moveCoordVertical                                               // move, wait and error if delay
     MVP     REL, M_verticalMotor, DETECT_CAP_HIGHT_REL  
+    CSUB    waitVertical
     
     RSUB
     
@@ -2869,10 +2870,10 @@ returnContentToVial666:
 // need to add a test if the cap is on the syringe or not 
 
     CSUB    squeeze                                                                 // will place syringe in the vertical location to test if a cap is detected
-    // need to go up on vertical 200 uSteps - to avoid detection of needle as cap
+    // need to go up on vertical 500 uSteps - to avoid detection of needle as cap
     // testing
-    MVP     REL, M_verticalMotor, -200
-    CSUB    waitVertical
+    // MVP     REL, M_verticalMotor, -500
+    // CSUB    waitVertical
     // end of test
     CSUB    checkCapOnSyringe                                                       // tests if RCTV will need to start by removing the cap from the syringe
 

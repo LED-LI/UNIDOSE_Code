@@ -408,7 +408,7 @@ GB_PistonFactor                    = 54
 GB_Default_Needle_Length           = 57     // 25 [mm]
 GB_temp_place_holder               = 58    
 GB_temp_place_holder2              = 59    
-GB_Cap_Is_On_Syringe              = 60     // set = the cap is on the syringe , clr = the syringe is without a cap
+GB_Cap_Is_On_Syringe               = 60     // set = the cap is on the syringe , clr = the syringe is without a cap
 
 //********************
 //********************

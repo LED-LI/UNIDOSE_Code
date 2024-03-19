@@ -167,7 +167,7 @@
 
 #Include UniDoze_TMCLParam.tmc                         // TMCL Parameters
 #Include UniDoze_Setup.tmc                             // UniDoze Parameters & initialization
-// this file 2024-03-17-V40098-c-UniDoze-SW.tmc
+// this file 2024-03-19-V40098-c-UniDoze-SW.tmc
 
 //*********************************
 //*********************************
@@ -730,19 +730,24 @@ homePigHolderMotor:
     // // // // RSUB
 
 homeCapHolderMotor:  
-    GGP     GB_CurrentState, GPbank_2   // InitDrawDoze can run if WAITING_INIT_DRAW_DOSE or if WAITING_DRAW_DOSE
-    COMP    RUNNING_INIT_DRAW_DOSE                                    // RUNNING_INIT_DRAW_DOSE?
-    JC      NE, okHomeCapHolder                                       // no, continue
+    GGP     GB_CurrentState, GPbank_2   // homeCapHolderMotor needs to be careful of headRotateMotor in case INIT_DRAW_DOSE or if RUNNING_RETURN_TO_VIAL is running because the location of the arm is unknown and we want to reduce as much risks as possible of damage to the arm
+    COMP    RUNNING_RETURN_TO_VIAL                                      // RUNNING_RETURN_TO_VIAL ?
+    JC      EQ, lowerCurrentHeadRotate
+    COMP    RUNNING_INIT_DRAW_DOSE                                      // RUNNING_INIT_DRAW_DOSE ?
+    JC      NE, okHomeCapHolder                                         // no, continue
  // set vertical motor current to zero for a case that the cap holder pushes the vertical axis:
-    SAP     AP_MaxCurrent, M_headRotateMotor, 0                       // Set absolute max. current
+lowerCurrentHeadRotate:
+    SAP     AP_MaxCurrent, M_headRotateMotor, 0                         // Set absolute max. current
     
 okHomeCapHolder:
-    SAP       AP_RefSearchSpeed, M_capHolderMotor, SEARCH_SPEED_CAP   // speed for search
-    SAP       AP_RefSwitchSpeed, M_capHolderMotor, SWITCH_SPEED_CAP   // speed for final search
-    SAP       AP_RefSearchMode, M_capHolderMotor, APV_RefLeftSwitch
-    RFS       START, M_capHolderMotor                                 // Start reference search
-    CSUB      waitCapHolderRfs
-    SAP       AP_MaxCurrent, M_headRotateMotor, MAX_CURRENT_ROT           // Set absolute max. current
+    SAP     AP_RefSearchSpeed, M_capHolderMotor, SEARCH_SPEED_CAP       // speed for search
+    SAP     AP_RefSwitchSpeed, M_capHolderMotor, SWITCH_SPEED_CAP       // speed for final search
+    SAP     AP_RefSearchMode, M_capHolderMotor, APV_RefLeftSwitch
+    RFS     START, M_capHolderMotor                                     // Start reference search
+    CSUB    waitCapHolderRfs
+    SAP     AP_MaxCurrent, M_headRotateMotor, MAX_CURRENT_ROT           // Set absolute max. current
+    SAP     AP_MaxCurrent, M_capHolderMotor, STBY_CUR_CAP_HIGH          // Set capHolder Motors current to highest settings to resist unwanted movements from inserting the syringe by the operator
+    
     RSUB
 
 //*********************************

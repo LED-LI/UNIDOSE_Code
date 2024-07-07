@@ -158,6 +158,7 @@
 //         136. V1040097-c-ISORAD patch
 //         137. .......... 70%
 //         138. V1040098-c-from_ISORAD patch - development of the return content back into the vial after an error
+//         139. V1040098-d-combination of all syringes in an external "syringe library" file
 //
 //***********************************************************************************************************
 
@@ -422,28 +423,29 @@ GB_Cap_Is_On_Syringe               = 60     // set = the cap is on the syringe ,
 // GB_Syring_Length_current_us  = 162
 // GB_Limit_for_Prefill_current = 163
 
-
-
 // Syringe_1 = BD_3ml_syringe with a G23 25mm needle
 Max_Volume_1           =      3000
-um_per_1mL_1           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
-microL_per_100mm_1     = 100000000 / um_per_1mL_1 // 5877  // 6035
+um_per_1mL_1           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_1
+microL_per_100mm_1     = 100000000 / um_per_1mL_X // the distance the piston moves per 1mL 
 Limit_for_Prefill_1    = Max_Volume_1 - 1000 // [uL]
+NeedleLength_1         =        25
+NeedleGauge_1          =        23
 SIZE_A_1               =     78500
 SIZE_B_1               =    117400
 SIZE_C_1               =    121100
 SIZE_D_1               =     14400
 
-
-// Syringe_2 = BD_3ml_syringe with a G25 16mm needle
-Max_Volume_2           =      3000
-um_per_1mL_2           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
-microL_per_100mm_2     = 100000000 / um_per_1mL_2 // 5877  // 6035
-Limit_for_Prefill_2    = Max_Volume_2 - 1000 // [uL]
-SIZE_A_2               =     78500
-SIZE_B_2               =    108400
-SIZE_C_2               =    121100
-SIZE_D_2               =     14400
+// // Syringe_X = structrue of syringe parameters
+// Max_Volume_X           =      xxxx
+// um_per_1mL_X           =     xxxxx // [um] // take this value divide 10^8 by value to get microL_per_100mm_X
+// microL_per_100mm_X     = 100000000 / um_per_1mL_X // the distance the piston moves per 1mL 
+// Limit_for_Prefill_X    = Max_Volume_X - 1000 // [uL]
+// NeedleLength_X         =        xx
+// NeedleGauge_X          =        xx
+// SIZE_A_X               =     xxxxx
+// SIZE_B_X               =    xxxxxx
+// SIZE_C_X               =    xxxxxx
+// SIZE_D_X               =     xxxxx
 
 //******************
 //******************
@@ -1005,13 +1007,12 @@ LEDS_OFF:
 // Init syringes for their parameters
 initSyringes:
  
-
 syringe1:   // BD 3ml with Blue needle 23G
     GGP     GB_Syringe_Type, GPbank_2
-    COMP    BD_3ml_syringe_W_G23_25mm                    // is it BD_3ml_syringe ?
+    COMP    1                                            // is it syringe number 1 ?
     JC      NE, syringe2                                // no, try next
-    SGP     GB_needleLength, GPbank_2, 25
-    SGP     GB_needleGauge , GPbank_2, 23
+    SGP     GB_needleLength, GPbank_2, NeedleLength_1
+    SGP     GB_needleGauge , GPbank_2, NeedleGauge_1
     SGP     GB_CurrentSize_A, GPbank_2, SIZE_A_1
     SGP     GB_CurrentSize_B, GPbank_2, SIZE_B_1
     SGP     GB_CurrentSize_C, GPbank_2, SIZE_C_1
@@ -1021,15 +1022,12 @@ syringe1:   // BD 3ml with Blue needle 23G
     SGP     GB_Limit_for_Prefill_current, GPbank_2, Limit_for_Prefill_1
     JA      returnInitSyringes
   
-  	
- 
- 
-syringe2:   // BD 3ml with Orange needle 25G
+syringe2:   // syringe number 2
     GGP     GB_Syringe_Type, GPbank_2
-    COMP    BD_3ml_syringe_W_G25_16mm                          // is it B_BRAUN_2ml ?
-    JC      NE, defaultSyringe                                // no, try next
-    SGP     GB_needleLength, GPbank_2, 16
-    SGP     GB_needleGauge , GPbank_2, 25
+    COMP    2                                            // is it syringe number 2 ?
+    JC      NE, syringe3                                // no, try next
+    SGP     GB_needleLength, GPbank_2, NeedleLength_2
+    SGP     GB_needleGauge , GPbank_2, NeedleGauge_2
     SGP     GB_CurrentSize_A, GPbank_2, SIZE_A_2
     SGP     GB_CurrentSize_B, GPbank_2, SIZE_B_2
     SGP     GB_CurrentSize_C, GPbank_2, SIZE_C_2
@@ -1039,12 +1037,42 @@ syringe2:   // BD 3ml with Orange needle 25G
     SGP     GB_Limit_for_Prefill_current, GPbank_2, Limit_for_Prefill_2
     JA      returnInitSyringes
 
+syringe3:   // syringe number 3
+    GGP     GB_Syringe_Type, GPbank_2
+    COMP    3                                            // is it syringe number 3 ?
+    JC      NE, syringe4                                // no, try next
+    SGP     GB_needleLength, GPbank_2, NeedleLength_3
+    SGP     GB_needleGauge , GPbank_2, NeedleGauge_3
+    SGP     GB_CurrentSize_A, GPbank_2, SIZE_A_3
+    SGP     GB_CurrentSize_B, GPbank_2, SIZE_B_3
+    SGP     GB_CurrentSize_C, GPbank_2, SIZE_C_3
+    SGP     GB_CurrentSize_D, GPbank_2, SIZE_D_3
+    SGP     GB_Max_Volume_current, GPbank_2, Max_Volume_3
+    SGP     GB_microL_per_100mm_current, GPbank_2, microL_per_100mm_3
+    SGP     GB_Limit_for_Prefill_current, GPbank_2, Limit_for_Prefill_3
+    JA      returnInitSyringes
+
+syringe4:   // syringe number 4
+    GGP     GB_Syringe_Type, GPbank_2
+    COMP    4                                            // is it syringe number 4 ?
+    JC      NE, defaultSyringe                          // no, try next
+    SGP     GB_needleLength, GPbank_2, NeedleLength_4
+    SGP     GB_needleGauge , GPbank_2, NeedleGauge_4
+    SGP     GB_CurrentSize_A, GPbank_2, SIZE_A_4
+    SGP     GB_CurrentSize_B, GPbank_2, SIZE_B_4
+    SGP     GB_CurrentSize_C, GPbank_2, SIZE_C_4
+    SGP     GB_CurrentSize_D, GPbank_2, SIZE_D_4
+    SGP     GB_Max_Volume_current, GPbank_2, Max_Volume_4
+    SGP     GB_microL_per_100mm_current, GPbank_2, microL_per_100mm_4
+    SGP     GB_Limit_for_Prefill_current, GPbank_2, Limit_for_Prefill_4
+    JA      returnInitSyringes
+
 defaultSyringe:  // BD 3ml with Blue needle 23G
-    SGP     GB_Syringe_Type, GPbank_2, DEFAULT_SYRINGE_TYPE     // ANDEMED
+    SGP     GB_Syringe_Type, GPbank_2, DEFAULT_SYRINGE_TYPE
     JA      initSyringes
 
-returnInitSyringes:    // save in EEPROM
 
+returnInitSyringes:    // save in EEPROM
 
     GGP     GB_preFillRequest, GPbank_2                                     // check for requested operation: "more"?
     COMP    PRE_FILL_REQUEST                                                // yes? then no "more"
@@ -1053,8 +1081,7 @@ returnInitSyringes:    // save in EEPROM
     COMP    ADJUST_STATE                                                    // adjust? do not "more"
     JC      EQ, justLoadMaxVol                                              // if yes, do not "more"
 //****
-    CALC    LOAD, PISTON_MORE_uL                   // u Litter
-    CALCVA  SUB, GB_Max_Volume_current
+    CALCV  SUB, GB_Max_Volume_current, PISTON_MORE_uL                       // u Litter
 //****
 justLoadMaxVol:
     RSUB
@@ -1065,7 +1092,6 @@ initNeedles:
 
  // default for 25 mm and Gauge 22: DEF_DRAW_WAIT_TIME
  // The flow with same presure relates to the 1/length and internal dia^2
-
 
 
 //GB_needleLengthInMicroSteps = 130                                            // verticalMicroStepsPerMM * GB_needleLength

@@ -1,0 +1,167 @@
+//******************************************
+// Name:        UniDoze_SyringeLib.tmc
+//
+// Description: UniDoze softwares Syringes Parameters
+//
+//***********************************************************************************************************
+// Changes:139. V1040098-d-combination of all syringes in an external "syringe library" file
+// Changes:2024-04-30 syringes will be in an external file - one file per client -- can not have all of the syringes due to limit of 2047 code lines ---
+//                --- default syringe will always be a BD 3mL syringe with a 25mm 23G needle as Syringe_1
+//
+//***********************************************************************************************************
+
+// this file UniDoze_Setup.tmc
+
+
+//********************
+//********************
+// Syringe parameters
+//********************
+//********************
+
+// current syringe
+// GB_Max_Volume_current        = 160
+// GB_microL_per_100mm_current  = 161
+// GB_Syring_Length_current_us  = 162
+// GB_Limit_for_Prefill_current = 163
+
+
+
+// // Syringe_1 = BD_3ml_syringe with a G23 25mm needle
+// Max_Volume_1           =      3000
+// um_per_1mL_1           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+// microL_per_100mm_1     = 100000000 / um_per_1mL_1 // 5877  // 6035
+// Limit_for_Prefill_1    = Max_Volume_1 - 1000 // [uL]
+// SIZE_A_1               =     78500
+// SIZE_B_1               =    117400
+// SIZE_C_1               =    121100
+// SIZE_D_1               =     14400
+
+
+// Syringe_2 = BD_3ml_syringe with a G25 16mm needle
+Max_Volume_2           =      3000
+um_per_1mL_2           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_2     = 100000000 / um_per_1mL_2 // 5877  // 6035
+Limit_for_Prefill_2    = Max_Volume_2 - 1000 // [uL]
+SIZE_A_2               =     78500
+SIZE_B_2               =    108400
+SIZE_C_2               =    121100
+SIZE_D_2               =     14400
+
+//******************
+//******************
+
+// Syringe_2 = B_BRAUN_2ml	
+Volume_2           =      3000
+um_per_1mL_2           =     13600 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_2     = 100000000 / um_per_1mL_2 // 5877  // 6035
+Limit_for_Prefill_2    = Volume_2 - 1000 // [uL]
+SIZE_A_2               =     62700
+SIZE_B_2               =    102200
+SIZE_C_2               =    105300
+SIZE_D_2               =     12200
+
+// Syringe_3 = DPS_3ml	
+Volume_3           =      3000
+um_per_1mL_3           =     17300 //   20353 //[um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_3     = 100000000 / um_per_1mL_3 // 5877  // 6035
+Limit_for_Prefill_3    = Volume_3 - 1000 // [uL]
+SIZE_A_3               =     78200
+SIZE_B_3               =    115600
+SIZE_C_3               =    120900
+SIZE_D_3               =     14400
+
+// Syringe_4 = TERUMO_3ml	
+Volume_4           =      3000
+um_per_1mL_4           =     15600 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_4     = 100000000 / um_per_1mL_4 // 5877  // 6035
+Limit_for_Prefill_4    = Volume_4 - 1000 // [uL]
+SIZE_A_4               =     68400
+SIZE_B_4               =    106900
+SIZE_C_4               =    111000
+SIZE_D_4               =     14000
+
+//******************
+//******************
+
+// Syringe_5 = TERUMO_6ml	
+Volume_5           =      5000
+um_per_1mL_5           =      7520 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_5     = 100000000 / um_per_1mL_5 // 5877  // 6035
+Limit_for_Prefill_5    = Volume_5 - 1000 // [uL]
+SIZE_A_5               =     74500
+SIZE_B_5               =    112000
+SIZE_C_5               =    117000
+SIZE_D_5               =     14800
+
+// Syringe_6 = BD_Slip_5ml	
+Volume_6           =      5000
+um_per_1mL_6           =      8900 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_6     = 100000000 / um_per_1mL_6 // 5877  // 6035
+Limit_for_Prefill_6    = Volume_6 - 1000 // [uL]
+SIZE_A_6               =     74500
+SIZE_B_6               =    112000
+SIZE_C_6               =    117000
+SIZE_D_6               =     14800
+
+// Syringe_7 = BD_Luer_5ml	
+Volume_7           =      5000
+um_per_1mL_7           =      8900 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_7     = 100000000 / um_per_1mL_7 // 5877  // 6035
+Limit_for_Prefill_7    = Volume_7 - 1000 // [uL]
+SIZE_A_7               =     74500
+SIZE_B_7               =    112000 
+SIZE_C_7               =    117000
+SIZE_D_7               =     14800
+
+
+//********************
+//********************
+// Syringe parameters
+//********************
+//********************
+
+
+
+// Syringe_2 = Andemed_2ml_syringe
+Max_Volume_1         =  2500  // [uL]
+microL_per_100mm_1   =  6098  // [uL]
+Thumbrestfromwings_1 = 17500  // [um]
+Syring_Length_1      = 64700  // [um]
+Limit_for_Prefill_1  =  2000  // [uL]
+CapLength_1          = 53800  // [um]
+CapToNeedleBase_1    = 13000  // [um]
+SIZE_A_1             =  64700 // [um]
+SIZE_B_1             = 107700 // [um]
+SIZE_C_1             = 118500 // [um]
+SIZE_D_1             =  17500 // [um]
+
+// Syringe_3 = wego_2_5ml_syringe
+Max_Volume_2         =  2500  // [uL]
+microL_per_100mm_2   =  6211  // [uL]
+Thumbrestfromwings_2 = 16500  // [um]
+Syring_Length_2      = 65100  // [um]
+Limit_for_Prefill_2  =  2000  // [uL]
+CapLength_2          = 44300  // [um]
+CapToNeedleBase_2    = 13000  // [um]
+SIZE_A_2             =  65100 // [um]
+SIZE_B_2             = 103100 // [um]
+SIZE_C_2             = 109400 // [um]
+SIZE_D_2             =  16500 // [um]
+
+// Syringe_4 = BD_2ml_syringe
+Max_Volume_3         =  2000  // [uL]
+microL_per_100mm_3   =  6060  // [uL]
+Thumbrestfromwings_3 = 13900  // [um]
+Syring_Length_3      = 58900  // [um]
+Limit_for_Prefill_3  =  1500  // [uL]
+CapLength_3          = 55300  // [um]
+CapToNeedleBase_3    = 13900  // [um]
+SIZE_A_3             =  58900 // [um]
+SIZE_B_3             = 102800 // [um]
+SIZE_C_3             = 114200 // [um]
+SIZE_D_3             =  13900 // [um]
+
+//******************
+//******************
+

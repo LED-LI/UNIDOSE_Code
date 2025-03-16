@@ -1,0 +1,143 @@
+last updated 2023-05-10
+
+// GB_Syringe_Type            =   1    //
+  // DEFAULT_SYRINGE_TYPE  = 1           // irelevant now
+  // Andemed_2ml_syringe   = 1
+  // wego_2_5ml_syringe    = 2
+  // BD_2ml_syringe        = 3
+  // BD_3ml_syringe        = 4
+  
+// BD_Luer_5ml	 = 1
+  // BD_Slip_5ml	 = 2
+  // TERUMO_6ml	 = 3
+
+  // // BD_3ml_syringe = 1
+  // // B_BRAUN_2ml	 = 2 
+  // // DPS_3ml	     = 3 
+  // // TERUMO_3ml	 = 4 
+
+  // // Andemed_2ml_syringe   = 1
+  // // wego_2_5ml_syringe    = 2
+  // // BD_2ml_syringe        = 3
+  // // BD_3ml_syringe        = 4
+  
+// // GB_Syringe_Type            =   1    //
+  // // DEFAULT_SYRINGE_TYPE  = 1
+  // // BD_syringe            = 1
+  // // HenryShine_syringe    = 2
+  // // DPS_syringe           = 3 
+  // // Terumo_2_5ml_syringe  = 4    
+  // // TERUMO_6ml_syringe    = 5     // 5ml  Taiwan
+  // // BD_2ml_syringe        = 6
+  // // wego_2_5ml_syringe    = 7
+  // // // other_7               = 7
+
+
+
+
+
+
+
+
+
+
+// Andemed_2ml_syringe
+Max_Volume_1           =      2500 // [uL]
+um_per_1mL_1           =     16250 // [um] // take this value divide 10^8 by value to get microL_per_100mm_2
+SIZE_A_1               =     64700 // [um]
+SIZE_B_1               =    107700 // [um]
+SIZE_C_1               =    118500 // [um]
+SIZE_D_1               =     17500 // [um]
+
+
+// wego_2_5ml_syringe
+Max_Volume_2           =      2500 // [uL]
+um_per_1mL_2           =     16000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_2
+SIZE_A_2               =     65100 // [um]
+SIZE_B_2               =    103100 // [um]
+SIZE_C_2               =    109400 // [um]
+SIZE_D_2               =     16500 // [um]
+
+// BD_2ml_syringe
+Max_Volume_3           =      2000 // [uL]
+um_per_1mL_3           =     16450 // [um] // take this value divide 10^8 by value to get microL_per_100mm_3
+SIZE_A_3               =     58900 // [um]
+SIZE_B_3               =    102800 // [um]
+SIZE_C_3               =    114200 // [um]
+SIZE_D_3               =     13900 // [um]
+
+// BD_3ml_syringe
+Max_Volume           =      3000 // [uL]
+um_per_1mL           =     17000 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+SIZE_A               =     78500 // [um]
+SIZE_B               =    117400 // [um]
+SIZE_C               =    121100 // [um]
+SIZE_D               =     14400 // [um]
+
+// BD_Luer_5ml	
+Max_Volume_1           =      5000
+um_per_1mL_1           =      8900 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+SIZE_A_1               =     74500
+SIZE_B_1               =    112000
+SIZE_C_1               =    117000
+SIZE_D_1               =     14800
+
+// BD_Slip_5ml	
+Max_Volume           =      5000
+um_per_1mL           =      8900 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+SIZE_A               =     74500
+SIZE_B               =    112000
+SIZE_C               =    117000
+SIZE_D               =     14800
+
+Syringe_3 = TERUMO_6ml	
+Max_Volume_3           =      5000
+um_per_1mL_3           =      7520 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+SIZE_A_3               =     67700
+SIZE_B_3               =    106500
+SIZE_C_3               =    110600
+SIZE_D_3               =     14200
+
+
+Syringe_2 = Henry Shine
+Max_Volume_2         =  3000  // [uL]
+microL_per_100mm_2   =  6417  //  6346
+Syring_Length_2      = 47000  // [um]
+Limit_for_Prefill_2  =  2500  // [uL]
+LoadingDistance_2    =  1500  // [usteps]
+
+Syringe_4 = Terumo_2_5ml_syringe
+Max_Volume_4         =  2500  // [uL]
+microL_per_100mm_4   =  6417
+Syring_Length_4      = 40000  // [um]
+Limit_for_Prefill_4  =  2000  // [uL]
+LoadingDistance_4    =  1500  // [usteps]
+
+
+// B_BRAUN_2ml	
+Max_Volume           =      2000
+um_per_1mL           =     13600 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+SIZE_A               =     62700
+SIZE_B               =    102200
+SIZE_C               =    105300
+SIZE_D               =     12200
+
+// DPS_3ml	
+Max_Volume_3           =      3000
+um_per_1mL_3           =     17300 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_3     = 100000000 / um_per_1mL_3 // 5877  // 6035
+Limit_for_Prefill_3    = Max_Volume_3 - 1000 // [uL]
+SIZE_A_3               =     78200
+SIZE_B_3               =    115600
+SIZE_C_3               =    120900
+SIZE_D_3               =     14400
+
+// TERUMO_3ml	
+Max_Volume_4           =      3000
+um_per_1mL_4           =     15600 // [um] // take this value divide 10^8 by value to get microL_per_100mm_4
+microL_per_100mm_4     = 100000000 / um_per_1mL_4 // 5877  // 6035
+Limit_for_Prefill_4    = Max_Volume_4 - 1000 // [uL]
+SIZE_A_4               =     68400
+SIZE_B_4               =    106900
+SIZE_C_4               =    111000
+SIZE_D_4               =     14000
